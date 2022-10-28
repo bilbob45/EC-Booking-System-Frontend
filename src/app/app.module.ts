@@ -8,8 +8,17 @@ import { MaterialModule } from './modules/material/material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarComponent } from './calendar/calendar.component';
+import { FormsModule } from '@angular/forms';
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
+import { ButtonModule } from 'primeng/button';
 @NgModule({
-  declarations: [AppComponent, NavigationComponent, routingComponents, CalendarComponent],
+  declarations: [
+    AppComponent,
+    NavigationComponent,
+    routingComponents,
+    CalendarComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -17,6 +26,10 @@ import { CalendarComponent } from './calendar/calendar.component';
     MaterialModule,
     HttpClientModule,
     NgbModule,
+    CalendarModule,
+    FormsModule,
+    DropdownModule,
+    ButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

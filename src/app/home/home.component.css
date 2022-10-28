@@ -1,0 +1,198 @@
+.home-container {
+  padding: 40px 40px 0 40px;
+}
+
+.home-content {
+  font-size: 48px;
+  line-height: 72px;
+  font-weight: 700;
+}
+
+.home-content b {
+  color: #e45c2b;
+}
+.home-subtext {
+  color: #252525;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 34px;
+  letter-spacing: -0.4px;
+  margin-right: 40px;
+}
+.search-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.search-wrapper {
+  padding: 20px;
+  box-shadow: 0px 0px 1px rgb(70 70 70 / 8%), 0px 8px 16px rgb(70 70 70 / 24%);
+  border-radius: 30px;
+}
+.search-button {
+  background: #e45c2b;
+  border-radius: 16px;
+  border: #e45c28;
+  padding: 10px 20px;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.search-title {
+  justify-content: space-between;
+  width: 65%;
+  align-items: center;
+  font-weight: 500;
+}
+.search-icon {
+  margin-bottom: 14px;
+}
+.exhibition-eclipse-wrapper {
+  padding-left: 100px;
+  margin-bottom: 80px;
+}
+.exhibition-eclipse {
+  /* position: absolute; */
+  /* width: 700px;
+  height: 700px;
+  left: 43.46px;
+  top: 0px; */
+  padding: 80px;
+  border-radius: 50%;
+  border: 16px solid #ebecf0;
+  box-shadow: inset 0px 3px 4px rgba(0, 0, 0, 0.25), inset -2px -4px 4px #ffffff;
+}
+.exhibition-eclipse-content-image {
+  width: 250px;
+  height: 250px;
+  margin: 0 auto;
+  padding-top: 20px;
+  object-fit: contain;
+}
+.mini-eclipse-image {
+  position: relative;
+  top: 20px;
+}
+.mini-eclipse-1 {
+  width: 130.67px;
+  height: 130.67px;
+  /* padding: 8px; */
+  position: absolute;
+  left: 35px;
+  top: -114px;
+  border-radius: 50%;
+  background: linear-gradient(149.91deg, #dcdee4 18.41%, #ebecf0 66.48%);
+  border: 2px solid #ffffff;
+  box-shadow: -6px -5px 12px #ffffff, 0px 4px 11px rgba(0, 0, 0, 0.25);
+}
+.mini-eclipse-2 {
+  width: 130.67px;
+  height: 130.67px;
+  /* padding: 8px; */
+  position: absolute;
+  left: -146px;
+  top: 75px;
+  border-radius: 50%;
+  background: linear-gradient(149.91deg, #dcdee4 18.41%, #ebecf0 66.48%);
+  border: 2px solid #ffffff;
+  box-shadow: -6px -5px 12px #ffffff, 0px 4px 11px rgba(0, 0, 0, 0.25);
+}
+.mini-eclipse-3 {
+  width: 130.67px;
+  height: 130.67px;
+  /* padding: 8px; */
+  position: absolute;
+  right: 340px;
+  bottom: -83px;
+  border-radius: 50%;
+  background: linear-gradient(149.91deg, #dcdee4 18.41%, #ebecf0 66.48%);
+  border: 2px solid #ffffff;
+  box-shadow: -6px -5px 12px #ffffff, 0px 4px 11px rgba(0, 0, 0, 0.25);
+}
+.exhibition-eclipse-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  /* top: 90px; */
+  position: relative;
+}
+.exhibition-eclipse-title {
+  font-weight: 700;
+  font-size: 24px;
+  padding-top: 15px;
+  line-height: 150%;
+  letter-spacing: -0.4px;
+  color: #111111;
+}
+.exhibition-eclipse-description {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.4px;
+  padding: 0 20px;
+  /* margin: 0 60px ; */
+  color: #474747;
+}
+.shadow-image {
+  display: flex;
+  justify-content: center;
+
+  margin-top: 30px;
+}
+::ng-deep .p-inputtext {
+  border: 1px solid transparent;
+}
+::ng-deep .p-inputtext:enabled:focus {
+  border-color: #fedacc;
+  box-shadow: 0 0 0 0.2rem #fedacc;
+}
+::ng-deep .p-inputtext:enabled:hover {
+  border-color: #e45c28;
+}
+::ng-deep .p-dropdown:not(.p-disabled):hover {
+  border-color: #e45c28;
+}
+::ng-deep .p-dropdown:not(.p-disabled):focus {
+  border-color: #fedacc;
+  box-shadow: 0 0 0 0.2rem #fedacc;
+}
+::ng-deep
+  .p-datepicker:not(.p-disabled)
+  table
+  td
+  span:not(.p-highlight):not(.p-disabled):hover {
+  background-color: #fedacc;
+}
+::ng-deep .p-dropdown {
+  border: none;
+}
+::ng-deep .p-dropdown .p-dropdown-trigger {
+  color: #e45c2b;
+}
+::ng-deep .p-dropdown .p-dropdown-label.p-placeholder {
+  color: #818181;
+}
+::ng-deep
+  .p-dropdown-panel
+  .p-dropdown-items
+  .p-dropdown-item:not(.p-highlight):not(.p-disabled):hover {
+  background-color: #fedacc !important;
+}
+::ng-deep .p-dropdown .p-dropdown-trigger {
+  color: transparent;
+}
+::ng-deep .dropdown-toggle::after {
+  display: none;
+}
+::ng-deep .dropdown-menu {
+  background: #ffffff;
+  border: #fff;
+  box-shadow: 0px 0px 1px rgba(70, 70, 70, 0.08),
+    0px 8px 16px rgba(70, 70, 70, 0.24);
+  border-radius: 8px;
+}
+::ng-deep .dropdown-menu.show {
+  margin-top: 20px;
+  padding: 15px 0;
+}
