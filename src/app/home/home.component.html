@@ -1,8 +1,11 @@
 <div class="container-fluid">
   <div class="row d-flex home-container">
-    <div class="col-md-5">
+    <div class="col-md-5 home-text-section">
       <div>
-        <img src="../../assets/images/pwc logo.svg" />
+        <img
+          src="../../assets/images/pwc logo.svg"
+          class="home-content-image"
+        />
         <p>HOME OF INNOVATION</p>
         <h1 class="home-content">Experience <b>Center</b> Booking System</h1>
         <p class="home-subtext">
@@ -53,7 +56,7 @@
           pButton
           pRipple
           type="button"
-          label="Book Now"
+          label="Complete Booking"
         ></button>
       </div>
     </div>
@@ -65,13 +68,15 @@
             <div class="mini-eclipse-1">
               <img
                 src="../../assets//images/shrunk-one.svg"
-                class="mini-eclipse-image"
+                onmouseover="this.src='../../assets/images/shrunk-three-active.svg'"
+                onmouseout="this.src='../../assets/images/shrunk-one.svg'"
+                class="mini-eclipse-image-1"
               />
             </div>
             <div class="mini-eclipse-2">
               <img
                 src="../../assets//images/shrunk-two.svg"
-                onmouseover="this.src='../../assets/images/shrunk-two-active.svg'"
+                onmouseover="this.src='../../assets/images/shrunk-one-active.svg'"
                 onmouseout="this.src='../../assets/images/shrunk-two.svg'"
                 class="mini-eclipse-image"
               />
@@ -79,6 +84,8 @@
             <div class="mini-eclipse-3">
               <img
                 src="../../assets//images/shrunk-three.svg"
+                onmouseover="this.src='../../assets/images/shrunk-two-active.svg'"
+                onmouseout="this.src='../../assets/images/shrunk-three.svg'"
                 class="mini-eclipse-image"
               />
             </div>

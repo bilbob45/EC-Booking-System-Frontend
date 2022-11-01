@@ -5,6 +5,7 @@ import { HistoryComponent } from './history/history.component';
 import { HomeComponent } from './home/home.component';
 import { ReportComponent } from './report/report.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { RoomsComponent } from './rooms/rooms.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'report', component: ReportComponent },
   { path: 'history', component: HistoryComponent },
   { path: 'calendar', component: CalendarComponent },
+  { path: 'rooms', component: RoomsComponent },
 ];
 
 @NgModule({

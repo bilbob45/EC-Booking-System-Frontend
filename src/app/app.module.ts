@@ -12,12 +12,16 @@ import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { ButtonModule } from 'primeng/button';
+import { RoomsComponent } from './rooms/rooms.component';
+import { ShuttleDiscoveryComponent } from './shuttle-discovery/shuttle-discovery.component';
 @NgModule({
   declarations: [
     AppComponent,
     NavigationComponent,
     routingComponents,
     CalendarComponent,
+    RoomsComponent,
+    ShuttleDiscoveryComponent,
   ],
   imports: [
     BrowserModule,
