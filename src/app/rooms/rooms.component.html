@@ -9,12 +9,12 @@
     </div>
     <div class="col-md-4 date-container">
       <span>Today </span>
-      <h2>20 Oct 2022</h2>
+      <h2>{{ today | date: "d MMM y" }}</h2>
     </div>
   </div>
   <div class="d-flex">
     <div class="col-md-8 rooms-features">
-      <div class="row">
+      <a routerLink="/shuttle-discovery" class="row">
         <div class="shuttle-discovery">
           <div class="shuttle-content">
             <h3>Shuttle Discovery</h3>
@@ -26,7 +26,7 @@
             >
           </div>
         </div>
-      </div>
+      </a>
       <div class="row second-rooms-section">
         <div class="col coliseum">
           <!-- <img src="../../assets/images/coliseum.svg" alt="" /> -->
@@ -62,7 +62,7 @@
           </div>
 
           <div class="VR-room-link">
-            <a>
+            <a routerLink="/vr-room">
               <img src="../../assets/icons/chevron-arrow.svg" />
             </a>
           </div>

@@ -67,29 +67,30 @@
           <div class="exhibition-eclipse-content">
             <div class="mini-eclipse-1">
               <img
-                src="../../assets//images/shrunk-one.svg"
-                onmouseover="this.src='../../assets/images/shrunk-three-active.svg'"
-                onmouseout="this.src='../../assets/images/shrunk-one.svg'"
+                (click)="changeImage(0)"
+                src="../../assets/images/shrunk-one.svg"
                 class="mini-eclipse-image-1"
               />
             </div>
             <div class="mini-eclipse-2">
               <img
-                src="../../assets//images/shrunk-two.svg"
-                onmouseover="this.src='../../assets/images/shrunk-one-active.svg'"
-                onmouseout="this.src='../../assets/images/shrunk-two.svg'"
+                (click)="changeImage(1)"
+                src="../../assets/images/shrunk-two.svg"
                 class="mini-eclipse-image"
               />
             </div>
             <div class="mini-eclipse-3">
               <img
+                (click)="changeImage(2)"
                 src="../../assets//images/shrunk-three.svg"
-                onmouseover="this.src='../../assets/images/shrunk-two-active.svg'"
-                onmouseout="this.src='../../assets/images/shrunk-three.svg'"
                 class="mini-eclipse-image"
               />
             </div>
-            <div
+            <div>
+              <img [src]="[slide]" />
+            </div>
+
+            <!-- <div
               id="carouselExampleSlidesOnly"
               class="carousel slide"
               data-bs-ride="carousel"
@@ -152,7 +153,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="shadow-image">

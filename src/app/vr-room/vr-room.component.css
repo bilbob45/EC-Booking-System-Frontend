@@ -1,0 +1,35 @@
+.vr-container {
+  padding: 25px 60px;
+}
+.vr-title {
+  padding-bottom: 25px;
+  display: flex;
+}
+.vr-title a img {
+  margin-right: 15px;
+}
+.vr-title span {
+  font-size: 32px;
+  color: #111111;
+}
+.vr-link {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.vr-link a {
+  color: #e45c2b;
+  font-size: 16px;
+}
+.vr-link img {
+  margin-left: 15px;
+  width: 40px;
+}
+
+.vr-content {
+  padding-top: 32px;
+}
+.vr-content h3 {
+  font-weight: 600;
+  font-size: 24px;
+}

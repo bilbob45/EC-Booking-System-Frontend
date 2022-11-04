@@ -1,0 +1,28 @@
+{
+  "data": [
+    {
+      "previewImageSrc": "assets/images/shuttle-image.svg",
+      "thumbnailImageSrc": "assets/images/shuttle-thumbnail-1.svg"
+    },
+    {
+      "previewImageSrc": "assets/images/shuttle-discovery.svg",
+      "thumbnailImageSrc": "assets/images/shuttle-thumbnail-1.svg"
+    },
+    {
+      "previewImageSrc": "assets/images/shuttle-image.svg",
+      "thumbnailImageSrc": "assets/images/view-vr-thumbnail.svg"
+    },
+    {
+      "previewImageSrc": "assets/images/shuttle-image.svg",
+      "thumbnailImageSrc": "assets/images/shuttle-thumbnail-1.svg"
+    },
+    {
+      "previewImageSrc": "assets/images/shuttle-image.svg",
+      "thumbnailImageSrc": "assets/images/shuttle-thumbnail-1.svg"
+    },
+    {
+      "previewImageSrc": "assets/images/shuttle-image.svg",
+      "thumbnailImageSrc": "assets/images/shuttle-thumbnail-1.svg"
+    }
+  ]
+}

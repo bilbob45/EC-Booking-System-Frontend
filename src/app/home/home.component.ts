@@ -20,7 +20,13 @@ export class HomeComponent {
 
   // selectToday() {
   // 	this.model = this.calendar.getToday();
+
   // }
+  images: any[];
+
+  slide: string = '../../assets/images/shuttle-slide.svg';
+  slides: string[] = ["../../assets/images/kilimanjaro-slide.svg","../../assets/images/breakroom-slide.svg",'../../assets/images/shuttle-slide.svg'];
+
   venues: Venue[];
 
   selectedVenue: Venue;
@@ -115,5 +121,9 @@ export class HomeComponent {
     let invalidDate = new Date();
     invalidDate.setDate(today.getDate() - 1);
     this.invalidDates = [today, invalidDate];
+  }
+
+  changeImage(e: number) {
+    this.slide = this.slides[e];
   }
 }

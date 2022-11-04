@@ -4,7 +4,9 @@
 .date-container {
   text-align: right;
 }
-
+a {
+  text-decoration: none;
+}
 .shuttle-discovery {
   background: url("../../assets/images/shuttle-discovery.svg");
   margin-top: 20px;
@@ -16,11 +18,17 @@
   border-radius: 12px;
   margin-left: 50px;
   padding: 0;
+  /* overflow: hidden;
+  transition: 2s; */
 }
-
+/* .shuttle-discovery img {
+  overflow: hidden;
+  transition: 2s;
+  width: 100%;
+} */
 /* .shuttle-discovery:hover {
   cursor: pointer;
-  transform: scale(1.2);
+  transform: scale(1.1);
 } */
 
 .shuttle-content {
@@ -40,7 +48,7 @@
 .coliseum {
   background: url("../../assets/images/coliseum.svg");
 
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   width: 309px;
   height: 349px;
@@ -54,7 +62,7 @@
   color: #fff;
   padding: 20px;
   position: relative;
-  top: 59%;
+  top: 56%;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
   opacity: 0;
@@ -65,11 +73,11 @@
 
 .kilimanjaro {
   background: url("../../assets/images/kilimanjaro.svg");
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   width: 309px;
   height: 349px;
-  /* margin: 20px 0; */
+  margin: 20px 0;
   padding: 0;
   border-radius: 12px;
 }
@@ -79,7 +87,7 @@
   color: #fff;
   padding: 20px;
   position: relative;
-  top: 59%;
+  top: 56%;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
   opacity: 0;

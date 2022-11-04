@@ -6,7 +6,8 @@ import { HomeComponent } from './home/home.component';
 import { ReportComponent } from './report/report.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { RoomsComponent } from './rooms/rooms.component';
-
+import { ShuttleDiscoveryComponent } from './shuttle-discovery/shuttle-discovery.component';
+import { VRRoomComponent } from './vr-room/vr-room.component';
 const routes: Routes = [
   {
     path: '',
@@ -17,6 +18,8 @@ const routes: Routes = [
   { path: 'history', component: HistoryComponent },
   { path: 'calendar', component: CalendarComponent },
   { path: 'rooms', component: RoomsComponent },
+  { path: 'shuttle-discovery', component: ShuttleDiscoveryComponent },
+  { path: 'vr-room', component: VRRoomComponent },
 ];
 
 @NgModule({
@@ -29,4 +32,9 @@ export const routingComponents = [
   ReportComponent,
   BookingComponent,
   HistoryComponent,
+  CalendarComponent,
+  ReportComponent,
+  RoomsComponent,
+  ShuttleDiscoveryComponent,
+  VRRoomComponent,
 ];
