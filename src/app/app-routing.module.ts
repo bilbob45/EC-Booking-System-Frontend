@@ -8,18 +8,33 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { RoomsComponent } from './rooms/rooms.component';
 import { ShuttleDiscoveryComponent } from './shuttle-discovery/shuttle-discovery.component';
 import { VRRoomComponent } from './vr-room/vr-room.component';
+import { BookingHistoryComponent } from './booking-history/booking-history.component';
+import { AwaitingApprovalComponent } from './request-pages/standard-user/awaiting-approval/awaiting-approval.component';
+import { CancelledComponent } from './request-pages/standard-user/cancelled/cancelled.component';
+import { DeniedComponent } from './request-pages/standard-user/denied/denied.component';
+import { CompletedComponent } from './request-pages/standard-user/completed/completed.component';
+import { ApprovedComponent } from './request-pages/standard-user/approved/approved.component';
+import { ApproverAwaitingApprovalComponent } from './request-pages/approver/approver-awaiting-approval/approver-awaiting-approval.component';
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
   },
-  { path: 'booking', component: BookingComponent },
+  { path: 'booking', component: BookingComponent, data:{permission:''} },
   { path: 'report', component: ReportComponent },
   { path: 'history', component: HistoryComponent },
   { path: 'calendar', component: CalendarComponent },
   { path: 'rooms', component: RoomsComponent },
   { path: 'shuttle-discovery', component: ShuttleDiscoveryComponent },
   { path: 'vr-room', component: VRRoomComponent },
+  { path: 'booking-history', component: BookingHistoryComponent },
+  { path: 'awaiting-approval', component: AwaitingApprovalComponent },
+  { path: 'cancelled', component: CancelledComponent },
+  { path: 'denied', component: DeniedComponent },
+  { path: 'completed', component: CompletedComponent },
+  { path: 'approved', component: ApprovedComponent },
+  {path: 'approver-awaiting-approval', component: ApproverAwaitingApprovalComponent },
+ 
 ];
 
 @NgModule({
@@ -37,4 +52,11 @@ export const routingComponents = [
   RoomsComponent,
   ShuttleDiscoveryComponent,
   VRRoomComponent,
+  BookingHistoryComponent,
+  AwaitingApprovalComponent,
+  CancelledComponent,
+  DeniedComponent,
+  CompletedComponent,
+  ApprovedComponent,
+  ApproverAwaitingApprovalComponent
 ];

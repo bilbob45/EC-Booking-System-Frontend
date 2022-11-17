@@ -1,4 +1,5 @@
 <div class="container-fluid booking-container">
+  <p-toast></p-toast>
   <div class="shuttle-header">
     <a routerLink="/rooms"
       ><img
@@ -49,188 +50,295 @@
       </div>
       <div class="booking-form">
         <h3>Basic Details <b>*</b></h3>
-        <div class="p-fluid">
-          <div class="d-flex booking-inputtext-wrapper">
-            <div class="field col-6 md:col-4 booking-inputtext">
-              <p-dropdown
-                inputId="dropdown"
-                class="p-inputtext-sm"
-                [autoDisplayFirst]="false"
-                [options]="venues"
-                [(ngModel)]="value8"
-                placeholder="Select Meeting Type"
-                optionLabel="name"
-              ></p-dropdown>
+        <form
+          [formGroup]="bookingForm"
+          (ngSubmit)="createBooking(selectedRoom)"
+        >
+          <div class="p-fluid booking-section">
+            <div class="d-flex booking-inputtext-wrapper">
+              <div class="field col-6 md:col-4 booking-inputtext">
+                <p-dropdown
+                  inputId="dropdown"
+                  class="p-inputtext-sm"
+                  [autoDisplayFirst]="false"
+                  [options]="venues"
+                  optionValue="name"
+                  formControlName="meetingType"
+                  name="meetingType"
+                  placeholder="Select Meeting Type"
+                  optionLabel="name"
+                  [required]="true"
+                ></p-dropdown>
+              </div>
+              <div class="field col-6 md:col-4">
+                <input
+                  type="text"
+                  id="inputtext"
+                  class="p-inputtext-sm"
+                  placeholder="Client Company Name"
+                  name="clientCompanyName"
+                  pInputText
+                  formControlName="clientCompanyName"
+                  required
+                />
+                <p-message
+                  severity="error"
+                  text="Client Company name is required"
+                  *ngIf="
+                    !bookingForm.controls['clientCompanyName'].valid &&
+                    bookingForm.controls['clientCompanyName'].dirty
+                  "
+                ></p-message>
+              </div>
             </div>
-            <div class="field col-6 md:col-4">
-              <input
-                type="text"
-                id="inputtext"
-                class="p-inputtext-sm"
-                placeholder="Client Company Name"
-                pInputText
-                [(ngModel)]="value1"
-              />
+            <div class="d-flex booking-inputtext-wrapper">
+              <div class="field col-6 md:col-4 booking-inputtext">
+                <input
+                  type="text"
+                  id="inputtext"
+                  class="p-inputtext-sm"
+                  placeholder="Engagement Leader"
+                  name="engagementLeader"
+                  pInputText
+                  formControlName="engagementLeader"
+                  required
+                />
+              </div>
+              <div class="field col-6 md:col-4">
+                <input
+                  type="text"
+                  id="inputtext"
+                  class="p-inputtext-sm"
+                  placeholder="Number of Individuals Expected"
+                  name="numberOfGuests"
+                  pInputText
+                  formControlName="numberOfGuests"
+                  required
+                />
+              </div>
             </div>
-          </div>
-          <div class="d-flex booking-inputtext-wrapper">
-            <div class="field col-6 md:col-4 booking-inputtext">
-              <input
-                type="text"
-                id="inputtext"
-                class="p-inputtext-sm"
-                placeholder="Engagement Leader"
-                pInputText
-                [(ngModel)]="value1"
-              />
-            </div>
-            <div class="field col-6 md:col-4">
-              <input
-                type="text"
-                id="inputtext"
-                class="p-inputtext-sm"
-                placeholder="Number of Individuals Expected"
-                pInputText
-                [(ngModel)]="value1"
-              />
-            </div>
-          </div>
-          <div class="d-flex booking-inputtext-wrapper">
-            <div class="p-field col-6 md:col-4 booking-inputtext">
-              <p-calendar
-                [(ngModel)]="date5"
-                [disabledDates]="invalidDates"
-                [disabledDays]="[0, 6]"
-                [readonlyInput]="true"
-                inputId="disabledays"
-                class="p-inputtext-sm"
-                placeholder="Select Appointment Date"
-              ></p-calendar>
-            </div>
-            <div class="field col-6 md:col-4">
-              <p-dropdown
-                inputId="dropdown"
-                class="p-inputtext-sm"
-                [autoDisplayFirst]="false"
-                [options]="timeSlots"
-                [(ngModel)]="value2"
-                placeholder="Select Time Slot for Booking"
-                optionLabel="time"
-              ></p-dropdown>
-            </div>
-          </div>
-        </div>
-        <div class="p-fluid">
-          <h3>PwC Internal Contact Details<b>*</b></h3>
-          <div class="d-flex booking-inputtext-wrapper">
-            <div class="field col-6 md:col-4 booking-inputtext">
-              <input
-                type="text"
-                id="inputtext"
-                class="p-inputtext-sm"
-                placeholder="Name"
-                pInputText
-                [(ngModel)]="value1"
-              />
-            </div>
-            <div class="field col-6 md:col-4">
-              <input
-                type="text"
-                id="inputtext"
-                class="p-inputtext-sm"
-                placeholder="Phone Number"
-                pInputText
-                [(ngModel)]="value1"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="p-fluid">
-          <h3>Additional Info</h3>
-          <div class="accordion accordion-flush" id="accordionFlushExample">
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="flush-headingOne">
-                <button
-                  class="accordion-button collapsed"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#flush-collapseOne"
-                  aria-expanded="false"
-                  aria-controls="flush-collapseOne"
-                >
-                  Food
-                </button>
-              </h2>
-              <div
-                id="flush-collapseOne"
-                class="accordion-collapse collapse"
-                aria-labelledby="flush-headingOne"
-                data-bs-parent="#accordionFlushExample"
-              >
-                <div class="accordion-body">
-                  <div>
-                    <div class="additional-info-accordion">
-                      <span class="additional-info-accordion-title"
-                        >Will food be required?</span
-                      >
-                      <p-inputSwitch [(ngModel)]="checked1"></p-inputSwitch>
+            <div class="p-fluid w-627">
+              <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header d-flex" id="flush-headingOne">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#flush-collapseOne"
+                      aria-expanded="false"
+                      aria-controls="flush-collapseOne"
+                    >
+                      Appointment
+                      <img
+                        class="ml-2"
+                        src="../../assets/icons/edit-notify.svg"
+                      />
+                    </button>
+                  </h2>
+                  <div
+                    id="flush-collapseOne"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="flush-headingOne"
+                    data-bs-parent="#accordionFlushExample"
+                  >
+                    <div class="accordion-body">
+                      <div>
+                        <div formArrayName="bookedDates">
+                          <div
+                            *ngFor="
+                              let DateModel of DateModels().controls;
+                              let x = index
+                            "
+                            [formGroupName]="x"
+                            class="add-appointment-container"
+                          >
+                            <div class="d-flex w-100 accordion-dates">
+                              <div
+                                class="p-field w-45 md:col-4 booking-inputtext"
+                              >
+                                <p-calendar
+                                  formControlName="eventDate"
+                                  name="eventDate"
+                                  dateFormat="dd/mm/yy"
+                                  [readonlyInput]="true"
+                                  inputId="disableDates"
+                                  class="p-inputtext-sm"
+                                  placeholder="Select Appointment Date"
+                                  [required]="true"
+                                ></p-calendar>
+                              </div>
+                              <div class="field w-45 md:col-4">
+                                <p-dropdown
+                                  inputId="dropdown"
+                                  class="p-inputtext-sm"
+                                  [autoDisplayFirst]="false"
+                                  [options]="timeSlots"
+                                  optionValue="time"
+                                  formControlName="time"
+                                  name="time"
+                                  placeholder="Select Time Slot for Booking"
+                                  optionLabel="time"
+                                  [required]="true"
+                                ></p-dropdown>
+                              </div>
+                              <div
+                                class="field w-10 md:col-4 accordion-dates-delete"
+                              >
+                                <img
+                                  src="../../assets/icons/delete.svg"
+                                  (click)="removeDate(x)"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="addDateButton" (click)="addDate()">
+                          <button
+                            type="button"
+                            class="add-appointment"
+                            (click)="addDate()"
+                          >
+                            <span>+ Add Date</span>
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                    <textarea
-                      rows="5"
-                      cols="30"
-                      pInputTextarea
-                      placeholder="Any other comment, dietary requirements, etc "
-                    ></textarea>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="flush-headingTwo">
-                <button
-                  class="accordion-button collapsed"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#flush-collapseTwo"
-                  aria-expanded="false"
-                  aria-controls="flush-collapseTwo"
+          </div>
+
+          <div class="p-fluid booking-section">
+            <h3>PwC Internal Contact Details<b>*</b></h3>
+            <div class="d-flex booking-inputtext-wrapper">
+              <div class="field col-6 md:col-4 booking-inputtext">
+                <input
+                  type="text"
+                  id="inputtext"
+                  class="p-inputtext-sm"
+                  placeholder="Name"
+                  name="internalContactPerson"
+                  pInputText
+                  formControlName="internalContactPerson"
+                  required
+                />
+              </div>
+              <div class="field col-6 md:col-4">
+                <input
+                  type="text"
+                  id="inputtext"
+                  class="p-inputtext-sm"
+                  placeholder="Phone Number"
+                  name="contactNumber"
+                  pInputText
+                  formControlName="contactNumber"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          <div class="p-fluid">
+            <h3>Additional Info</h3>
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseOne"
+                  >
+                    Food
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseOne"
+                  class="accordion-collapse collapse"
+                  aria-labelledby="flush-headingOne"
+                  data-bs-parent="#accordionFlushExample"
                 >
-                  Notes
-                </button>
-              </h2>
-              <div
-                id="flush-collapseTwo"
-                class="accordion-collapse collapse"
-                aria-labelledby="flush-headingTwo"
-                data-bs-parent="#accordionFlushExample"
-              >
-                <div class="accordion-body">
-                  <div>
-                    <textarea
-                      rows="5"
-                      cols="30"
-                      pInputTextarea
-                      placeholder="Any other thing we should know about the guest, event, meeting/engagement etc? "
-                    ></textarea>
+                  <div class="accordion-body">
+                    <div>
+                      <div class="additional-info-accordion">
+                        <span class="additional-info-accordion-title"
+                          >Will food be required?</span
+                        >
+                        <p-inputSwitch
+                          formControlName="feedingRequirement"
+                          name="feedingRequirement"
+                        ></p-inputSwitch>
+                      </div>
+                      <textarea
+                        rows="5"
+                        cols="30"
+                        pInputTextarea
+                        formControlName="feedingRequirement"
+                        name="feedingRequirement"
+                        placeholder="Any other comment, dietary requirements, etc "
+                        required
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingTwo">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseTwo"
+                  >
+                    Notes
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseTwo"
+                  class="accordion-collapse collapse"
+                  aria-labelledby="flush-headingTwo"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div class="accordion-body">
+                    <div>
+                      <textarea
+                        rows="5"
+                        cols="30"
+                        formControlName="notes"
+                        name="notes"
+                        pInputTextarea
+                        placeholder="Any other thing we should know about the guest, event, meeting/engagement etc? "
+                        required
+                      ></textarea>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div>
-          <div class="submit-container">
-            <button
-              pButton
-              pRipple
-              type="button"
-              label="Cancel"
-              styleClass="p-button-sm"
-              class="p-button-outlined"
-            ></button>
-            <p-button label="Submit" class="submit-button"></p-button>
+          <div class="mt-4">
+            <div class="submit-container">
+              <button
+                pButton
+                type="button"
+                label="Cancel"
+                styleClass="p-button-sm"
+                class="p-button-outlined"
+              ></button>
+              <p-button
+                type="submit"
+                label="Submit"
+                class="submit-button"
+                [disabled]="bookingForm.invalid"
+              ></p-button>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>

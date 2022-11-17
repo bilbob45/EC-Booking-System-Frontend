@@ -27,9 +27,37 @@
 }
 
 .vr-content {
-  padding-top: 32px;
+  padding-top: 0px;
 }
 .vr-content h3 {
   font-weight: 600;
   font-size: 24px;
+}
+.iframe-container {
+  position: relative;
+  width: 1160px;
+  height: 100vh;
+  /* height: 360px;
+  overflow: hidden; */
+}
+.iframe-content {
+  position: absolute;
+  top: 10px;
+
+  width: 1146px;
+  height: 500px;
+}
+.iframe-container iframe {
+  position: relative;
+  top: -47px !important;
+}
+.hidelogo {
+  position: absolute;
+  width: 1140px;
+  height: 60px;
+  right: 0px;
+  bottom: 0px;
+  display: block;
+  background: #fff;
+  z-index: 999;
 }

@@ -1,0 +1,207 @@
+<div class="container-fluid booking-container">
+  <div class="shuttle-header">
+    <a routerLink="/rooms"
+      ><img
+        src="../../assets/icons/chevron-left-arrow.svg"
+        width="18"
+        height="18"
+    /></a>
+    <span class="shuttle-title">EC/22/0001</span>
+  </div>
+  <div class="shuttle-container row">
+    <div class="col-md-4">
+      <div>
+        <p-galleria
+          [value]="images"
+          [responsiveOptions]="responsiveOptions"
+          [numVisible]="2"
+        >
+          <ng-template pTemplate="item" let-item>
+            <img
+              [src]="item.previewImageSrc"
+              style="width: 100%; display: block"
+            />
+          </ng-template>
+          <ng-template pTemplate="thumbnail" let-item>
+            <div class="grid grid-nogutter justify-content-center">
+              <img [src]="item.thumbnailImageSrc" style="display: block" />
+            </div>
+          </ng-template>
+        </p-galleria>
+      </div>
+
+      <div class="shuttle-description-container">
+        <h3 class="shuttle-description-title">Shuttle Discovery</h3>
+        <p class="shuttle-description-copy">
+          Lorem ipsum dolor sit amet, consectetur ading elit. Opsum dolor sit
+          amet bubsu ... Lorem ipsum dolor sit amet, consectetur ading elit.
+          Opsum dolor sit amet bubsu ...
+        </p>
+      </div>
+    </div>
+    <div class="col-md-8 booking-form-container">
+      <div class="booking-notice">
+        <span>APPROVED</span>
+      </div>
+      <div class="d-flex request-content">
+        <div>
+          <span class="request-content-title">
+            Request ID :
+            <span class="request-content-copy">EC/22/001</span></span
+          >
+        </div>
+        <div>
+          <button
+            pButton
+            type="button"
+            label="Download"
+            styleClass="p-button-sm"
+            class="p-button-outlined"
+          ></button>
+        </div>
+      </div>
+      <div class="d-flex request-content">
+        <div>
+          <span class="request-content-title">
+            Event Date(s) :
+            <span class="request-content-copy">20 Aug, 2022</span>
+            <p class="request-content-copy">20 Aug, 2022</p>
+          </span>
+        </div>
+        <div>
+          <div>
+            <span class="request-content-title">
+              Time Slot(s) :
+              <span class="request-content-copy"
+                >Full day (9:00am - 4:00pm)</span
+              >
+              <p class="request-content-copy">
+                Full day (9:00am - 4:00pm)
+              </p></span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="d-flex request-content">
+        <div class="d-flex">
+          <ul class="request-section">
+            <li><span class="request-content-title">Requested By:</span></li>
+            <li class="request-section-list">
+              <span class="request-content-title">LoS:</span>
+            </li>
+            <li class="request-section-list">
+              <span class="request-content-title">BU:</span>
+            </li>
+            <li class="request-section-list">
+              <span class="request-content-title">Level:</span>
+            </li>
+          </ul>
+          <ul>
+            <li><span class="request-content-copy">Ajala Olasunkanmi</span></li>
+            <li class="request-section-list">
+              <span class="request-content-copy">Advisory</span>
+            </li>
+            <li class="request-section-list">
+              <span class="request-content-copy">Tech Advisory</span>
+            </li>
+            <li class="request-section-list">
+              <span class="request-content-copy">Senior Associate</span>
+            </li>
+          </ul>
+        </div>
+        <div class="d-flex">
+          <ul class="request-section">
+            <li><span class="request-content-title">Requested:</span></li>
+            <li class="request-section-list">
+              <span class="request-content-title">Requested Time:</span>
+            </li>
+            <li class="request-section-list">
+              <span class="request-content-title">Approved Date:</span>
+            </li>
+            <li class="request-section-list">
+              <span class="request-content-title">Approved Time:</span>
+            </li>
+          </ul>
+          <ul>
+            <li><span class="request-content-copy">20 Aug, 2022</span></li>
+            <li class="request-section-list">
+              <span class="request-content-copy">10:52AM</span>
+            </li>
+            <li class="request-section-list">
+              <span class="request-content-copy"><em>Pending</em></span>
+            </li>
+            <li class="request-section-list">
+              <span class="request-content-copy"><em>Pending</em></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="d-flex request-content">
+        <div>
+          <span class="request-content-title">
+            Meeting Type:
+            <span class="request-content-copy">Client Meeting</span></span
+          >
+        </div>
+        <div>
+          <span class="request-content-title">
+            No(s) of Individuals:
+            <span class="request-content-copy">18</span></span
+          >
+        </div>
+      </div>
+      <div class="d-flex request-content">
+        <div>
+          <span class="request-content-title">
+            Contact Name:
+            <span class="request-content-copy">Ajala Olasunkanmi</span></span
+          >
+        </div>
+        <div>
+          <span class="request-content-title">
+            Phone Number:
+            <span class="request-content-copy">08063323914</span></span
+          >
+        </div>
+      </div>
+      <div class="d-flex request-content border-0">
+        <div class="d-flex">
+          <ul class="request-section">
+            <li><span class="request-content-title">Food:</span></li>
+            <li></li>
+          </ul>
+          <ul>
+            <li><span class="request-content-title">Yes</span></li>
+            <li class="request-section-list">
+              <span class="request-content-copy p-0"
+                >Snacks will be fine. It will be a <br />
+                short meeting so no food required.</span
+              >
+            </li>
+          </ul>
+          <!-- <span class="request-content-title">
+                    Food :
+                    <span class="request-content-copy">Yes</span>
+                    <p class="request-content-copy">
+                      Snacks will be fine. It will be a <br />
+                      short meeting so no food required.
+                    </p>
+                  </span> -->
+        </div>
+
+        <div class="d-flex request-content border-0">
+          <ul>
+            <li><span class="request-content-title">Others:</span></li>
+          </ul>
+          <ul>
+            <li><span class="request-content-copy">Nil</span></li>
+          </ul>
+          <!-- <span class="request-content-title">
+                    Others :
+                    <span class="request-content-copy">Nil</span>
+                  </span> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

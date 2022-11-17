@@ -1,24 +1,24 @@
 {
   "data": [
     {
-      "previewImageSrc": "assets/images/shuttle-image.svg",
-      "thumbnailImageSrc": "assets/images/shuttle-thumbnail-1.svg"
+      "previewImageSrc": "assets/images/shuttle-discovery/images/1.svg",
+      "thumbnailImageSrc": "assets/images/shuttle-discovery/thumbnails/3.svg"
     },
     {
-      "previewImageSrc": "assets/images/shuttle-discovery.svg",
-      "thumbnailImageSrc": "assets/images/shuttle-thumbnail-1.svg"
+      "previewImageSrc": "assets/images/shuttle-discovery/images/2.svg",
+      "thumbnailImageSrc": "assets/images/shuttle-discovery/thumbnails/2.svg"
     },
     {
-      "previewImageSrc": "assets/images/shuttle-image.svg",
-      "thumbnailImageSrc": "assets/images/view-vr-thumbnail.svg"
+      "previewImageSrc": "assets/images/shuttle-discovery/images/3.svg",
+      "thumbnailImageSrc": "assets/images/shuttle-discovery/thumbnails/4.svg"
     },
     {
-      "previewImageSrc": "assets/images/shuttle-image.svg",
-      "thumbnailImageSrc": "assets/images/shuttle-thumbnail-1.svg"
+      "previewImageSrc": "assets/images/shuttle-discovery/images/4.svg",
+      "thumbnailImageSrc": "assets/images/shuttle-discovery/thumbnails/1.svg"
     },
     {
-      "previewImageSrc": "assets/images/shuttle-image.svg",
-      "thumbnailImageSrc": "assets/images/shuttle-thumbnail-1.svg"
+      "previewImageSrc": "assets/images/shuttle-discovery/images/2.svg",
+      "thumbnailImageSrc": "assets/images/shuttle-discovery/thumbnails/2.svg"
     },
     {
       "previewImageSrc": "assets/images/shuttle-image.svg",

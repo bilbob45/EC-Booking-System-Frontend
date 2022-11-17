@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { SelectItem } from 'primeng/api';
 import { SelectItemGroup } from 'primeng/api';
@@ -23,9 +24,21 @@ export class HomeComponent {
 
   // }
   images: any[];
-
-  slide: string = '../../assets/images/shuttle-slide.svg';
-  slides: string[] = ["../../assets/images/kilimanjaro-slide.svg","../../assets/images/breakroom-slide.svg",'../../assets/images/shuttle-slide.svg'];
+  title: string = 'The Breakroom';
+  titles: string[] = ['Kilimanjaro', 'The Coliseum', 'Shuttle Discovery'];
+  description: string =
+    'Lorem ipsum dolor sit amet, conseelers sas adipiscin elit. Donec dolor sit amet, apaisd';
+  descriptions: string[] = [
+    'Lorem ipsum dolor sit amet, conseelers sas adipiscing elit. Donec dolor sit amet, apaisd',
+    'Lorem ipsum dolor sit amet, conseelers sas adipiscing elit. Donec dolor sit amet, apaisd',
+    'Lorem ipsum dolor sit amet, conseelers sas adipiscing elit. Donec dolor sit amet, apaisd',
+  ];
+  slide: string = '../../assets/images/breakroom-slide.svg';
+  slides: string[] = [
+    '../../assets/images/kilimanjaro-slide.svg',
+    '../../assets/images/coliseum-slide.svg',
+    '../../assets/images/shuttle-slide.svg',
+  ];
 
   venues: Venue[];
 
@@ -46,8 +59,9 @@ export class HomeComponent {
   items: SelectItem[];
 
   item: string;
+  eventDate: Date;
 
-  constructor() {
+  constructor(private _router: Router) {
     this.items = [];
     for (let i = 0; i < 10000; i++) {
       this.items.push({ label: 'Item ' + i, value: 'Item ' + i });
@@ -125,5 +139,17 @@ export class HomeComponent {
 
   changeImage(e: number) {
     this.slide = this.slides[e];
+    this.description = this.descriptions[e];
+    this.title = this.titles[e];
+  }
+
+  goToRoom() {
+    switch (this.selectedVenue.name) {
+      case 'The Coliseum':
+        this._router.navigate(['/shuttle-discovery/'], {
+          queryParams: { date: this.date10.toISOString() },
+        });
+        break;
+    }
   }
 }

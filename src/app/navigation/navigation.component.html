@@ -64,7 +64,7 @@
               <button ngbDropdownItem>
                 <a
                   class="nav-items"
-                  [routerLink]="['/history']"
+                  [routerLink]="['/booking-history']"
                   routerLinkActive="active"
                   (click)="$event.preventDefault()"
                 >
@@ -118,7 +118,84 @@
         </ul>
         <div class="d-flex nav-items">
           <div class="assets">
-            <img src="../../assets/icons/notification.svg" alt="notification" />
+            <img
+              src="../../assets/icons/notification.svg"
+              alt="notification"
+              (click)="showDialog()"
+            />
+            <div>
+              <p-dialog
+                [(visible)]="display"
+                [draggable]="false"
+                [style]="{ width: '30vw' }"
+                header="Notification"
+              >
+                <div>
+                  <div class="date-container">
+                    <span>Today</span>
+                  </div>
+                  <div class="notification-template">
+                    <div class="notification-time">
+                      <img src="../../assets/icons/file.svg" width="25px" />
+                      <span>5:00pm</span>
+                    </div>
+                    <div class="notification-content">
+                      <span><b>New Request:</b>EC/22/0001</span>
+                      <p>
+                        You have received a new request for
+                        <strong>The Coliseum.</strong> Click to view more
+                        information. .
+                      </p>
+                    </div>
+                  </div>
+                  <div class="notification-template">
+                    <div class="notification-time">
+                      <img src="../../assets/icons/file.svg" width="25px" />
+                      <span>5:00pm</span>
+                    </div>
+                    <div class="notification-content">
+                      <span><b>New Request:</b>EC/22/0001</span>
+                      <p>
+                        You have received a new request for
+                        <strong>The Coliseum.</strong> Click to view more
+                        information. .
+                      </p>
+                    </div>
+                  </div>
+                  <div class="date-container">
+                    <span>Older</span>
+                  </div>
+                  <div class="notification-template">
+                    <div class="notification-time">
+                      <img src="../../assets/icons/file.svg" width="25px" />
+                      <span>5:00pm</span>
+                    </div>
+                    <div class="notification-content">
+                      <span><b>New Request:</b>EC/22/0001</span>
+                      <p>
+                        You have received a new request for
+                        <strong>The Coliseum.</strong> Click to view more
+                        information. .
+                      </p>
+                    </div>
+                  </div>
+                  <div class="notification-template">
+                    <div class="notification-time">
+                      <img src="../../assets/icons/file.svg" width="25px" />
+                      <span>5:00pm</span>
+                    </div>
+                    <div class="notification-content">
+                      <span><b>New Request:</b>EC/22/0001</span>
+                      <p>
+                        You have received a new request for
+                        <strong>The Coliseum.</strong> Click to view more
+                        information. .
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </p-dialog>
+            </div>
           </div>
           <div class="assets">
             <img src="../../assets/icons/settings.svg" alt="" />

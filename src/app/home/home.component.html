@@ -16,10 +16,6 @@
       <div class="search-wrapper">
         <div class="search-container">
           <div>
-            <!-- <p>Rooms</p>
-          <select class="form-select" aria-label="Default select example">
-            <option *ngFor="let n of venues">{{ n }}</option>
-          </select> -->
             <div class="d-flex search-title">
               <h3>Rooms</h3>
               <img
@@ -48,10 +44,14 @@
               inputId="basic"
               placeholder="When does it start?"
               [(ngModel)]="date10"
+              [disabledDates]="invalidDates"
+              [disabledDays]="[0, 6]"
+              [readonlyInput]="true"
             ></p-calendar>
           </div>
         </div>
         <button
+          (click)="goToRoom()"
           class="search-button"
           pButton
           pRipple
@@ -87,7 +87,13 @@
               />
             </div>
             <div>
-              <img [src]="[slide]" />
+              <img [src]="[slide]" class="exhibition-eclipse-content-image" />
+              <div>
+                <h3 class="exhibition-eclipse-title">{{ title }}</h3>
+                <p class="exhibition-eclipse-description">
+                  {{ description }}
+                </p>
+              </div>
             </div>
 
             <!-- <div

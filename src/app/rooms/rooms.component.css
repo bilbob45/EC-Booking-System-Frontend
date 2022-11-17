@@ -1,6 +1,9 @@
 .rooms-container {
   padding: 40px 40px 0 40px;
 }
+.rooms-section {
+  padding-bottom: 40px;
+}
 .date-container {
   text-align: right;
 }
@@ -13,7 +16,7 @@ a {
   background-size: cover;
   background-repeat: no-repeat;
   padding: 0;
-  width: 460px;
+  width: 621px;
   height: 718px;
   border-radius: 12px;
   margin-left: 50px;
@@ -36,7 +39,7 @@ a {
   color: #fff;
   padding: 20px;
   position: relative;
-  top: 77.5%;
+  top: 80%;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
   opacity: 0;
@@ -45,12 +48,15 @@ a {
 .shuttle-content:hover {
   opacity: 1;
 }
+.shuttle-content h3 {
+  font-weight: 500;
+}
 .coliseum {
   background: url("../../assets/images/coliseum.svg");
 
   background-size: cover;
   background-repeat: no-repeat;
-  width: 309px;
+  width: 237px;
   height: 349px;
   margin: 20px 0;
   padding: 0;
@@ -62,7 +68,7 @@ a {
   color: #fff;
   padding: 20px;
   position: relative;
-  top: 56%;
+  top: 53%;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
   opacity: 0;
@@ -70,14 +76,17 @@ a {
 .coliseum-content:hover {
   opacity: 1;
 }
+.coliseum-content h3 {
+  font-weight: 500;
+}
 
 .kilimanjaro {
   background: url("../../assets/images/kilimanjaro.svg");
   background-size: cover;
   background-repeat: no-repeat;
-  width: 309px;
+  width: 237px;
   height: 349px;
-  margin: 20px 0;
+  margin-top: 5px;
   padding: 0;
   border-radius: 12px;
 }
@@ -87,7 +96,7 @@ a {
   color: #fff;
   padding: 20px;
   position: relative;
-  top: 56%;
+  top: 53%;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
   opacity: 0;
@@ -95,14 +104,16 @@ a {
 .kilimanjaro-content:hover {
   opacity: 1;
 }
-
+.kilimanjaro-content h3 {
+  font-weight: 500;
+}
 .rooms-features {
   display: flex;
 }
 .second-rooms-section {
   display: flex;
   flex-direction: column;
-  margin-left: 40px;
+  margin-left: 35px;
 }
 
 .VR-room {
@@ -110,10 +121,10 @@ a {
   /* background-position: center; */
   background-size: cover;
   background-repeat: no-repeat;
-  width: 347px;
+  /* width: 290px; */
   height: 718px;
   border-radius: 12px;
-  margin-left: 40px;
+  margin-right: 40px;
   margin-top: 20px;
 }
 .VR-room-overlay {

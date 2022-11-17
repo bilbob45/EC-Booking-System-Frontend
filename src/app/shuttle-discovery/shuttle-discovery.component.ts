@@ -1,6 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { PhotoService } from '../services/photoservice';
 import { SelectItem } from 'primeng/api';
+import { ActivatedRoute, Router } from '@angular/router';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { ShuttleDiscoveryService } from './shuttle-discovery.service';
+import { MessageService } from 'primeng/api';
+import { Booking } from './ShuttleDiscovery';
+import { DatePipe } from '@angular/common';
+
 interface Venue {
   name: string;
 }
@@ -11,25 +24,41 @@ interface TimeSlot {
   selector: 'app-shuttle-discovery',
   templateUrl: './shuttle-discovery.component.html',
   styleUrls: ['./shuttle-discovery.component.css'],
-  providers: [PhotoService],
+  providers: [DatePipe, MessageService],
 })
 export class ShuttleDiscoveryComponent implements OnInit {
+  selectedRoom: number = 2;
+  public successMsg: string;
+  public errorMsg: string;
+  public _id: string;
+  public meetingType: string;
+  public clientCompanyName: string;
+  public engagementLeader: string;
+  public eventDate: Date;
+  public time: string;
+  public numberOfGuests: number;
+  public internalContactPerson: string;
+  public contactNumber: string;
+  public notes: string;
+  public feedingRequirement: string;
   images: any[];
-  val:string;
+  val: string;
   value1: any;
   venues: Venue[];
-  timeSlots: TimeSlot[];
+  timeSlots: TimeSlot[] = [];
+  bookingForm: FormGroup;
   items: SelectItem[];
   selectedVenue: Venue;
   item: string;
   value2: any;
   value8: any;
-  date5: Date;
+
   dates: Date[];
   rangeDates: Date[];
   minDate: Date;
   maxDate: Date;
   es: any;
+  queryDate: Date;
   invalidDates: Array<Date>;
   checked1: boolean = false;
   checked2: boolean = true;
@@ -48,29 +77,71 @@ export class ShuttleDiscoveryComponent implements OnInit {
     },
   ];
 
-  constructor(private photoService: PhotoService) {
+  constructor(
+    private photoService: PhotoService,
+    private fb: FormBuilder,
+    private datePipe: DatePipe,
+    private messageService: MessageService,
+    private _router: Router,
+    private activatedRouter: ActivatedRoute,
+    private shuttleDiscoveryService: ShuttleDiscoveryService
+  ) {
     this.items = [];
     for (let i = 0; i < 10000; i++) {
       this.items.push({ label: 'Item ' + i, value: 'Item ' + i });
     }
 
+    // this.activatedRouter.queryParams.subscribe(
+    //   data=>this.queryParams.eventDate = data.eventDate
+    // )
     this.venues = [
-      { name: 'The Coliseum' },
-      { name: 'Kilimanjaro' },
-      { name: 'Shuttle Discovery' },
+      { name: 'Client Meeting' },
+      { name: 'BU Meeting' },
+      { name: 'Partner Meeting' },
+      { name: 'Training' },
+      { name: 'Other Events' },
     ];
     this.timeSlots = [
       { time: 'Morning (9:00am - 12:00noon)' },
-      { time: 'Afternon (1:00pm - 4:00pm)' },
+      { time: 'Afternoon (1:00pm - 4:00pm)' },
       { time: 'Full Day (9:00am - 4:00pm)' },
     ];
+    this.bookingForm = this.fb.group({
+      meetingType: ['', Validators.required],
+      clientCompanyName: ['', Validators.required],
+      engagementLeader: ['', Validators.required],
+
+      numberOfGuests: [0, Validators.required],
+      internalContactPerson: ['', Validators.required],
+      contactNumber: ['', Validators.required],
+      notes: ['', Validators.required],
+      feedingRequirement: ['', Validators.required],
+      bookedDates: this.fb.array([]),
+    });
   }
 
   ngOnInit(): void {
     this.photoService.getImages().then((images) => {
       this.images = images;
+      this.getBookedDates(2);
     });
+    const filter = this.activatedRouter.snapshot.queryParamMap.get('date');
+    console.log(filter, 'filter');
+    let homeDate = filter;
+    this.activatedRouter.queryParams.subscribe((filter) => {
+      homeDate = this.datePipe.transform(homeDate, 'dd/MM/yyyy');
+      console.log(homeDate, 'homeDate');
+    });
+    //   this.activatedRouter.queryParams
+    //   .filter(params => params.order)
+    //   .subscribe(params => {
+    //     console.log(params); // { order: "popular" }
 
+    //     this.eventDate = params.order;
+
+    //     console.log(this.eventDate); // popular
+    //   }
+    // );
     let today = new Date();
     let month = today.getMonth();
     let year = today.getFullYear();
@@ -85,8 +156,103 @@ export class ShuttleDiscoveryComponent implements OnInit {
     this.maxDate.setMonth(nextMonth);
     this.maxDate.setFullYear(nextYear);
 
-    let invalidDate = new Date();
-    invalidDate.setDate(today.getDate() - 1);
-    this.invalidDates = [today, invalidDate];
+    // let invalidDate = new Date();
+    // invalidDate.setDate(today.getDate() - 1);
+    // this.invalidDates = [today, invalidDate];
+  }
+  showSuccess() {
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: 'Booking has been created',
+      sticky: true,
+    });
+  }
+  showError() {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'Booking has not been created',
+    });
+  }
+  newDateModel(): FormGroup {
+    return this.fb.group({
+      eventDate: Date,
+      time: '',
+
+      // eventDate: ['', Validators.required],
+      // time: ['', Validators.required],
+    });
+  }
+  DateModels(): FormArray {
+    return this.bookingForm.get('bookedDates') as FormArray;
+  }
+
+  addDate() {
+    this.DateModels().push(this.newDateModel());
+    console.log(this.DateModels(), 'controls');
+  }
+
+  removeDate(i: number) {
+    this.DateModels().removeAt(i);
+  }
+
+  // save(): void {
+
+  // }
+  getBookedDates(id: number) {
+    this.shuttleDiscoveryService.getBookings(id).subscribe((response) => {
+      this.invalidDates = [];
+      response.data.forEach((x) =>
+        this.invalidDates.push(...x.bookedDates.map((x) => x.eventDate))
+      );
+      console.log(this.invalidDates, 'invalid dates');
+    });
+  }
+  submitted = false;
+
+  onSubmit(selectedRoom: number) {
+    this.submitted = true;
+  }
+
+  createBooking(spaceId: number) {
+    this.successMsg = '';
+    this.errorMsg = '';
+    this.submitted = true;
+    const t = this.bookingForm.value;
+    for (let i = 0; i < t.bookedDates.length; i++) {
+      let originalDate = t.bookedDates[i].eventDate;
+      t.bookedDates[i].eventDate = this.datePipe.transform(
+        originalDate,
+        'dd/MM/yyyy'
+      );
+    }
+    console.log(t.bookedDates, 'date');
+
+    //let phoneNumber=this.contactNumber.toString()
+    this.shuttleDiscoveryService.createBooking(t, spaceId).subscribe(
+      (res) => {
+        this.showSuccess();
+        console.log(this.showSuccess, 'response');
+        this._router.navigate(['/awaiting-approval']);
+        this.reset();
+      },
+      (error: ErrorEvent) => {
+        this.errorMsg = error.message;
+        this.showError();
+      }
+    );
+  }
+  reset() {
+    this.meetingType = '';
+    this.clientCompanyName = '';
+    this.internalContactPerson = '';
+    this.numberOfGuests = 0;
+    this.engagementLeader = '';
+    this.eventDate = new Date();
+    this.time = '';
+    this.contactNumber = '';
+    this.notes = '';
+    this.feedingRequirement = '';
   }
 }

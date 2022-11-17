@@ -1,0 +1,52 @@
+.booking-history-container {
+  background: #f3f3f3;
+  padding: 25px 60px;
+}
+.history-title {
+  padding-bottom: 25px;
+  display: flex;
+}
+.history-title a img {
+  margin-right: 15px;
+}
+.history-title span {
+  font-size: 32px;
+  color: #111111;
+}
+.cancelled-empty-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px;
+}
+table {
+  border-collapse: separate;
+  border-spacing: 20px 0;
+}
+th,
+td {
+  width: 150px;
+  padding: 5px;
+}
+::ng-deep .p-tabview .p-tabview-nav {
+  border: 1px solid transparent !important;
+  border-width: 0 0 2px 0;
+}
+::ng-deep .p-badge {
+  background: #d04a02;
+  margin-left: 10px;
+}
+::ng-deep .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  border-color: #d04a02;
+  color: #d04a02;
+  background: transparent;
+}
+::ng-deep .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  padding: 8px 16px;
+}
+::ng-deep .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  background: transparent;
+}
+::ng-deep .p-tabview .p-tabview-nav {
+  background: transparent;
+}
