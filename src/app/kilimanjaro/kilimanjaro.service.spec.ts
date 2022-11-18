@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ShuttleDiscoveryService } from './shuttle-discovery.service';
+import { ShuttleDiscoveryService } from './kilimanjaro.service';
 
 describe('ShuttleDiscoveryService', () => {
   let service: ShuttleDiscoveryService;

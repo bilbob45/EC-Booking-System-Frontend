@@ -7,8 +7,16 @@
         width="18"
         height="18"
     /></a>
-    <span class="shuttle-title">Shuttle Discovery</span>
-    <img src="../../assets/icons/chevron-down.svg" width="18" height="18" />
+
+    <p-dropdown
+      inputId="dropdown"
+      class="p-inputtext-sm"
+      id="header-dropdown"
+      [options]="venues"
+      [(ngModel)]="selectedVenue"
+      (onClick)="goToRoom()"
+      optionLabel="name"
+    ></p-dropdown>
   </div>
   <div class="shuttle-container row">
     <div class="col-md-5">
@@ -33,11 +41,11 @@
       </div>
 
       <div class="shuttle-description-container">
-        <h3 class="shuttle-description-title">Shuttle Discovery</h3>
+        <h3 class="shuttle-description-title">The Coliseum</h3>
         <p class="shuttle-description-copy">
-          Lorem ipsum dolor sit amet, consectetur ading elit. Opsum dolor sit
-          amet bubsu ... Lorem ipsum dolor sit amet, consectetur ading elit.
-          Opsum dolor sit amet bubsu ...
+          Have a team bonding event, client retreat or bu meetings in the PwC
+          Experience Center Coliseum. A space created to spark creativity,
+          knowledge, and instill the importance of community.
         </p>
       </div>
     </div>
@@ -61,7 +69,7 @@
                   inputId="dropdown"
                   class="p-inputtext-sm"
                   [autoDisplayFirst]="false"
-                  [options]="venues"
+                  [options]="meetingTypes"
                   optionValue="name"
                   formControlName="meetingType"
                   name="meetingType"

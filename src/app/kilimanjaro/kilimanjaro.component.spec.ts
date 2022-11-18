@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TheColiseumComponent } from './the-coliseum.component';
+import { KilimanjaroComponent } from './kilimanjaro.component';
 
-describe('TheColiseumComponent', () => {
-  let component: TheColiseumComponent;
-  let fixture: ComponentFixture<TheColiseumComponent>;
+describe('KilimanjaroComponent', () => {
+  let component: KilimanjaroComponent;
+  let fixture: ComponentFixture<KilimanjaroComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TheColiseumComponent ]
+      declarations: [ KilimanjaroComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TheColiseumComponent);
+    fixture = TestBed.createComponent(KilimanjaroComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -9,12 +9,15 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ShuttleDiscoveryService } from './shuttle-discovery.service';
+import { BookingsService } from '../services/bookingsservice';
 import { MessageService } from 'primeng/api';
-import { Booking } from './ShuttleDiscovery';
+import { Booking } from '../services/BookingService';
 import { DatePipe } from '@angular/common';
 
 interface Venue {
+  name: string;
+}
+interface MeetingType {
   name: string;
 }
 interface TimeSlot {
@@ -27,7 +30,7 @@ interface TimeSlot {
   providers: [DatePipe, MessageService],
 })
 export class ShuttleDiscoveryComponent implements OnInit {
-  selectedRoom: number = 2;
+  selectedRoom: number = 1;
   public successMsg: string;
   public errorMsg: string;
   public _id: string;
@@ -44,6 +47,7 @@ export class ShuttleDiscoveryComponent implements OnInit {
   images: any[];
   val: string;
   value1: any;
+  meetingTypes: MeetingType[];
   venues: Venue[];
   timeSlots: TimeSlot[] = [];
   bookingForm: FormGroup;
@@ -84,7 +88,7 @@ export class ShuttleDiscoveryComponent implements OnInit {
     private messageService: MessageService,
     private _router: Router,
     private activatedRouter: ActivatedRoute,
-    private shuttleDiscoveryService: ShuttleDiscoveryService
+    private bookingsService: BookingsService
   ) {
     this.items = [];
     for (let i = 0; i < 10000; i++) {
@@ -94,12 +98,17 @@ export class ShuttleDiscoveryComponent implements OnInit {
     // this.activatedRouter.queryParams.subscribe(
     //   data=>this.queryParams.eventDate = data.eventDate
     // )
-    this.venues = [
+    this.meetingTypes = [
       { name: 'Client Meeting' },
       { name: 'BU Meeting' },
       { name: 'Partner Meeting' },
       { name: 'Training' },
       { name: 'Other Events' },
+    ];
+    this.venues = [
+      { name: 'Shuttle Discovery' },
+      { name: 'The Coliseum' },
+      { name: 'Kilimanjaro' },
     ];
     this.timeSlots = [
       { time: 'Morning (9:00am - 12:00noon)' },
@@ -123,7 +132,7 @@ export class ShuttleDiscoveryComponent implements OnInit {
   ngOnInit(): void {
     this.photoService.getImages().then((images) => {
       this.images = images;
-      this.getBookedDates(2);
+      // this.getBookedDates(1);
     });
     const filter = this.activatedRouter.snapshot.queryParamMap.get('date');
     console.log(filter, 'filter');
@@ -200,15 +209,15 @@ export class ShuttleDiscoveryComponent implements OnInit {
   // save(): void {
 
   // }
-  getBookedDates(id: number) {
-    this.shuttleDiscoveryService.getBookings(id).subscribe((response) => {
-      this.invalidDates = [];
-      response.data.forEach((x) =>
-        this.invalidDates.push(...x.bookedDates.map((x) => x.eventDate))
-      );
-      console.log(this.invalidDates, 'invalid dates');
-    });
-  }
+  // getBookedDates(id: number) {
+  //   this.shuttleDiscoveryService.getBookings(id).subscribe((response) => {
+  //     this.invalidDates = [];
+  //     response.data.forEach((x) =>
+  //       this.invalidDates.push(...x.bookedDates.map((x) => x.eventDate))
+  //     );
+  //     console.log(this.invalidDates, 'invalid dates');
+  //   });
+  // }
   submitted = false;
 
   onSubmit(selectedRoom: number) {
@@ -230,11 +239,12 @@ export class ShuttleDiscoveryComponent implements OnInit {
     console.log(t.bookedDates, 'date');
 
     //let phoneNumber=this.contactNumber.toString()
-    this.shuttleDiscoveryService.createBooking(t, spaceId).subscribe(
+    this.bookingsService.createBooking(t, spaceId).subscribe(
       (res) => {
         this.showSuccess();
         console.log(this.showSuccess, 'response');
-        this._router.navigate(['/awaiting-approval']);
+        this._router.navigate(['/awaiting-approval', spaceId]);
+        console.log(res, 'res');
         this.reset();
       },
       (error: ErrorEvent) => {
@@ -254,5 +264,16 @@ export class ShuttleDiscoveryComponent implements OnInit {
     this.contactNumber = '';
     this.notes = '';
     this.feedingRequirement = '';
+  }
+
+  goToRoom() {
+    switch (this.selectedVenue.name) {
+      case 'The Coliseum':
+        this._router.navigate(['/the-coliseum/'], {});
+        break;
+      case 'Shuttle Discovery':
+        this._router.navigate(['/shuttle-discovery/'], {});
+        break;
+    }
   }
 }

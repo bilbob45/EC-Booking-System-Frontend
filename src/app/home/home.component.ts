@@ -146,10 +146,15 @@ export class HomeComponent {
   goToRoom() {
     switch (this.selectedVenue.name) {
       case 'The Coliseum':
-        this._router.navigate(['/shuttle-discovery/'], {
+        this._router.navigate(['/the-coliseum/'], {
           queryParams: { date: this.date10.toISOString() },
         });
         break;
+        case 'Shuttle Discovery':
+          this._router.navigate(['/shuttle-discovery/'], {
+            queryParams: { date: this.date10.toISOString() },
+          });
+          break;
     }
   }
 }

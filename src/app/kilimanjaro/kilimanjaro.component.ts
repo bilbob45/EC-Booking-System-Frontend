@@ -9,9 +9,9 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ShuttleDiscoveryService } from './shuttle-discovery.service';
+import { BookingsService } from '../services/bookingsservice';
 import { MessageService } from 'primeng/api';
-import { Booking } from './ShuttleDiscovery';
+import { Booking } from '../services/BookingService';
 import { DatePipe } from '@angular/common';
 
 interface Venue {
@@ -21,12 +21,12 @@ interface TimeSlot {
   time: string;
 }
 @Component({
-  selector: 'app-shuttle-discovery',
-  templateUrl: './shuttle-discovery.component.html',
-  styleUrls: ['./shuttle-discovery.component.css'],
+  selector: 'app-kilimanjaro',
+  templateUrl: './kilimanjaro.component.html',
+  styleUrls: ['./kilimanjaro.component.css'],
   providers: [DatePipe, MessageService],
 })
-export class ShuttleDiscoveryComponent implements OnInit {
+export class KilimanjaroComponent implements OnInit {
   selectedRoom: number = 2;
   public successMsg: string;
   public errorMsg: string;
@@ -84,7 +84,7 @@ export class ShuttleDiscoveryComponent implements OnInit {
     private messageService: MessageService,
     private _router: Router,
     private activatedRouter: ActivatedRoute,
-    private shuttleDiscoveryService: ShuttleDiscoveryService
+    private bookingsService: BookingsService
   ) {
     this.items = [];
     for (let i = 0; i < 10000; i++) {
@@ -201,7 +201,7 @@ export class ShuttleDiscoveryComponent implements OnInit {
 
   // }
   getBookedDates(id: number) {
-    this.shuttleDiscoveryService.getBookings(id).subscribe((response) => {
+    this.bookingsService.getBookings(id).subscribe((response) => {
       this.invalidDates = [];
       response.data.forEach((x) =>
         this.invalidDates.push(...x.bookedDates.map((x) => x.eventDate))
@@ -230,7 +230,7 @@ export class ShuttleDiscoveryComponent implements OnInit {
     console.log(t.bookedDates, 'date');
 
     //let phoneNumber=this.contactNumber.toString()
-    this.shuttleDiscoveryService.createBooking(t, spaceId).subscribe(
+    this.bookingsService.createBooking(t, spaceId).subscribe(
       (res) => {
         this.showSuccess();
         console.log(this.showSuccess, 'response');

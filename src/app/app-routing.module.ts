@@ -15,12 +15,14 @@ import { DeniedComponent } from './request-pages/standard-user/denied/denied.com
 import { CompletedComponent } from './request-pages/standard-user/completed/completed.component';
 import { ApprovedComponent } from './request-pages/standard-user/approved/approved.component';
 import { ApproverAwaitingApprovalComponent } from './request-pages/approver/approver-awaiting-approval/approver-awaiting-approval.component';
+import { TheColiseumComponent } from './the-coliseum/the-coliseum.component';
+import { KilimanjaroComponent } from './kilimanjaro/kilimanjaro.component';
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
   },
-  { path: 'booking', component: BookingComponent, data:{permission:''} },
+  { path: 'booking', component: BookingComponent, data: { permission: '' } },
   { path: 'report', component: ReportComponent },
   { path: 'history', component: HistoryComponent },
   { path: 'calendar', component: CalendarComponent },
@@ -28,13 +30,17 @@ const routes: Routes = [
   { path: 'shuttle-discovery', component: ShuttleDiscoveryComponent },
   { path: 'vr-room', component: VRRoomComponent },
   { path: 'booking-history', component: BookingHistoryComponent },
-  { path: 'awaiting-approval', component: AwaitingApprovalComponent },
+  { path: 'awaiting-approval/:id', component: AwaitingApprovalComponent },
   { path: 'cancelled', component: CancelledComponent },
   { path: 'denied', component: DeniedComponent },
   { path: 'completed', component: CompletedComponent },
   { path: 'approved', component: ApprovedComponent },
-  {path: 'approver-awaiting-approval', component: ApproverAwaitingApprovalComponent },
- 
+  {
+    path: 'approver-awaiting-approval',
+    component: ApproverAwaitingApprovalComponent,
+  },
+  { path: 'the-coliseum', component: TheColiseumComponent },
+  { path: 'kilimanjaro', component: KilimanjaroComponent },
 ];
 
 @NgModule({
@@ -58,5 +64,7 @@ export const routingComponents = [
   DeniedComponent,
   CompletedComponent,
   ApprovedComponent,
-  ApproverAwaitingApprovalComponent
+  ApproverAwaitingApprovalComponent,
+  TheColiseumComponent,
+  KilimanjaroComponent,
 ];

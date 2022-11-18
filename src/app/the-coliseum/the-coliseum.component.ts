@@ -9,12 +9,15 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { TheColiseumService } from './the-coliseum.service';
+import { BookingsService } from '../services/bookingsservice';
 import { MessageService } from 'primeng/api';
-import { Booking } from './TheColiseum';
+import { Booking } from '../services/BookingService';
 import { DatePipe } from '@angular/common';
 
 interface Venue {
+  name: string;
+}
+interface MeetingType {
   name: string;
 }
 interface TimeSlot {
@@ -24,10 +27,10 @@ interface TimeSlot {
   selector: 'app-the-coliseum',
   templateUrl: './the-coliseum.component.html',
   styleUrls: ['./the-coliseum.component.css'],
-  providers: [DatePipe, MessageService],
+  providers: [DatePipe, MessageService, ColiseumService],
 })
 export class TheColiseumComponent implements OnInit {
-  selectedRoom: number = 2;
+  selectedRoom: number = 3;
   public successMsg: string;
   public errorMsg: string;
   public _id: string;
@@ -44,6 +47,7 @@ export class TheColiseumComponent implements OnInit {
   images: any[];
   val: string;
   value1: any;
+  meetingTypes: MeetingType[];
   venues: Venue[];
   timeSlots: TimeSlot[] = [];
   bookingForm: FormGroup;
@@ -84,7 +88,7 @@ export class TheColiseumComponent implements OnInit {
     private messageService: MessageService,
     private _router: Router,
     private activatedRouter: ActivatedRoute,
-    private TheColiseumService: TheColiseumService
+    private bookingsService: BookingsService
   ) {
     this.items = [];
     for (let i = 0; i < 10000; i++) {
@@ -94,12 +98,17 @@ export class TheColiseumComponent implements OnInit {
     // this.activatedRouter.queryParams.subscribe(
     //   data=>this.queryParams.eventDate = data.eventDate
     // )
-    this.venues = [
+    this.meetingTypes = [
       { name: 'Client Meeting' },
       { name: 'BU Meeting' },
       { name: 'Partner Meeting' },
       { name: 'Training' },
       { name: 'Other Events' },
+    ];
+    this.venues = [
+      { name: 'Shuttle Discovery' },
+      { name: 'The Coliseum' },
+      { name: 'Kilimanjaro' },
     ];
     this.timeSlots = [
       { time: 'Morning (9:00am - 12:00noon)' },
@@ -123,7 +132,7 @@ export class TheColiseumComponent implements OnInit {
   ngOnInit(): void {
     this.coliseumService.getImages().then((images) => {
       this.images = images;
-      this.getBookedDates(2);
+      this.getBookedDates(3);
     });
     const filter = this.activatedRouter.snapshot.queryParamMap.get('date');
     console.log(filter, 'filter');
@@ -201,7 +210,7 @@ export class TheColiseumComponent implements OnInit {
 
   // }
   getBookedDates(id: number) {
-    this.TheColiseumService.getBookings(id).subscribe((response) => {
+    this.bookingsService.getBookings(id).subscribe((response) => {
       this.invalidDates = [];
       response.data.forEach((x) =>
         this.invalidDates.push(...x.bookedDates.map((x) => x.eventDate))
@@ -220,17 +229,17 @@ export class TheColiseumComponent implements OnInit {
     this.errorMsg = '';
     this.submitted = true;
     const t = this.bookingForm.value;
-    for (let i = 0; i < t.bookedDates.length; i++) {
-      let originalDate = t.bookedDates[i].eventDate;
-      t.bookedDates[i].eventDate = this.datePipe.transform(
-        originalDate,
-        'dd/MM/yyyy'
-      );
-    }
-    console.log(t.bookedDates, 'date');
+    // for (let i = 0; i < t.bookedDates.length; i++) {
+    //   let originalDate = t.bookedDates[i].eventDate;
+    //   t.bookedDates[i].eventDate = this.datePipe.transform(
+    //     originalDate,
+    //     'dd/MM/yyyy'
+    //   );
+    // }
+    // console.log(t.bookedDates, 'date');
 
     //let phoneNumber=this.contactNumber.toString()
-    this.TheColiseumService.createBooking(t, spaceId).subscribe(
+    this.bookingsService.createBooking(t, spaceId).subscribe(
       (res) => {
         this.showSuccess();
         console.log(this.showSuccess, 'response');
@@ -254,5 +263,15 @@ export class TheColiseumComponent implements OnInit {
     this.contactNumber = '';
     this.notes = '';
     this.feedingRequirement = '';
+  }
+  goToRoom() {
+    switch (this.selectedVenue.name) {
+      case 'The Coliseum':
+        this._router.navigate(['/the-coliseum/'], {});
+        break;
+      case 'Shuttle Discovery':
+        this._router.navigate(['/shuttle-discovery/'], {});
+        break;
+    }
   }
 }

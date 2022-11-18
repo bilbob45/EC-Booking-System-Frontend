@@ -7,8 +7,15 @@
         width="18"
         height="18"
     /></a>
-    <span class="shuttle-title">Shuttle Discovery</span>
-    <img src="../../assets/icons/chevron-down.svg" width="18" height="18" />
+    <p-dropdown
+      inputId="dropdown"
+      class="p-inputtext-sm"
+      id="header-dropdown"
+      [options]="venues"
+      [(ngModel)]="selectedVenue"
+      (onClick)="goToRoom()"
+      optionLabel="name"
+    ></p-dropdown>
   </div>
   <div class="shuttle-container row">
     <div class="col-md-5">
@@ -35,9 +42,11 @@
       <div class="shuttle-description-container">
         <h3 class="shuttle-description-title">Shuttle Discovery</h3>
         <p class="shuttle-description-copy">
-          Lorem ipsum dolor sit amet, consectetur ading elit. Opsum dolor sit
-          amet bubsu ... Lorem ipsum dolor sit amet, consectetur ading elit.
-          Opsum dolor sit amet bubsu ...
+          A space ship themed Demo lab & Alternate reality room aptly named
+          Shuttle Discovery after the NASA space of the same name. It is the
+          only original Shuttle to survive her final launch and landing unlike
+          the Challenger and Columbia. This is where you will discover, test,
+          and interact with our solutions.
         </p>
       </div>
     </div>
@@ -61,7 +70,7 @@
                   inputId="dropdown"
                   class="p-inputtext-sm"
                   [autoDisplayFirst]="false"
-                  [options]="venues"
+                  [options]="meetingTypes"
                   optionValue="name"
                   formControlName="meetingType"
                   name="meetingType"

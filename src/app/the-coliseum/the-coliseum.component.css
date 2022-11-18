@@ -14,6 +14,7 @@
   padding: 0 10px 0 30px;
   font-size: 30px;
   font-weight: 500;
+  font-family: "Helvetica Neue - Medium";
 }
 .shuttle-container {
   background: #fff;
@@ -145,7 +146,28 @@
   background-color: #fedacc;
   color: #e45c2b;
 }
-
+#header-dropdown ::ng-deep .p-dropdown {
+  background-color: transparent !important;
+  border: none;
+}
+#header-dropdown ::ng-deep .pi {
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+}
+#header-dropdown ::ng-deep .p-dropdown .p-dropdown-trigger {
+  color: #111111;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 5px;
+}
+#header-dropdown ::ng-deep .p-dropdown .p-dropdown-label.p-placeholder {
+  display: none;
+}
+#header-dropdown ::ng-deep .p-inputtext {
+  font-family: "Helvetica Neue - Medium";
+  font-size: 1.9rem !important;
+  color: #111111;
+}
 ::ng-deep
   .p-galleria
   .p-galleria-thumbnail-container

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PhotoService } from '../../../services/photoservice';
-import { ShuttleDiscoveryService } from 'src/app/shuttle-discovery/shuttle-discovery.service';
-import { GetBookings } from 'src/app/shuttle-discovery/ShuttleDiscovery';
+import { BookingsService } from 'src/app/services/bookingsservice';
+import { GetBookings } from 'src/app/services/BookingService';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-awaiting-approval',
@@ -11,7 +12,7 @@ import { GetBookings } from 'src/app/shuttle-discovery/ShuttleDiscovery';
 })
 export class AwaitingApprovalComponent implements OnInit {
   images: any[];
-  bookings: GetBookings[];
+  bookings: GetBookings[] = [];
   responsiveOptions: any[] = [
     {
       breakpoint: '1024px',
@@ -27,25 +28,39 @@ export class AwaitingApprovalComponent implements OnInit {
     },
   ];
   displayModal: boolean = false;
+  bookingId: string;
 
   showModalDialog() {
     this.displayModal = true;
   }
 
   constructor(
+    private route: ActivatedRoute,
     private photoService: PhotoService,
-    private shuttleDiscoveryService: ShuttleDiscoveryService
-  ) {}
+    private bookingsService: BookingsService
+  ) {
+
+  }
 
   ngOnInit(): void {
     this.photoService.getImages().then((images) => {
       this.images = images;
-      this.getBookings(2);
+      this.getBookingsId('EC/EB/2022-11-17:13-37-23-100');
     });
   }
-  getBookings(id: number) {
-    this.shuttleDiscoveryService.getBookings(id).subscribe((response) => {
-      return (this.bookings = response.data), console.log(response, 'bookings');
+  // getBookings(id: number) {
+  //   this.bookingsService.getBookings(id).subscribe((response) => {
+  //     return (
+  //       (this.bookings = response.data), console.log(this.bookings, 'bookings')
+  //     );
+  //   });
+  // }
+
+  getBookingsId(bookingId: string) {
+    this.bookingsService.getBookingsById(bookingId).subscribe((response) => {
+      return (
+        (this.bookings = response.data), console.log(this.bookings, 'bookings')
+      );
     });
   }
 }

@@ -97,7 +97,7 @@ nav a {
   line-height: 20px;
   text-decoration: none;
 }
-::ng-deep .p-dialog-mask {
+#notification ::ng-deep .p-dialog-mask {
   justify-content: flex-end !important;
   top: 7% !important;
   left: -4% !important;
