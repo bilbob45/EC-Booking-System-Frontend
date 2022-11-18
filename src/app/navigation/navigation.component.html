@@ -1,0 +1,221 @@
+<!-- Toolbar -->
+
+<div>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid header-container">
+      <a class="navbar-brand" href="#" class="logo">
+        <img alt="EC-Booking Logo" src="../../assets/images/logo.svg" />
+      </a>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-container">
+          <li class="nav-item">
+            <a
+              [routerLink]="['']"
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
+              #home="routerLinkActive"
+            >
+              <img
+                [src]="
+                  home.isActive
+                    ? '../../assets/icons/home-active.svg'
+                    : '../../assets/icons/home.svg'
+                "
+                class="nav-icon"
+              />
+              <div>
+                <span class="nav-text">Home</span>
+                <div [ngClass]="home.isActive ? 'divider' : ''"></div>
+              </div>
+            </a>
+          </li>
+
+          <li ngbDropdown class="nav-item dropdown">
+            <a
+              ngbDropdownToggle
+              class="nav-items"
+              routerLink="#"
+              routerLinkActive="active"
+              #booking="routerLinkActive"
+              role="button"
+            >
+              <img
+                [src]="
+                  booking.isActive
+                    ? '../../assets/icons/booking-active.svg'
+                    : '../../assets/icons/booking.svg'
+                "
+                class="nav-icon"
+              />
+              <span class="nav-text">Booking</span>
+            </a>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+              <button ngbDropdownItem>
+                <a
+                  class="nav-items"
+                  [routerLink]="['/rooms']"
+                  routerLinkActive="active"
+                  (click)="$event.preventDefault()"
+                >
+                  <span>Rooms</span>
+                </a>
+              </button>
+              <button ngbDropdownItem>
+                <a
+                  class="nav-items"
+                  [routerLink]="['/booking-history']"
+                  routerLinkActive="active"
+                  (click)="$event.preventDefault()"
+                >
+                  <span>Booking History</span>
+                </a>
+              </button>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-items"
+              [routerLink]="['/report']"
+              routerLinkActive="active"
+              #report="routerLinkActive"
+            >
+              <img
+                [src]="
+                  report.isActive
+                    ? '../../assets/icons/report-active.svg'
+                    : '../../assets/icons/report.svg'
+                "
+                class="nav-icon"
+              />
+              <div>
+                <span class="nav-text">Report</span>
+                <div [ngClass]="report.isActive ? 'divider' : ''"></div>
+              </div>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-items"
+              [routerLink]="['/calendar']"
+              routerLinkActive="active"
+              #calendar="routerLinkActive"
+            >
+              <img
+                [src]="
+                  calendar.isActive
+                    ? '../../assets/icons/calendar-active.svg'
+                    : '../../assets/icons/calendar.svg'
+                "
+                class="nav-icon"
+              />
+              <div class="">
+                <span class="nav-text">Calendar</span>
+                <div [ngClass]="calendar.isActive ? 'divider' : ''"></div>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <div class="d-flex nav-items">
+          <div class="assets">
+            <img
+              src="../../assets/icons/notification.svg"
+              alt="notification"
+              (click)="showDialog()"
+            />
+            <div>
+              <p-dialog
+                id="notification"
+                [(visible)]="display"
+                [draggable]="false"
+                [style]="{ width: '30vw' }"
+                header="Notification"
+              >
+                <div>
+                  <div class="date-container">
+                    <span>Today</span>
+                  </div>
+                  <div class="notification-template">
+                    <div class="notification-time">
+                      <img src="../../assets/icons/file.svg" width="25px" />
+                      <span>5:00pm</span>
+                    </div>
+                    <div class="notification-content">
+                      <span><b>New Request:</b>EC/22/0001</span>
+                      <p>
+                        You have received a new request for
+                        <strong>The Coliseum.</strong> Click to view more
+                        information. .
+                      </p>
+                    </div>
+                  </div>
+                  <div class="notification-template">
+                    <div class="notification-time">
+                      <img src="../../assets/icons/file.svg" width="25px" />
+                      <span>5:00pm</span>
+                    </div>
+                    <div class="notification-content">
+                      <span><b>New Request:</b>EC/22/0001</span>
+                      <p>
+                        You have received a new request for
+                        <strong>The Coliseum.</strong> Click to view more
+                        information. .
+                      </p>
+                    </div>
+                  </div>
+                  <div class="date-container">
+                    <span>Older</span>
+                  </div>
+                  <div class="notification-template">
+                    <div class="notification-time">
+                      <img src="../../assets/icons/file.svg" width="25px" />
+                      <span>5:00pm</span>
+                    </div>
+                    <div class="notification-content">
+                      <span><b>New Request:</b>EC/22/0001</span>
+                      <p>
+                        You have received a new request for
+                        <strong>The Coliseum.</strong> Click to view more
+                        information. .
+                      </p>
+                    </div>
+                  </div>
+                  <div class="notification-template">
+                    <div class="notification-time">
+                      <img src="../../assets/icons/file.svg" width="25px" />
+                      <span>5:00pm</span>
+                    </div>
+                    <div class="notification-content">
+                      <span><b>New Request:</b>EC/22/0001</span>
+                      <p>
+                        You have received a new request for
+                        <strong>The Coliseum.</strong> Click to view more
+                        information. .
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </p-dialog>
+            </div>
+          </div>
+          <div class="assets">
+            <img src="../../assets/icons/settings.svg" alt="" />
+          </div>
+          <div class="">
+            <img
+              src="../../assets/icons/avatar.svg"
+              alt=""
+              width="50"
+              height="50"
+              onmouseover="this.src = '../../assets/icons/avatar-hover.svg'"
+              onmouseout="this.src = '../../assets/icons/avatar.svg'"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>
+<div>
+  <h1></h1>
+</div>

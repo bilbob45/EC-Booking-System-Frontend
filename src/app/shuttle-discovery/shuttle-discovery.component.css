@@ -1,0 +1,278 @@
+.booking-container {
+  background: #f3f3f3;
+  padding: 60px;
+}
+.booking-section {
+  padding-bottom: 32px;
+}
+.shuttle-header {
+  display: flex;
+  align-items: center;
+  padding-bottom: 25px;
+}
+.shuttle-title {
+  padding: 0 10px 0 30px;
+  font-size: 30px;
+  font-weight: 500;
+  font-family: "Helvetica Neue - Medium";
+}
+#header-dropdown ::ng-deep .p-dropdown {
+  background-color: transparent !important;
+  border: none;
+}
+#header-dropdown ::ng-deep .pi {
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+}
+#header-dropdown ::ng-deep .p-dropdown .p-dropdown-trigger {
+  color: #111111;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 5px;
+}
+#header-dropdown ::ng-deep .p-dropdown .p-dropdown-label.p-placeholder {
+  display: none;
+}
+#header-dropdown ::ng-deep .p-inputtext {
+  font-family: "Helvetica Neue - Medium";
+  font-size: 1.9rem !important;
+  color: #111111;
+}
+
+.shuttle-container {
+  background: #fff;
+  padding: 25px;
+}
+.booking-form-container {
+  padding-left: 5px;
+}
+.booking-form {
+  padding: 30px 15px 0 20px;
+}
+.booking-form h3 {
+  font-size: 18px;
+  font-weight: 500;
+}
+.booking-form b {
+  color: #c52a1a;
+}
+.booking-notice {
+  background-color: #252525;
+  color: #fff;
+  text-align: center;
+  padding: 10px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.booking-inputtext-wrapper {
+  margin-bottom: 20px;
+}
+.booking-inputtext {
+  margin-right: 15px;
+}
+.accordion-dates-container {
+  background: #f3f3f3;
+  padding: 24px;
+}
+.w-100 {
+  width: 100%;
+}
+.w-45 {
+  width: 45%;
+}
+.w-10 {
+  width: 10%;
+}
+.w-627 {
+  width: 627px;
+}
+.ml-2 {
+  margin-left: 10px;
+}
+.add-appointment {
+  color: #415385;
+  border: none;
+  font-weight: 400;
+  font-size: 16px;
+}
+.add-appointment-container {
+  margin-top: 15px;
+  padding: 0;
+  background: #f3f3f3;
+}
+.accordion-dates {
+  justify-content: space-between;
+  align-items: center;
+
+  border-radius: 4px;
+}
+.accordion-dates-delete {
+  text-align: center;
+}
+.addDateButton {
+  border: 1px dashed #696969;
+  border-radius: 4px;
+  padding: 10px;
+  text-align: center;
+  color: #415385;
+  margin-top: 15px;
+}
+
+.additional-info-accordion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+}
+.additional-info-accordion-title {
+  font-weight: 500;
+  font-size: 16.5px;
+}
+.submit-container {
+  text-align: right;
+}
+.submit-button {
+  margin-left: 15px;
+}
+.shuttle-description-container {
+  padding-top: 30px;
+}
+.shuttle-description-title {
+  font-size: 18px;
+  font-weight: 500;
+  padding-bottom: 5px;
+}
+.shuttle-description-copy {
+  line-height: 24px;
+  letter-spacing: -0.4px;
+  color: #818181;
+  font-size: 16px;
+}
+::ng-deep .p-galleria .p-galleria-thumbnail-container {
+  background: transparent;
+}
+
+::ng-deep .p-galleria-thumbnail-item {
+  opacity: 1 !important;
+}
+
+::ng-deep .p-galleria .p-galleria-thumbnail-container {
+  padding: 1.5rem 0.25rem;
+}
+::ng-deep
+  .p-galleria
+  .p-galleria-thumbnail-container
+  .p-galleria-thumbnail-prev,
+.p-galleria .p-galleria-thumbnail-container .p-galleria-thumbnail-next,
+.p-galleria .p-galleria-thumbnail-container .p-galleria-thumbnail-next:hover {
+  background-color: #fedacc;
+  color: #e45c2b;
+}
+
+::ng-deep
+  .p-galleria
+  .p-galleria-thumbnail-container
+  .p-galleria-thumbnail-next,
+.p-galleria .p-galleria-thumbnail-container .p-galleria-thumbnail-next:hover {
+  background-color: #fedacc;
+  color: #e45c2b;
+}
+h3 {
+  font-weight: 600 !important;
+}
+::ng-deep
+  .p-galleria
+  .p-galleria-thumbnail-container
+  .p-galleria-thumbnail-next:hover {
+  background-color: #fedacc;
+  color: #e45c2b;
+}
+::ng-deep .accordion-button:not(.collapsed) {
+  color: #e45c28;
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px transparent, 0 1px 2px 0 black;
+}
+::ng-deep .p-link:focus {
+  box-shadow: none !important;
+}
+::ng-deep .accordion-flush .accordion-item .accordion-button,
+.accordion-flush .accordion-item .accordion-button.collapsed {
+  border-radius: 4px;
+  background-color: #f3f3f3;
+  font-weight: 500;
+}
+::ng-deep .accordion-body {
+  background: #f3f3f3;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  margin-top: 16px;
+}
+::ng-deep .accordion-flush .accordion-item:first-child {
+  border-top: 0;
+  border-bottom: 0;
+}
+::ng-deep .accordion-flush .accordion-item:last-child {
+  border-bottom: 0;
+  margin-top: 20px;
+}
+::ng-deep .p-button {
+  color: #ffffff;
+  background: #e45c2b;
+  border: 1px solid #e45c2b;
+  padding: 8px 23px;
+  border-radius: 4px;
+}
+::ng-deep .p-button:enabled:hover {
+  background: #e45c2b;
+  color: #ffffff;
+  border-color: #e45c2b;
+}
+::ng-deep .p-button:focus {
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #fedacc, 0 1px 2px 0 black;
+}
+::ng-deep .p-button.p-button-outlined {
+  color: #818181;
+}
+::ng-deep .p-button.p-button-outlined:enabled:hover {
+  color: #818181;
+}
+::ng-deep .p-button-label {
+  font-weight: 500;
+}
+::ng-deep
+  .p-dropdown-panel
+  .p-dropdown-items
+  .p-dropdown-item:not(.p-highlight):not(.p-disabled):hover {
+  background-color: #fedacc !important;
+  padding: 12px 8px;
+  margin: 10px;
+  border-radius: 4px;
+}
+::ng-deep .p-inputtext:enabled:focus {
+  border-color: #fedacc;
+  box-shadow: 0 0 0 0.2rem #fedacc;
+}
+::ng-deep .p-inputtext:enabled:hover {
+  border-color: #e45c2b;
+}
+::ng-deep .p-dropdown:not(.p-disabled):hover {
+  border-color: #e45c28;
+}
+::ng-deep .p-dropdown:not(.p-disabled):focus {
+  border-color: #fedacc;
+  box-shadow: 0 0 0 0.2rem #fedacc;
+}
+::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+  background: #e45c28;
+}
+::ng-deep
+  .p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover
+  .p-inputswitch-slider {
+  background: #e45c28;
+}
+::ng-deep
+  .p-inputswitch.p-inputswitch-checked:not(.p-disabled):focus
+  .p-inputswitch-slider {
+  border-color: #fedacc;
+  box-shadow: 0 0 0 0.2rem #fedacc;
+}

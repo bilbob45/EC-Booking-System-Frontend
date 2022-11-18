@@ -1,0 +1,133 @@
+/* :host {
+  /* font-family: -apple-system, Helvetica Neue;
+  font-size: 14px;
+  color: #303030;
+  font-weight: 500;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; */
+p {
+  margin: 0;
+}
+.spacer {
+  flex: 1;
+}
+.header-container {
+  padding: 0 60px;
+}
+.logo {
+  margin-right: 80px;
+}
+.nav-icon {
+  width: 16px;
+  height: 16px;
+}
+.nav-container li {
+  margin-right: 50px;
+}
+.nav-text {
+  padding-left: 10px;
+  font-weight: 500;
+}
+.date-container {
+  background: #f3f3f3;
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+.notification-template {
+  padding-top: 10px;
+  margin-top: 10px;
+  margin-bottom: 16px;
+}
+.notification-template:hover {
+  background: rgba(254, 218, 204, 0.4);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.notification-time {
+  padding-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+.notification-time span {
+  padding-left: 8px;
+  font-size: 18px;
+}
+.notification-content {
+  padding-bottom: 4px;
+}
+.notification-content b {
+  padding-right: 4px;
+}
+.notification-content p {
+  color: #818181;
+  font-size: 15px;
+  padding-top: 4px;
+}
+
+::ng-deep .dropdown-item {
+  width: 86%;
+}
+::ng-deep .dropdown-item:hover {
+  background-color: #fedacc !important;
+  padding: 12px 8px;
+  margin: 10px;
+  border-radius: 4px;
+}
+::ng-deep .dropdown-toggle::after {
+  display: none;
+}
+::ng-deep .dropdown-menu {
+  background: #ffffff;
+  border: #fff;
+  box-shadow: 0px 0px 1px rgba(70, 70, 70, 0.08),
+    0px 8px 16px rgba(70, 70, 70, 0.24);
+  border-radius: 8px;
+}
+::ng-deep .dropdown-menu.show {
+  margin-top: 8px;
+  padding: 15px 10px;
+}
+nav a {
+  display: flex;
+  align-items: center;
+  color: #303030;
+  font-size: 14px;
+  letter-spacing: -0.4px;
+  line-height: 20px;
+  text-decoration: none;
+}
+#notification ::ng-deep .p-dialog-mask {
+  justify-content: flex-end !important;
+  top: 7% !important;
+  left: -4% !important;
+}
+nav a.active {
+  color: #e45c2b;
+  /* 
+  border-bottom: 5px solid #e45c2b; */
+}
+nav a.active:hover {
+  color: #303030;
+}
+.nav-items {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.assets {
+  margin-right: 40px;
+}
+.divider {
+  border: 2px solid #e45c2b;
+  margin-left: 10px;
+  margin-top: 2px;
+  border-radius: 8px;
+  /* padding: 20px; */
+}
+/* Responsive Styles */
+@media screen and (max-width: 767px) {
+}
+
+@media screen and (max-width: 575px) {
+}
