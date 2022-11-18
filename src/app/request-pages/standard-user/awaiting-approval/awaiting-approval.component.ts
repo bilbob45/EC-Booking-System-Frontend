@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { PhotoService } from '../../../services/photoservice';
 import { BookingsService } from 'src/app/services/bookingsservice';
-import { GetBookings } from 'src/app/services/BookingService';
+import {
+  AddBookingResponse,
+  BookingStatus,
+} from 'src/app/services/BookingService';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -12,7 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AwaitingApprovalComponent implements OnInit {
   images: any[];
-  bookings: GetBookings[] = [];
+  booking: any;
   responsiveOptions: any[] = [
     {
       breakpoint: '1024px',
@@ -29,6 +32,7 @@ export class AwaitingApprovalComponent implements OnInit {
   ];
   displayModal: boolean = false;
   bookingId: string;
+  bookingStatus: string;
 
   showModalDialog() {
     this.displayModal = true;
@@ -39,13 +43,15 @@ export class AwaitingApprovalComponent implements OnInit {
     private photoService: PhotoService,
     private bookingsService: BookingsService
   ) {
-
+    this.bookingId = this.route.snapshot.params['id'];
   }
 
   ngOnInit(): void {
+    console.log(this.bookingId, 'ID');
+
     this.photoService.getImages().then((images) => {
       this.images = images;
-      this.getBookingsId('EC/EB/2022-11-17:13-37-23-100');
+      this.getBookingsId(this.bookingId);
     });
   }
   // getBookings(id: number) {
@@ -56,11 +62,33 @@ export class AwaitingApprovalComponent implements OnInit {
   //   });
   // }
 
+  // getBookingsId(bookingId: string) {
+  //   this.bookingsService.getBookingsById(bookingId).subscribe((response) => {
+  //     return (
+  //       (this.booking = response.data), console.log(this.booking, 'bookings')
+  //     );
+  //   });
+  // }
+
   getBookingsId(bookingId: string) {
-    this.bookingsService.getBookingsById(bookingId).subscribe((response) => {
-      return (
-        (this.bookings = response.data), console.log(this.bookings, 'bookings')
-      );
+    this.bookingsService.getBookingsById(bookingId).subscribe({
+      next: (res) => {
+        this.booking = res?.data;
+
+        switch (this.booking?.status) {
+          case 1:
+            this.bookingStatus = 'Awaiting Approval';
+            break;
+          case 2:
+            this.bookingStatus = 'Approved';
+            break;
+          case 3:
+            this.bookingStatus = 'Denied';
+            break;
+          default:
+            this.bookingStatus = 'Awaiting Approval';
+        }
+      },
     });
   }
 }

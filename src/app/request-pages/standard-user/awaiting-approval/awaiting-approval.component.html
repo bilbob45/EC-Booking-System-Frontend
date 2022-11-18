@@ -33,9 +33,11 @@
       <div class="shuttle-description-container">
         <h3 class="shuttle-description-title">Shuttle Discovery</h3>
         <p class="shuttle-description-copy">
-          Lorem ipsum dolor sit amet, consectetur ading elit. Opsum dolor sit
-          amet bubsu ... Lorem ipsum dolor sit amet, consectetur ading elit.
-          Opsum dolor sit amet bubsu ...
+          A space ship themed Demo lab & Alternate reality room aptly named
+          Shuttle Discovery after the NASA space of the same name. It is the
+          only original Shuttle to survive her final launch and landing unlike
+          the Challenger and Columbia. This is where you will discover, test,
+          and interact with our solutions.
         </p>
       </div>
     </div>
@@ -47,8 +49,10 @@
         <div>
           <span class="request-content-title">
             Request ID :
-            <span class="request-content-copy"></span
-          ></span>
+            <span class="request-content-copy">
+              {{ booking?.id }}
+            </span></span
+          >
         </div>
         <div>
           <button
@@ -64,19 +68,23 @@
         <div>
           <span class="request-content-title">
             Event Date(s) :
-            <span class="request-content-copy">20 Aug, 2022</span>
-            <p class="request-content-copy">20 Aug, 2022</p>
+            <span class="request-content-copy">{{
+              booking?.bookedDates[0].eventDate
+            }}</span>
+            <p class="request-content-copy">
+              {{ booking?.bookedDates[0].eventDate }}
+            </p>
           </span>
         </div>
         <div>
           <div>
             <span class="request-content-title">
               Time Slot(s) :
-              <span class="request-content-copy"
-                >Full day (9:00am - 4:00pm)</span
-              >
+              <span class="request-content-copy">{{
+                booking?.bookedDates[0].time
+              }}</span>
               <p class="request-content-copy">
-                Full day (9:00am - 4:00pm)
+                {{ booking?.bookedDates[0].time }}
               </p></span
             >
           </div>
@@ -123,15 +131,23 @@
             </li>
           </ul>
           <ul>
-            <li><span class="request-content-copy">20 Aug, 2022</span></li>
+            <li>
+              <span class="request-content-copy">{{
+                booking?.bookedDates[0].eventDate
+              }}</span>
+            </li>
             <li class="request-section-list">
               <span class="request-content-copy">10:52AM</span>
             </li>
             <li class="request-section-list">
-              <span class="request-content-copy"><em>Pending</em></span>
+              <span class="request-content-copy"
+                ><em>{{ bookingStatus }}</em></span
+              >
             </li>
             <li class="request-section-list">
-              <span class="request-content-copy"><em>Pending</em></span>
+              <span class="request-content-copy"
+                ><em>{{ bookingStatus }}</em></span
+              >
             </li>
           </ul>
         </div>
@@ -140,13 +156,17 @@
         <div>
           <span class="request-content-title">
             Meeting Type:
-            <span class="request-content-copy">Client Meeting</span></span
+            <span class="request-content-copy">{{
+              booking?.meetingType
+            }}</span></span
           >
         </div>
         <div>
           <span class="request-content-title">
             No(s) of Individuals:
-            <span class="request-content-copy">18</span></span
+            <span class="request-content-copy">
+              {{ booking?.numberOfGuests }}
+            </span></span
           >
         </div>
       </div>
@@ -154,13 +174,17 @@
         <div>
           <span class="request-content-title">
             Contact Name:
-            <span class="request-content-copy">Ajala Olasunkanmi</span></span
+            <span class="request-content-copy">
+              {{ booking?.internalContactPerson }}
+            </span></span
           >
         </div>
         <div>
           <span class="request-content-title">
             Phone Number:
-            <span class="request-content-copy">08063323914</span></span
+            <span class="request-content-copy">
+              {{ booking?.contactNumber }}
+            </span></span
           >
         </div>
       </div>
@@ -171,22 +195,12 @@
             <li></li>
           </ul>
           <ul>
-            <li><span class="request-content-title">Yes</span></li>
             <li class="request-section-list">
-              <span class="request-content-copy p-0"
-                >Snacks will be fine. It will be a <br />
-                short meeting so no food required.</span
-              >
+              <span class="request-content-copy p-0">
+                {{ booking?.feedingRequirement }}
+              </span>
             </li>
           </ul>
-          <!-- <span class="request-content-title">
-            Food :
-            <span class="request-content-copy">Yes</span>
-            <p class="request-content-copy">
-              Snacks will be fine. It will be a <br />
-              short meeting so no food required.
-            </p>
-          </span> -->
         </div>
 
         <div class="d-flex">
@@ -194,12 +208,10 @@
             <li><span class="request-content-title">Others:</span></li>
           </ul>
           <ul>
-            <li><span class="request-content-copy">Nil</span></li>
+            <li>
+              <span class="request-content-copy">{{ booking?.notes }}</span>
+            </li>
           </ul>
-          <!-- <span class="request-content-title">
-            Others :
-            <span class="request-content-copy">Nil</span>
-          </span> -->
         </div>
       </div>
 

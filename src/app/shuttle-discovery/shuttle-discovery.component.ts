@@ -243,8 +243,8 @@ export class ShuttleDiscoveryComponent implements OnInit {
       (res) => {
         this.showSuccess();
         console.log(this.showSuccess, 'response');
-        this._router.navigate(['/awaiting-approval', spaceId]);
-        console.log(res, 'res');
+        this._router.navigate(['/awaiting-approval', res.data[0].id]);
+        console.log(res.data[0].id, 'res');
         this.reset();
       },
       (error: ErrorEvent) => {
