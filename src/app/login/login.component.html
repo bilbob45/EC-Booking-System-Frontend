@@ -1,0 +1,32 @@
+<div class="container-fluid login-container">
+  <div class="login-section">
+    <form [formGroup]="loginForm" class="login-form">
+      <input
+        pInputText
+        id="email"
+        type="text"
+        formControlName="email"
+        name="email"
+        placeholder="sarah.obasi@pwc.com"
+        required
+      />
+      <input
+        class="mt-2"
+        pInputText
+        id="password"
+        type="text"
+        name="password"
+        formControlName="email"
+        placeholder="*******"
+        required
+      />
+      <button
+        type="submit"
+        label="Login"
+        class="submit-button mt-4"
+        pButton
+        [disabled]="loginForm.invalid"
+      ></button>
+    </form>
+  </div>
+</div>

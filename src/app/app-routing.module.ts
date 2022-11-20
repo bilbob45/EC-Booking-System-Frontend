@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BookingComponent } from './booking/booking.component';
-import { HistoryComponent } from './history/history.component';
 import { HomeComponent } from './home/home.component';
 import { ReportComponent } from './report/report.component';
 import { CalendarComponent } from './calendar/calendar.component';
@@ -17,14 +16,31 @@ import { ApprovedComponent } from './request-pages/standard-user/approved/approv
 import { ApproverAwaitingApprovalComponent } from './request-pages/approver/approver-awaiting-approval/approver-awaiting-approval.component';
 import { TheColiseumComponent } from './the-coliseum/the-coliseum.component';
 import { KilimanjaroComponent } from './kilimanjaro/kilimanjaro.component';
+import { LoginComponent } from './login/login.component';
+import { BaseLayoutComponent } from './base-layout/base-layout.component';
+import { SiteLayoutComponent } from './site-layout/site-layout.component';
 const routes: Routes = [
   {
     path: '',
+    component: BaseLayoutComponent,
+    children: [
+        {
+            path: 'login',
+            component: LoginComponent
+        }
+    ]
+},
+{
+  path: '',
+  component: SiteLayoutComponent,
+  children: [
+       {
+    path: 'home',
     component: HomeComponent,
   },
+  { path: 'login', component: LoginComponent },
   { path: 'booking', component: BookingComponent, data: { permission: '' } },
   { path: 'report', component: ReportComponent },
-  { path: 'history', component: HistoryComponent },
   { path: 'calendar', component: CalendarComponent },
   { path: 'rooms', component: RoomsComponent },
   { path: 'shuttle-discovery', component: ShuttleDiscoveryComponent },
@@ -41,6 +57,9 @@ const routes: Routes = [
   },
   { path: 'the-coliseum', component: TheColiseumComponent },
   { path: 'kilimanjaro', component: KilimanjaroComponent },
+   ]
+  }
+ 
 ];
 
 @NgModule({
@@ -52,7 +71,6 @@ export const routingComponents = [
   HomeComponent,
   ReportComponent,
   BookingComponent,
-  HistoryComponent,
   CalendarComponent,
   ReportComponent,
   RoomsComponent,
@@ -67,4 +85,5 @@ export const routingComponents = [
   ApproverAwaitingApprovalComponent,
   TheColiseumComponent,
   KilimanjaroComponent,
+  LoginComponent
 ];

@@ -24,9 +24,12 @@ import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 
 import { PhotoService } from './services/photoservice';
+import { LoginComponent } from './login/login.component';
+import { BaseLayoutComponent } from './base-layout/base-layout.component';
+import { SiteLayoutComponent } from './site-layout/site-layout.component';
 
 @NgModule({
-  declarations: [AppComponent, NavigationComponent, routingComponents],
+  declarations: [AppComponent, NavigationComponent, routingComponents, LoginComponent, BaseLayoutComponent, SiteLayoutComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
