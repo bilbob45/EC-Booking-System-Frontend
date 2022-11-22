@@ -123,7 +123,7 @@ export class KilimanjaroComponent implements OnInit {
   ngOnInit(): void {
     this.photoService.getImages().then((images) => {
       this.images = images;
-      this.getBookedDates(2);
+      // this.getBookedDates(2);
     });
     const filter = this.activatedRouter.snapshot.queryParamMap.get('date');
     console.log(filter, 'filter');
@@ -200,15 +200,15 @@ export class KilimanjaroComponent implements OnInit {
   // save(): void {
 
   // }
-  getBookedDates(id: number) {
-    this.bookingsService.getBookings(id).subscribe((response) => {
-      this.invalidDates = [];
-      response.data.forEach((x) =>
-        this.invalidDates.push(...x.bookedDates.map((x) => x.eventDate))
-      );
-      console.log(this.invalidDates, 'invalid dates');
-    });
-  }
+  // getBookedDates(id: number) {
+  //   this.bookingsService.getBookings(id).subscribe((response) => {
+  //     this.invalidDates = [];
+  //     response.data.forEach((x) =>
+  //       this.invalidDates.push(...x.bookedDates.map((x) => x.eventDate))
+  //     );
+  //     console.log(this.invalidDates, 'invalid dates');
+  //   });
+  // }
   submitted = false;
 
   onSubmit(selectedRoom: number) {

@@ -27,7 +27,6 @@ export class ApproverAwaitingApprovalComponent implements OnInit {
   ];
   displayModalApprove: boolean = false;
   displayModalDecline: boolean = false;
-  bookingsService: any;
 
   showModalDialog() {
     this.displayModalApprove = true;
@@ -37,19 +36,19 @@ export class ApproverAwaitingApprovalComponent implements OnInit {
   }
   constructor(
     private photoService: PhotoService,
-    bookingsService: BookingsService
+    private bookingsService: BookingsService
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.photoService.getImages().then((images) => {
       this.images = images;
-      this.approveBooking('EC/EB/2022-11-17:13-37-23-100');
     });
+    
   }
 
   approveBooking(bookingId: string) {
     this.bookingsService
-      .approveBookings(bookingId)
+      .approveBooking(bookingId)
       .subscribe((response: Booking) => {
         return console.log(response, 'approve');
       });

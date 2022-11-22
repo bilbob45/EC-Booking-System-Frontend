@@ -75,7 +75,7 @@
           </li>
           <li class="nav-item">
             <a
-              class="nav-items"
+              class="nav-items disabled"
               [routerLink]="['/report']"
               routerLinkActive="active"
               #report="routerLinkActive"
@@ -201,7 +201,30 @@
           <div class="assets">
             <img src="../../assets/icons/settings.svg" alt="" />
           </div>
-          <div class="">
+          <div ngbDropdown class="nav-item dropdown">
+            <a ngbDropdownToggle class="nav-items" role="button">
+              <img
+                src="../../assets/icons/avatar.svg"
+                alt=""
+                width="50"
+                height="50"
+                onmouseover="this.src = '../../assets/icons/avatar-hover.svg'"
+                onmouseout="this.src = '../../assets/icons/avatar.svg'"
+              />
+            </a>
+            <div
+              ngbDropdownMenu
+              aria-labelledby="dropdownBasic1"
+              class="dropdown-menu dropdown-menu-end"
+            >
+              <button ngbDropdownItem>
+                <a class="nav-items">
+                  <span>Abiola Babatunde</span>
+                </a>
+              </button>
+            </div>
+          </div>
+          <!-- <div class="">
             <img
               src="../../assets/icons/avatar.svg"
               alt=""
@@ -210,7 +233,7 @@
               onmouseover="this.src = '../../assets/icons/avatar-hover.svg'"
               onmouseout="this.src = '../../assets/icons/avatar.svg'"
             />
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

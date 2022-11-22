@@ -2,9 +2,15 @@
   background: #f3f3f3;
   padding: 25px 60px;
 }
+.history-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .history-title {
   padding-bottom: 25px;
   display: flex;
+  align-items: center;
 }
 .history-title a img {
   margin-right: 15px;
@@ -23,10 +29,26 @@ table {
   border-collapse: separate;
   border-spacing: 20px 0;
 }
-th,
+th {
+  width: 150px;
+  padding: 5px;
+  font-family: "Helvetica Neue";
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.4px;
+  color: #111111;
+}
+
 td {
   width: 150px;
   padding: 5px;
+  font-family: "Helvetica Neue";
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.4px;
+  color: #5e5e5e;
 }
 ::ng-deep .p-tabview .p-tabview-nav {
   border: 1px solid transparent !important;
@@ -43,10 +65,20 @@ td {
 }
 ::ng-deep .p-tabview .p-tabview-nav li .p-tabview-nav-link {
   padding: 8px 16px;
-}
-::ng-deep .p-tabview .p-tabview-nav li .p-tabview-nav-link {
   background: transparent;
+  font-family: "Helvetica Neue";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  letter-spacing: -0.4px;
 }
+
 ::ng-deep .p-tabview .p-tabview-nav {
   background: transparent;
+}
+
+.badgeBg{
+  background-color: #5e5e5e;
 }

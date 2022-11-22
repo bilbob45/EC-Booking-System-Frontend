@@ -64,7 +64,14 @@ p {
   font-size: 15px;
   padding-top: 4px;
 }
-
+a.disabled {
+  color: #cecece !important;
+  cursor: not-allowed;
+  text-decoration: none;
+}
+/* #profile ::ng-deep .dropdown-menu[data-bs-popper] {
+  left: -95px !important;
+} */
 ::ng-deep .dropdown-item {
   width: 86%;
 }

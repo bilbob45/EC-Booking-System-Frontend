@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BookingComponent } from './booking/booking.component';
 import { HomeComponent } from './home/home.component';
 import { ReportComponent } from './report/report.component';
 import { CalendarComponent } from './calendar/calendar.component';
@@ -19,47 +18,54 @@ import { KilimanjaroComponent } from './kilimanjaro/kilimanjaro.component';
 import { LoginComponent } from './login/login.component';
 import { BaseLayoutComponent } from './base-layout/base-layout.component';
 import { SiteLayoutComponent } from './site-layout/site-layout.component';
+import { BookingComponent } from './booking/booking.component';
+import { BookingDetailComponent } from './booking/booking-detail/booking-detail.component';
 const routes: Routes = [
+  {
+    path: '',
+    component: SiteLayoutComponent,
+    children: [
+      {
+        path: '',
+        component: HomeComponent,
+      },
+      { path: 'login', component: LoginComponent },
+      { path: 'report', component: ReportComponent },
+      { path: 'calendar', component: CalendarComponent },
+      { path: 'rooms', component: RoomsComponent },
+      { path: 'shuttle-discovery', component: ShuttleDiscoveryComponent },
+      { path: 'vr-room', component: VRRoomComponent },
+      { path: 'booking-history', component: BookingHistoryComponent },
+      { path: 'awaiting-approval/:id', component: AwaitingApprovalComponent },
+      { path: 'cancelled', component: CancelledComponent },
+      { path: 'denied', component: DeniedComponent },
+      { path: 'completed', component: CompletedComponent },
+      { path: 'approved', component: ApprovedComponent },
+      { path: 'booking', component: BookingComponent },
+      {
+        path: 'approver-awaiting-approval',
+        component: ApproverAwaitingApprovalComponent,
+      },
+      { path: 'the-coliseum', component: TheColiseumComponent },
+      { path: 'kilimanjaro', component: KilimanjaroComponent },
+      { path: 'booking-detail', component: BookingDetailComponent },
+    ],
+  },
+  {
+    path: 'bookings',
+    loadChildren: () =>
+      import('./booking/booking.module').then((m) => m.BookingModule),
+  },
   {
     path: '',
     component: BaseLayoutComponent,
     children: [
-        {
-            path: 'login',
-            component: LoginComponent
-        }
-    ]
-},
-{
-  path: '',
-  component: SiteLayoutComponent,
-  children: [
-       {
-    path: 'home',
-    component: HomeComponent,
+      {
+        path: 'login',
+        component: LoginComponent,
+      },
+    ],
   },
-  { path: 'login', component: LoginComponent },
-  { path: 'booking', component: BookingComponent, data: { permission: '' } },
-  { path: 'report', component: ReportComponent },
-  { path: 'calendar', component: CalendarComponent },
-  { path: 'rooms', component: RoomsComponent },
-  { path: 'shuttle-discovery', component: ShuttleDiscoveryComponent },
-  { path: 'vr-room', component: VRRoomComponent },
-  { path: 'booking-history', component: BookingHistoryComponent },
-  { path: 'awaiting-approval/:id', component: AwaitingApprovalComponent },
-  { path: 'cancelled', component: CancelledComponent },
-  { path: 'denied', component: DeniedComponent },
-  { path: 'completed', component: CompletedComponent },
-  { path: 'approved', component: ApprovedComponent },
-  {
-    path: 'approver-awaiting-approval',
-    component: ApproverAwaitingApprovalComponent,
-  },
-  { path: 'the-coliseum', component: TheColiseumComponent },
-  { path: 'kilimanjaro', component: KilimanjaroComponent },
-   ]
-  }
- 
 ];
 
 @NgModule({
@@ -70,7 +76,6 @@ export class AppRoutingModule {}
 export const routingComponents = [
   HomeComponent,
   ReportComponent,
-  BookingComponent,
   CalendarComponent,
   ReportComponent,
   RoomsComponent,
@@ -85,5 +90,7 @@ export const routingComponents = [
   ApproverAwaitingApprovalComponent,
   TheColiseumComponent,
   KilimanjaroComponent,
-  LoginComponent
+  LoginComponent,
+  BookingComponent,
+  BookingDetailComponent,
 ];

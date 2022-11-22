@@ -132,7 +132,7 @@ export class TheColiseumComponent implements OnInit {
   ngOnInit(): void {
     this.coliseumService.getImages().then((images) => {
       this.images = images;
-      this.getBookedDates(3);
+      // this.getBookedDates(3);
     });
     const filter = this.activatedRouter.snapshot.queryParamMap.get('date');
     console.log(filter, 'filter');
@@ -209,15 +209,15 @@ export class TheColiseumComponent implements OnInit {
   // save(): void {
 
   // }
-  getBookedDates(id: number) {
-    this.bookingsService.getBookings(id).subscribe((response) => {
-      this.invalidDates = [];
-      response.data.forEach((x) =>
-        this.invalidDates.push(...x.bookedDates.map((x) => x.eventDate))
-      );
-      console.log(this.invalidDates, 'invalid dates');
-    });
-  }
+  // getBookedDates(id: number) {
+  //   this.bookingsService.getBookings(id).subscribe((response) => {
+  //     this.invalidDates = [];
+  //     response.data.forEach((x) =>
+  //       this.invalidDates.push(...x.bookedDates.map((x) => x.eventDate))
+  //     );
+  //     console.log(this.invalidDates, 'invalid dates');
+  //   });
+  // }
   submitted = false;
 
   onSubmit(selectedRoom: number) {

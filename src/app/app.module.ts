@@ -20,16 +20,23 @@ import { TabViewModule } from 'primeng/tabview';
 import { BadgeModule } from 'primeng/badge';
 import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
-import {MessagesModule} from 'primeng/messages';
-import {MessageModule} from 'primeng/message';
-
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
+import { TableModule } from 'primeng/table';
 import { PhotoService } from './services/photoservice';
 import { LoginComponent } from './login/login.component';
 import { BaseLayoutComponent } from './base-layout/base-layout.component';
 import { SiteLayoutComponent } from './site-layout/site-layout.component';
 
 @NgModule({
-  declarations: [AppComponent, NavigationComponent, routingComponents, LoginComponent, BaseLayoutComponent, SiteLayoutComponent],
+  declarations: [
+    AppComponent,
+    NavigationComponent,
+    routingComponents,
+    LoginComponent,
+    BaseLayoutComponent,
+    SiteLayoutComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -50,8 +57,9 @@ import { SiteLayoutComponent } from './site-layout/site-layout.component';
     BadgeModule,
     ToastModule,
     ReactiveFormsModule,
-   MessageModule,
-   MessagesModule
+    MessageModule,
+    MessagesModule,
+    TableModule,
   ],
   providers: [PhotoService],
   bootstrap: [AppComponent],
