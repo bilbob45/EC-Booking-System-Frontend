@@ -1,11 +1,15 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpBackend, HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {
   AddBookingResponse,
   Booking,
+  BookingStatus,
   GetBookings,
+  Login,
+  LoginResponse,
+  ReasonForDecline,
 } from '../services/BookingService';
 
 @Injectable({
@@ -15,12 +19,17 @@ export class BookingsService {
   getState: any;
   private BASE_URL = environment.API_URL;
   private headers: HttpHeaders;
-  token: string;
-  constructor(private http: HttpClient) {
+  private http: HttpClient;
+  userData = localStorage.getItem('user');
+  user = JSON.parse(this.userData);
+  token: any;
+  constructor(httpBackend: HttpBackend) {
+    this.http = new HttpClient(httpBackend);
+    this.token = this.user.token;
     this.headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=utf-8',
       'Access-Control-Allow-Origin': '*',
-      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW5AcHdjLmNvbSIsImp0aSI6IjNlNjZjMDcyLTVjOGUtNDliNy1iNjBiLWI4MGM0MzljOWQxYiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNjY5MDg0OTM2LCJpc3MiOiJodHRwczovL2VjYm9va2luZ3N5c3RlbTEuYXp1cmV3ZWJzaXRlcy5uZXQiLCJhdWQiOiJodHRwczovL2VjYm9va2luZ3N5c3RlbTEuYXp1cmV3ZWJzaXRlcy5uZXQifQ.yL0iaELeGYX69VA4h5ZUY76iOseDwJzEe6GJ1lJOk_8`,
+      Authorization: `Bearer ${this.token}`,
     });
   }
 
@@ -38,6 +47,14 @@ export class BookingsService {
       { headers: this.headers }
     );
   }
+  getBookingsByStatus(
+    status: BookingStatus
+  ): Observable<AddBookingResponse | undefined> {
+    return this.http.get<AddBookingResponse>(
+      `${this.BASE_URL}/Bookings/getbookingsbystatus?status=${status}`,
+      { headers: this.headers }
+    );
+  }
   approveBooking(bookingId: string, body?: Booking): Observable<Booking> {
     return this.http.put<Booking>(
       `${this.BASE_URL}/Bookings/approvebooking?BookingId=${bookingId}`,
@@ -45,6 +62,25 @@ export class BookingsService {
       { headers: this.headers }
     );
   }
+
+  declineBooking(
+    bookingId: string,
+    body?: ReasonForDecline
+  ): Observable<AddBookingResponse> {
+    return this.http.put<AddBookingResponse>(
+      `${this.BASE_URL}/Bookings/declinebooking?BookingId=${bookingId}`,
+      body,
+      { headers: this.headers }
+    );
+  }
+  cancelBooking(bookingId: string, body?: ReasonForDecline): Observable<AddBookingResponse> {
+    return this.http.put<AddBookingResponse>(
+      `${this.BASE_URL}/Bookings/cancelbooking?BookingId=${bookingId}`,
+      body,
+      { headers: this.headers }
+    );
+  }
+
   //createBooking(eventDate: string, time: string, meetingType: string, clientCompanyName: string, engagementLeader: string, numberOfGuests: number, contactNumber: number, internalContactPerson: string,additionalInfo: string, feedingRequirement:boolean): Observable<Booking> {
 
   createBooking(body: Booking, id: number): Observable<AddBookingResponse> {
@@ -54,8 +90,12 @@ export class BookingsService {
       { headers: this.headers }
     );
   }
-
-  cancelBooking(id: string): Observable<any> {
-    return this.http.delete(`${this.BASE_URL}/bookings/${id}`);
+  login(body: Login): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(
+      `${this.BASE_URL}/Accounts/login
+      `,
+      body,
+      { headers: this.headers }
+    );
   }
 }

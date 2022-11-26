@@ -170,11 +170,13 @@
                                   formControlName="eventDate"
                                   name="eventDate"
                                   dateFormat="dd/mm/yy"
+                                  [disabledDates]="invalidDates"
                                   [readonlyInput]="true"
                                   inputId="disableDates"
                                   class="p-inputtext-sm"
                                   placeholder="Select Appointment Date"
                                   [required]="true"
+                                  [defaultDate]="dateQuery"
                                 ></p-calendar>
                               </div>
                               <div class="field w-45 md:col-4">

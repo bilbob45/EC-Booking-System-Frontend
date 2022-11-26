@@ -111,6 +111,13 @@ ul {
 .cancel-modal {
   text-align: center;
 }
+.approval-section {
+  justify-content: flex-end;
+}
+.decline-button {
+  margin-right: 12px;
+}
+
 .w-100 {
   width: 100%;
 }

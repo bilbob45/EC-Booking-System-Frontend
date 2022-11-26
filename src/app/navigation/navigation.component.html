@@ -73,7 +73,7 @@
               </button>
             </div>
           </li>
-          <li class="nav-item">
+          <li *ngIf="showMenu" class="nav-item">
             <a
               class="nav-items disabled"
               [routerLink]="['/report']"
@@ -84,7 +84,7 @@
                 [src]="
                   report.isActive
                     ? '../../assets/icons/report-active.svg'
-                    : '../../assets/icons/report.svg'
+                    : '../../assets/icons/gray-report.svg'
                 "
                 class="nav-icon"
               />
@@ -94,7 +94,7 @@
               </div>
             </a>
           </li>
-          <li class="nav-item">
+          <li *ngIf="showMenu" class="nav-item">
             <a
               class="nav-items"
               [routerLink]="['/calendar']"
@@ -198,8 +198,8 @@
               </p-dialog>
             </div>
           </div>
-          <div class="assets">
-            <img src="../../assets/icons/settings.svg" alt="" />
+          <div *ngIf="showSettings" class="assets">
+            <img src="../../assets/icons/gray-settings.svg" alt="" />
           </div>
           <div ngbDropdown class="nav-item dropdown">
             <a ngbDropdownToggle class="nav-items" role="button">

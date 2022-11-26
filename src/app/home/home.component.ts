@@ -2,6 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { SelectItem } from 'primeng/api';
+import { BookingsService } from '../services/bookingsservice';
+
+import {
+  HubConnection,
+  HubConnectionBuilder,
+  LogLevel,
+} from '@microsoft/signalr';
 import { SelectItemGroup } from 'primeng/api';
 interface Venue {
   name: string;
@@ -11,27 +18,19 @@ interface Venue {
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
+  providers: [HubConnectionBuilder],
 })
-export class HomeComponent {
-  // model: NgbDateStruct | any;
-  // model: NgbDateStruct;
-  // date: { year: number; month: number };
-
-  // constructor(private calendar: NgbCalendar) {}
-
-  // selectToday() {
-  // 	this.model = this.calendar.getToday();
-
-  // }
+export class HomeComponent implements OnInit {
+  userId: string;
   images: any[];
   title: string = 'The Breakroom';
   titles: string[] = ['Kilimanjaro', 'The Coliseum', 'Shuttle Discovery'];
   description: string =
-    'Lorem ipsum dolor sit amet, conseelers sas adipiscin elit. Donec dolor sit amet, apaisd';
+    'Relax, converse, eat, and chill in our kitchenette area appropriately named Top up n’ chill. ';
   descriptions: string[] = [
-    'Lorem ipsum dolor sit amet, conseelers sas adipiscing elit. Donec dolor sit amet, apaisd',
-    'Lorem ipsum dolor sit amet, conseelers sas adipiscing elit. Donec dolor sit amet, apaisd',
-    'Lorem ipsum dolor sit amet, conseelers sas adipiscing elit. Donec dolor sit amet, apaisd',
+    'Our glorious 12-man meeting room called appropriately named after the highest point in Africa.',
+    'A space created to spark creativity, knowledge, and instill the importance of community.',
+    'A space ship themed Demo lab & Alternate reality room aptly named Shuttle Discovery after the NASA space',
   ];
   slide: string = '../../assets/images/breakroom-slide.svg';
   slides: string[] = [
@@ -57,10 +56,10 @@ export class HomeComponent {
   invalidDates: Array<Date>;
 
   items: SelectItem[];
-
+  notifications: any[] = [];
   item: string;
   eventDate: Date;
-
+  private hubConnectionBuilder: HubConnection;
   constructor(private _router: Router) {
     this.items = [];
     for (let i = 0; i < 10000; i++) {
@@ -135,6 +134,21 @@ export class HomeComponent {
     let invalidDate = new Date();
     invalidDate.setDate(today.getDate() - 1);
     this.invalidDates = [today, invalidDate];
+  }
+  ngOnInit(): void {
+    this.hubConnectionBuilder = new HubConnectionBuilder()
+      .withUrl(
+        'https://ecbookingsystem1.azurewebsites.net/api/Accounts/testpostingbysignalr'
+      )
+      .configureLogging(LogLevel.Information)
+      .build();
+    this.hubConnectionBuilder
+      .start()
+      .then(() => console.log('Connection Started'))
+      .catch((err) => console.log('Error while connecting'));
+    this.hubConnectionBuilder.on('BroadcastMessage', (result: any) => {
+      this.notifications.push(result);
+    });
   }
 
   changeImage(e: number) {

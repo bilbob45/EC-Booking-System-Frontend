@@ -24,11 +24,15 @@
   justify-content: center;
   align-items: center;
   padding: 80px;
+  background: #fff;
 }
 table {
   border-collapse: separate;
-  border-spacing: 20px 0;
+  /* border-spacing: 20px 0; */
+  padding: 10px;
+  background: #fff;
 }
+
 th {
   width: 150px;
   padding: 5px;
@@ -46,6 +50,7 @@ td {
   font-family: "Helvetica Neue";
   font-weight: 400;
   font-size: 16px;
+  padding: 20px 10px !important;
   line-height: 24px;
   letter-spacing: -0.4px;
   color: #5e5e5e;
@@ -79,6 +84,42 @@ td {
   background: transparent;
 }
 
-.badgeBg{
+.badgeBg {
   background-color: #5e5e5e;
+}
+
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+  color: #5e5e5e;
+  background-color: transparent;
+  border-color: transparent;
+  border-bottom: 2px solid #d04a02;
+}
+
+.nav-tabs .nav-link {
+  border: none;
+}
+.nav-tabs {
+  border-bottom: transparent;
+}
+.nav-tabs .badge {
+  background-color: #dddddd;
+  border-radius: 50%;
+  padding: 8px;
+  margin-left: 5px;
+}
+.nav-link {
+  color: #5e5e5e;
+  font-size: 16px;
+}
+
+/* .badge {
+  background-color: #dddddd;
+  border-radius: 50%;
+  padding: 8px;
+} */
+.nav-tabs .nav-link.active i {
+  background-color: #d04a02;
+  border-radius: 50%;
+  padding: 8px;
 }

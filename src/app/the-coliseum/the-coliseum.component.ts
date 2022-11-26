@@ -56,7 +56,7 @@ export class TheColiseumComponent implements OnInit {
   item: string;
   value2: any;
   value8: any;
-
+  homeDate: any;
   dates: Date[];
   rangeDates: Date[];
   minDate: Date;
@@ -151,6 +151,11 @@ export class TheColiseumComponent implements OnInit {
     //     console.log(this.eventDate); // popular
     //   }
     // );
+    if (this.homeDate) {
+      this.addHomeModel();
+    } else {
+      this.addDate();
+    }
     let today = new Date();
     let month = today.getMonth();
     let year = today.getFullYear();
@@ -193,6 +198,18 @@ export class TheColiseumComponent implements OnInit {
       // time: ['', Validators.required],
     });
   }
+
+  homeDateModel(): FormGroup {
+    return this.fb.group({
+      eventDate: (Date = this.homeDate),
+      time: '',
+    });
+  }
+
+  addHomeModel() {
+    this.DateModels().push(this.newDateModel());
+  }
+
   DateModels(): FormArray {
     return this.bookingForm.get('bookedDates') as FormArray;
   }
@@ -229,21 +246,23 @@ export class TheColiseumComponent implements OnInit {
     this.errorMsg = '';
     this.submitted = true;
     const t = this.bookingForm.value;
-    // for (let i = 0; i < t.bookedDates.length; i++) {
-    //   let originalDate = t.bookedDates[i].eventDate;
-    //   t.bookedDates[i].eventDate = this.datePipe.transform(
-    //     originalDate,
-    //     'dd/MM/yyyy'
-    //   );
-    // }
-    // console.log(t.bookedDates, 'date');
+    for (let i = 0; i < t.bookedDates.length; i++) {
+      let originalDate = t.bookedDates[i].eventDate;
+      t.bookedDates[i].eventDate = this.datePipe.transform(
+        originalDate,
+        'dd/MM/yyyy'
+      );
+    }
+    console.log(t.bookedDates, 'date');
 
+    //let phoneNumber=this.contactNumber.toString()
     //let phoneNumber=this.contactNumber.toString()
     this.bookingsService.createBooking(t, spaceId).subscribe(
       (res) => {
         this.showSuccess();
         console.log(this.showSuccess, 'response');
-        this._router.navigate(['/awaiting-approval']);
+        this._router.navigate(['/awaiting-approval', res.data[0].id]);
+        console.log(res.data, 'res');
         this.reset();
       },
       (error: ErrorEvent) => {

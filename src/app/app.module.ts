@@ -27,15 +27,18 @@ import { PhotoService } from './services/photoservice';
 import { LoginComponent } from './login/login.component';
 import { BaseLayoutComponent } from './base-layout/base-layout.component';
 import { SiteLayoutComponent } from './site-layout/site-layout.component';
+import { SearchPipe } from './booking-history/search.pipe';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationComponent,
     routingComponents,
-    LoginComponent,
+
     BaseLayoutComponent,
     SiteLayoutComponent,
+    SearchPipe,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +63,7 @@ import { SiteLayoutComponent } from './site-layout/site-layout.component';
     MessageModule,
     MessagesModule,
     TableModule,
+    TabsModule,
   ],
   providers: [PhotoService],
   bootstrap: [AppComponent],

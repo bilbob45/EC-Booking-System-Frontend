@@ -61,6 +61,7 @@ export class BookingComponent implements OnInit {
   rangeDates: Date[];
   minDate: Date;
   maxDate: Date;
+  dateQuery: any;
   es: any;
   queryDate: Date;
   invalidDates: Array<Date>;
@@ -127,19 +128,29 @@ export class BookingComponent implements OnInit {
       feedingRequirement: ['', Validators.required],
       bookedDates: this.fb.array([]),
     });
+
+    this.dateQuery = new Date(
+      this.activatedRouter.snapshot.queryParamMap.get('date')
+    );
+    // let newDate = filter;
+    // this.activatedRouter.queryParams.subscribe(() => {
+    //   this.homeDate = this.datePipe.transform(newDate, 'dd/MM/yyyy');
+    //   console.log(this.homeDate, 'homeDate');
+    // });
   }
 
   ngOnInit(): void {
     this.photoService.getImages().then((images) => {
       this.images = images;
-      // this.getBookedDates(1);
+      this.getBookedDates(1);
+      console.log(this.dateQuery);
     });
-    const filter = this.activatedRouter.snapshot.queryParamMap.get('date');
-    let newDate = filter;
-    this.activatedRouter.queryParams.subscribe(() => {
-      this.homeDate = this.datePipe.transform(newDate, 'dd/MM/yyyy');
-      console.log(this.homeDate, 'homeDate');
-    });
+    // const filter = this.activatedRouter.snapshot.queryParamMap.get('date');
+    // let newDate = filter;
+    // this.activatedRouter.queryParams.subscribe(() => {
+    //   this.homeDate = this.datePipe.transform(newDate, 'dd/MM/yyyy');
+    //   console.log(this.homeDate, 'homeDate');
+    // });
     if (this.homeDate) {
       this.addHomeModel();
     } else {
@@ -210,15 +221,17 @@ export class BookingComponent implements OnInit {
   // save(): void {
 
   // }
-  // getBookedDates(id: number) {
-  //   this.shuttleDiscoveryService.getBookings(id).subscribe((response) => {
-  //     this.invalidDates = [];
-  //     response.data.forEach((x) =>
-  //       this.invalidDates.push(...x.bookedDates.map((x) => x.eventDate))
-  //     );
-  //     console.log(this.invalidDates, 'invalid dates');
-  //   });
-  // }
+  getBookedDates(id: number) {
+    this.bookingsService.getBookings(id).subscribe((response) => {
+      this.invalidDates = [];
+      response.data.forEach((x) =>
+        this.invalidDates.push(
+          ...x['bookedDates'].map((x) => new Date(x.eventDate))
+        )
+      );
+      // console.log(this.invalidDates, 'invalid dates');
+    });
+  }
   submitted = false;
 
   onSubmit(selectedRoom: number) {

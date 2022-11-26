@@ -14,9 +14,9 @@
         class="mt-2"
         pInputText
         id="password"
-        type="text"
+        type="password"
         name="password"
-        formControlName="email"
+        formControlName="password"
         placeholder="*******"
         required
       />
@@ -26,6 +26,7 @@
         class="submit-button mt-4"
         pButton
         [disabled]="loginForm.invalid"
+        (click)="login()"
       ></button>
     </form>
   </div>
