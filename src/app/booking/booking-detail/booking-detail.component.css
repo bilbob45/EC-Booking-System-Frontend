@@ -34,7 +34,7 @@ ul {
 .booking-form b {
   color: #c52a1a;
 }
-.booking-notice {
+.awaiting-booking-notice {
   background: rgba(32, 53, 112, 0.2);
   border-radius: 16px;
   color: #1a2a5a;
@@ -44,7 +44,51 @@ ul {
   display: flex;
   align-items: center;
   justify-content: center;
+  text-transform: uppercase;
 }
+.cancel-booking-notice {
+  background: #f3f3f3;
+  border-radius: 16px;
+  color: #818181;
+  font-weight: 500;
+  text-align: center;
+  padding: 10px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+.denied-booking-notice {
+  background: #f3d4d1;
+  border-radius: 16px;
+  color: #a4291d;
+  font-weight: 500;
+  text-align: center;
+  padding: 10px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+.approved-booking-notice {
+  background: #d3ebd5;
+  border-radius: 16px;
+  color: #206a2c;
+  font-weight: 500;
+  text-align: center;
+  padding: 10px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+}
+.cancel-reason-title {
+  font-size: 16px;
+  color: #c52a1a;
+}
+
 .booking-inputtext-wrapper {
   margin-bottom: 20px;
 }
@@ -111,6 +155,13 @@ ul {
 .cancel-modal {
   text-align: center;
 }
+.approval-section {
+  justify-content: flex-end;
+}
+.decline-button {
+  margin-right: 12px;
+}
+
 .w-100 {
   width: 100%;
 }

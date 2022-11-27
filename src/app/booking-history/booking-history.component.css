@@ -26,9 +26,11 @@
   padding: 80px;
   background: #fff;
 }
+.table-container {
+  padding: 30px;
+  background: #fff;
+}
 table {
-  border-collapse: separate;
-  /* border-spacing: 20px 0; */
   padding: 10px;
   background: #fff;
 }
@@ -118,8 +120,11 @@ td {
   border-radius: 50%;
   padding: 8px;
 } */
-.nav-tabs .nav-link.active i {
+.nav-tabs .nav-link.active b {
   background-color: #d04a02;
   border-radius: 50%;
   padding: 8px;
+}
+.nav-link:hover {
+  color: #d04a02;
 }

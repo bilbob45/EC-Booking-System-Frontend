@@ -21,268 +21,51 @@
   </div>
   <div>
     <tabset>
-      <tab (selectTab)="onSelect()">
+      <tab>
         <ng-template tabHeading>
           <span>All</span>
-          <i class="badge"><span>2</span></i>
-        </ng-template>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">SN</th>
-              <th scope="col">ID</th>
-              <th scope="col">Requested on</th>
-              <th scope="col">Start Date</th>
-              <th scope="col">End Date</th>
-              <th scope="col">Room</th>
-              <th scope="col">Slot</th>
-              <th scope="col">Requested by</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              *ngFor="let booking of bookings | search: searchText; index as i"
-            >
-              <th scope="row">{{ i + 1 }}</th>
-              <td>{{ booking?.id }}</td>
-              <td>{{ booking?.createdAt | date: "d MMM, y" }}</td>
-              <td>
-                {{ booking?.bookedDates[0].eventDate | date: "d MMM, y" }}
-              </td>
-              <td>
-                {{ startDate | date: "d MMM, y" }}
-              </td>
-              <td>{{ booking?.spaceName }}</td>
-              <td>
-                {{ booking?.bookedDates[0].time | slice: 0:8 }}
-              </td>
-              <td>{{ booking?.internalContactPerson }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </tab>
-      <tab>
-        <ng-template tabHeading>
-          <span>Pending</span>
-          <i class="badge"><span>2</span></i>
-        </ng-template>
-        <div *ngIf="emptyState" class="cancelled-empty-state">
-          <img src="../../assets/images/cancel-empty.svg" />
-        </div>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">SN</th>
-              <th scope="col">ID</th>
-              <th scope="col">Requested on</th>
-              <th scope="col">Start Date</th>
-              <th scope="col">End Date</th>
-              <th scope="col">Room</th>
-              <th scope="col">Slot</th>
-              <th scope="col">Requested by</th>
-            </tr>
-          </thead>
 
-          <tbody>
-            <tr
-              *ngFor="
-                let pendingBooking of pendingBookings | search: searchText;
-                index as i
-              "
-            >
-              <th scope="row">{{ i + 1 }}</th>
-              <td>{{ pendingBooking?.id }}</td>
-              <td>{{ pendingBooking?.createdAt | date: "d MMM, y" }}</td>
-              <td>
-                {{
-                  pendingBooking?.bookedDates[0].eventDate | date: "d MMM, y"
-                }}
-              </td>
-              <td>
-                {{ startDate | date: "d MMM, y" }}
-              </td>
-              <td>{{ pendingBooking?.spaceName }}</td>
-              <td>
-                {{ pendingBooking?.bookedDates[0].time | slice: 0:8 }}
-              </td>
-              <td>{{ pendingBooking?.internalContactPerson }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </tab>
-      <tab>
-        <ng-template tabHeading>
-          <span>Approved</span>
-          <i class="badge"><span>2</span></i>
+          <b class="badge">{{ bookings?.length }}</b>
         </ng-template>
-        <div *ngIf="emptyState" class="cancelled-empty-state">
-          <img src="../../assets/images/cancel-empty.svg" />
-        </div>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">SN</th>
-              <th scope="col">ID</th>
-              <th scope="col">Requested on</th>
-              <th scope="col">Start Date</th>
-              <th scope="col">End Date</th>
-              <th scope="col">Room</th>
-              <th scope="col">Slot</th>
-              <th scope="col">Requested by</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr
-              *ngFor="
-                let approvedBooking of approvedBookings | search: searchText;
-                index as i
-              "
-            >
-              <th scope="row">{{ i + 1 }}</th>
-              <td>{{ approvedBooking?.id }}</td>
-              <td>{{ approvedBooking?.createdAt | date: "d MMM, y" }}</td>
-              <td>
-                {{
-                  approvedBooking?.bookedDates[0].eventDate | date: "d MMM, y"
-                }}
-              </td>
-              <td>
-                {{ startDate | date: "d MMM, y" }}
-              </td>
-              <td>{{ approvedBooking?.spaceName }}</td>
-              <td>
-                {{ approvedBooking?.bookedDates[0].time | slice: 0:8 }}
-              </td>
-              <td>{{ approvedBooking?.internalContactPerson }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </tab>
-      <tab>
-        <ng-template tabHeading>
-          <span>Denied</span>
-          <i class="badge"><span>2</span></i>
+        <ng-template #notEmpty>
+          <div class="cancelled-empty-state">
+            <img src="../../assets/images/cancel-empty.svg" />
+          </div>
         </ng-template>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">SN</th>
-              <th scope="col">ID</th>
-              <th scope="col">Requested on</th>
-              <th scope="col">Start Date</th>
-              <th scope="col">End Date</th>
-              <th scope="col">Room</th>
-              <th scope="col">Slot</th>
-              <th scope="col">Requested by</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              *ngFor="
-                let deniedBooking of deniedBookings | search: searchText;
-                index as i
-              "
-            >
-              <th scope="row">{{ i + 1 }}</th>
-              <td>{{ deniedBooking?.id }}</td>
-              <td>{{ deniedBooking?.createdAt | date: "d MMM, y" }}</td>
-              <td>
-                {{ deniedBooking?.bookedDates[0].eventDate | date: "d MMM, y" }}
-              </td>
-              <td>
-                {{ startDate | date: "d MMM, y" }}
-              </td>
-              <td>{{ deniedBooking?.spaceName }}</td>
-              <td>
-                {{ deniedBooking?.bookedDates[0].time | slice: 0:8 }}
-              </td>
-              <td>{{ deniedBooking?.internalContactPerson }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </tab>
-      <tab>
-        <ng-template tabHeading>
-          <span>Cancelled</span>
-          <i class="badge"><span>2</span></i>
-        </ng-template>
-        <div *ngIf="cancelEmptyState" class="cancelled-empty-state">
-          <img src="../../assets/images/cancel-empty.svg" />
-        </div>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">SN</th>
-              <th scope="col">ID</th>
-              <th scope="col">Requested on</th>
-              <th scope="col">Start Date</th>
-              <th scope="col">End Date</th>
-              <th scope="col">Room</th>
-              <th scope="col">Slot</th>
-              <th scope="col">Requested by</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              *ngFor="
-                let cancelledBooking of cancelledBookings | search: searchText;
-                index as i
-              "
-            >
-              <th scope="row">{{ i + 1 }}</th>
-              <td>{{ cancelledBooking?.id }}</td>
-              <td>{{ cancelledBooking?.createdAt | date: "d MMM, y" }}</td>
-              <td>
-                {{
-                  cancelledBooking?.bookedDates[0].eventDate | date: "d MMM, y"
-                }}
-              </td>
-              <td>
-                {{ startDate | date: "d MMM, y" }}
-              </td>
-              <td>{{ cancelledBooking?.spaceName }}</td>
-              <td>
-                {{ cancelledBooking?.bookedDates[0].time | slice: 0:8 }}
-              </td>
-              <td>{{ cancelledBooking?.internalContactPerson }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </tab>
-    </tabset>
-  </div>
-  <!-- <div>
-    <p-tabView>
-      <p-tabPanel>
-        <ng-template pTemplate="header">
-          <span>All</span>
-          <p-badge value="8" badgeDisabled></p-badge>
-        </ng-template>
-        <div>
-          <p-table [value]="bookings">
-            <ng-template pTemplate="header">
+        <div class="table-container" *ngIf="bookings; else notEmpty">
+          <table class="table">
+            <thead>
               <tr>
-                <th>SN</th>
-                <th>ID</th>
-                <th>Requested On</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Room</th>
-                <th>Slot</th>
-                <th>Requested By</th>
+                <th scope="col">SN</th>
+                <th scope="col">ID</th>
+                <th scope="col">Requested on</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col">Room</th>
+                <th scope="col">Slot</th>
+                <th scope="col">Requested by</th>
               </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-rowIndex="rowIndex" let-booking>
-              <tr>
-                <td>{{ rowIndex + 1 }}</td>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let booking of bookings | search: searchText;
+                  index as i
+                "
+                (click)="clickContinue(booking.id)"
+              >
+                <th scope="row">{{ i + 1 }}</th>
                 <td>{{ booking?.id }}</td>
                 <td>{{ booking?.createdAt | date: "d MMM, y" }}</td>
                 <td>
                   {{ booking?.bookedDates[0].eventDate | date: "d MMM, y" }}
                 </td>
                 <td>
-                  {{ startDate | date: "d MMM, y" }}
+                  <!-- {{ startDate | date: "d MMM, y" }} -->
+                  {{
+                    booking?.bookedDates[booking?.bookedDates.length - 1]
+                      .eventDate | date: "d MMM, y"
+                  }}
                 </td>
                 <td>{{ booking?.spaceName }}</td>
                 <td>
@@ -290,37 +73,47 @@
                 </td>
                 <td>{{ booking?.internalContactPerson }}</td>
               </tr>
-            </ng-template>
-          </p-table>
+            </tbody>
+          </table>
         </div>
-      </p-tabPanel>
-      <p-tabPanel>
-        <ng-template pTemplate="header">
+      </tab>
+      <tab>
+        <ng-template tabHeading>
           <span>Pending</span>
-          <p-badge value="5" styleClass=""></p-badge>
+
+          <b class="badge">{{ pendingBookings?.length }}</b>
         </ng-template>
-        <div>
-          <p-table [value]="pendingBookings">
-            <ng-template pTemplate="header">
+        <ng-template #notEmpty>
+          <div class="cancelled-empty-state">
+            <img src="../../assets/images/cancel-empty.svg" />
+          </div>
+        </ng-template>
+        <div class="table-container" *ngIf="pendingBookings; else notEmpty">
+          <table class="table">
+            <thead>
               <tr>
-                <th>SN</th>
-                <th>ID</th>
-                <th>Requested On</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Room</th>
-                <th>Slot</th>
-                <th>Requested By</th>
+                <th scope="col">SN</th>
+                <th scope="col">ID</th>
+                <th scope="col">Requested on</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col">Room</th>
+                <th scope="col">Slot</th>
+                <th scope="col">Requested by</th>
               </tr>
-            </ng-template>
-            <ng-template
-              pTemplate="body"
-              let-rowIndex="rowIndex"
-              let-pendingBooking
-            >
-              <tr>
-                <td>{{ rowIndex + 1 }}</td>
-                <td>{{ pendingBooking?.id }}</td>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let pendingBooking of pendingBookings | search: searchText;
+                  index as i
+                "
+                (click)="clickContinue(pendingBooking.id)"
+              >
+                <th scope="row">{{ i + 1 }}</th>
+                <td>
+                  {{ pendingBooking?.id }}
+                </td>
                 <td>{{ pendingBooking?.createdAt | date: "d MMM, y" }}</td>
                 <td>
                   {{
@@ -328,7 +121,11 @@
                   }}
                 </td>
                 <td>
-                  {{ startDate | date: "d MMM, y" }}
+                  {{
+                    pendingBooking?.bookedDates[
+                      pendingBooking?.bookedDates.length - 1
+                    ].eventDate | date: "d MMM, y"
+                  }}
                 </td>
                 <td>{{ pendingBooking?.spaceName }}</td>
                 <td>
@@ -336,37 +133,44 @@
                 </td>
                 <td>{{ pendingBooking?.internalContactPerson }}</td>
               </tr>
-            </ng-template>
-          </p-table>
+            </tbody>
+          </table>
         </div>
-      </p-tabPanel>
-
-      <p-tabPanel>
-        <ng-template pTemplate="header">
+      </tab>
+      <tab>
+        <ng-template tabHeading>
           <span>Approved</span>
-          <p-badge value="8"></p-badge>
+          <b class="badge">{{ approvedBookings?.length }}</b>
         </ng-template>
-        <div>
-          <p-table [value]="bookings">
-            <ng-template pTemplate="header">
+        <ng-template #notEmpty>
+          <div class="cancelled-empty-state">
+            <img src="../../assets/images/cancel-empty.svg" />
+          </div>
+        </ng-template>
+        <div class="table-container">
+          <table class="table" *ngIf="approvedBookings; else notEmpty">
+            <thead>
               <tr>
-                <th>SN</th>
-                <th>ID</th>
-                <th>Requested On</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Room</th>
-                <th>Slot</th>
-                <th>Requested By</th>
+                <th scope="col">SN</th>
+                <th scope="col">ID</th>
+                <th scope="col">Requested on</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col">Room</th>
+                <th scope="col">Slot</th>
+                <th scope="col">Requested by</th>
               </tr>
-            </ng-template>
-            <ng-template
-              pTemplate="body"
-              let-rowIndex="rowIndex"
-              let-approvedBooking
-            >
-              <tr>
-                <td>{{ rowIndex + 1 }}</td>
+            </thead>
+
+            <tbody>
+              <tr
+                *ngFor="
+                  let approvedBooking of approvedBookings | search: searchText;
+                  index as i
+                "
+                (click)="clickContinue(approvedBooking.id)"
+              >
+                <th scope="row">{{ i + 1 }}</th>
                 <td>{{ approvedBooking?.id }}</td>
                 <td>{{ approvedBooking?.createdAt | date: "d MMM, y" }}</td>
                 <td>
@@ -375,7 +179,11 @@
                   }}
                 </td>
                 <td>
-                  {{ startDate | date: "d MMM, y" }}
+                  {{
+                    approvedBooking?.bookedDates[
+                      approvedBooking?.bookedDates.length - 1
+                    ].eventDate | date: "d MMM, y"
+                  }}
                 </td>
                 <td>{{ approvedBooking?.spaceName }}</td>
                 <td>
@@ -383,37 +191,43 @@
                 </td>
                 <td>{{ approvedBooking?.internalContactPerson }}</td>
               </tr>
-            </ng-template>
-          </p-table>
+            </tbody>
+          </table>
         </div>
-      </p-tabPanel>
-
-      <p-tabPanel>
-        <ng-template pTemplate="header">
+      </tab>
+      <tab>
+        <ng-template tabHeading>
           <span>Denied</span>
-          <p-badge value="3"></p-badge>
+          <b class="badge">{{ deniedBookings?.length }}</b>
         </ng-template>
-        <div>
-          <p-table [value]="bookings">
-            <ng-template pTemplate="header">
+        <ng-template #notEmpty>
+          <div class="cancelled-empty-state">
+            <img src="../../assets/images/cancel-empty.svg" />
+          </div>
+        </ng-template>
+        <div class="table-container">
+          <table class="table" *ngIf="deniedBookings; else notEmpty">
+            <thead>
               <tr>
-                <th>SN</th>
-                <th>ID</th>
-                <th>Requested On</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Room</th>
-                <th>Slot</th>
-                <th>Requested By</th>
+                <th scope="col">SN</th>
+                <th scope="col">ID</th>
+                <th scope="col">Requested on</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col">Room</th>
+                <th scope="col">Slot</th>
+                <th scope="col">Requested by</th>
               </tr>
-            </ng-template>
-            <ng-template
-              pTemplate="body"
-              let-rowIndex="rowIndex"
-              let-deniedBooking
-            >
-              <tr>
-                <td>{{ rowIndex + 1 }}</td>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let deniedBooking of deniedBookings | search: searchText;
+                  index as i
+                "
+                (click)="clickContinue(deniedBooking.id)"
+              >
+                <th scope="row">{{ i + 1 }}</th>
                 <td>{{ deniedBooking?.id }}</td>
                 <td>{{ deniedBooking?.createdAt | date: "d MMM, y" }}</td>
                 <td>
@@ -422,7 +236,11 @@
                   }}
                 </td>
                 <td>
-                  {{ startDate | date: "d MMM, y" }}
+                  {{
+                    deniedBooking?.bookedDates[
+                      deniedBooking?.bookedDates.length - 1
+                    ].eventDate | date: "d MMM, y"
+                  }}
                 </td>
                 <td>{{ deniedBooking?.spaceName }}</td>
                 <td>
@@ -430,21 +248,73 @@
                 </td>
                 <td>{{ deniedBooking?.internalContactPerson }}</td>
               </tr>
-            </ng-template>
-          </p-table>
+            </tbody>
+          </table>
         </div>
-      </p-tabPanel>
-
-      <p-tabPanel>
-        <ng-template pTemplate="header">
+      </tab>
+      <tab>
+        <ng-template tabHeading>
           <span>Cancelled</span>
-          <p-badge value="2"></p-badge>
+
+          <b class="badge">{{ cancelledBookings?.length }}</b>
         </ng-template>
-        <div class="cancelled-empty-state">
-          <img src="../../assets/images/cancel-empty.svg" />
+        <ng-template #notEmpty>
+          <div class="cancelled-empty-state">
+            <img src="../../assets/images/cancel-empty.svg" />
+          </div>
+        </ng-template>
+        <div
+          *ngIf="this.cancelledBookings; else notEmpty"
+          class="table-container"
+        >
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">SN</th>
+                <th scope="col">ID</th>
+                <th scope="col">Requested on</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col">Room</th>
+                <th scope="col">Slot</th>
+                <th scope="col">Requested by</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let cancelledBooking of cancelledBookings
+                    | search: searchText;
+                  index as i
+                "
+                (click)="clickContinue(cancelledBooking.id)"
+              >
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ cancelledBooking?.id }}</td>
+                <td>{{ cancelledBooking?.createdAt | date: "d MMM, y" }}</td>
+                <td>
+                  {{
+                    cancelledBooking?.bookedDates[0].eventDate
+                      | date: "d MMM, y"
+                  }}
+                </td>
+                <td>
+                  {{
+                    cancelledBooking?.bookedDates[
+                      cancelledBooking?.bookedDates.length - 1
+                    ].eventDate | date: "d MMM, y"
+                  }}
+                </td>
+                <td>{{ cancelledBooking?.spaceName }}</td>
+                <td>
+                  {{ cancelledBooking?.bookedDates[0].time | slice: 0:8 }}
+                </td>
+                <td>{{ cancelledBooking?.internalContactPerson }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-      </p-tabPanel>
-    </p-tabView>
-   
-  </div> -->
+      </tab>
+    </tabset>
+  </div>
 </div>

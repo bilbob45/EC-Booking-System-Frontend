@@ -7,12 +7,6 @@ import { RoomsComponent } from './rooms/rooms.component';
 import { ShuttleDiscoveryComponent } from './shuttle-discovery/shuttle-discovery.component';
 import { VRRoomComponent } from './vr-room/vr-room.component';
 import { BookingHistoryComponent } from './booking-history/booking-history.component';
-import { AwaitingApprovalComponent } from './request-pages/standard-user/awaiting-approval/awaiting-approval.component';
-import { CancelledComponent } from './request-pages/standard-user/cancelled/cancelled.component';
-import { DeniedComponent } from './request-pages/standard-user/denied/denied.component';
-import { CompletedComponent } from './request-pages/standard-user/completed/completed.component';
-import { ApprovedComponent } from './request-pages/standard-user/approved/approved.component';
-import { ApproverAwaitingApprovalComponent } from './request-pages/approver/approver-awaiting-approval/approver-awaiting-approval.component';
 import { TheColiseumComponent } from './the-coliseum/the-coliseum.component';
 import { KilimanjaroComponent } from './kilimanjaro/kilimanjaro.component';
 import { LoginComponent } from './login/login.component';
@@ -35,16 +29,7 @@ const routes: Routes = [
       { path: 'shuttle-discovery', component: ShuttleDiscoveryComponent },
       { path: 'vr-room', component: VRRoomComponent },
       { path: 'booking-history', component: BookingHistoryComponent },
-      { path: 'awaiting-approval/:id', component: AwaitingApprovalComponent },
-      { path: 'cancelled/:id', component: CancelledComponent },
-      { path: 'denied/:id', component: DeniedComponent },
-      { path: 'completed/:id', component: CompletedComponent },
-      { path: 'approved/:id', component: ApprovedComponent },
       { path: 'booking', component: BookingComponent },
-      {
-        path: 'approver-awaiting-approval',
-        component: ApproverAwaitingApprovalComponent,
-      },
       { path: 'the-coliseum', component: TheColiseumComponent },
       { path: 'kilimanjaro', component: KilimanjaroComponent },
       { path: 'booking-detail', component: BookingDetailComponent },
@@ -81,12 +66,6 @@ export const routingComponents = [
   ShuttleDiscoveryComponent,
   VRRoomComponent,
   BookingHistoryComponent,
-  AwaitingApprovalComponent,
-  CancelledComponent,
-  DeniedComponent,
-  CompletedComponent,
-  ApprovedComponent,
-  ApproverAwaitingApprovalComponent,
   TheColiseumComponent,
   KilimanjaroComponent,
   LoginComponent,

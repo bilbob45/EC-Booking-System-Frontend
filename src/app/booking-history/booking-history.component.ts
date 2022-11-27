@@ -5,11 +5,15 @@ import {
   BookingStatus,
   GetBookings,
 } from '../services/BookingService';
+import { ActivatedRoute, Router } from '@angular/router';
+
 import { TabDirective } from 'ngx-bootstrap/tabs';
 import { BookingsService } from '../services/bookingsservice';
 import { LazyLoadEvent } from 'primeng/api';
 import { Paginator } from 'primeng/paginator';
 import { Table } from 'primeng/table';
+
+const FILTER_PAG_REGEX = /[^0-9]/g;
 @Component({
   selector: 'app-booking-history',
   templateUrl: './booking-history.component.html',
@@ -17,22 +21,25 @@ import { Table } from 'primeng/table';
   encapsulation: ViewEncapsulation.None,
 })
 export class BookingHistoryComponent implements OnInit {
-  @ViewChild('dataTableAuditLogs', { static: true }) dataTable: Table;
-  @ViewChild('paginatorAuditLogs', { static: true }) paginator: Paginator;
-
   activeIndex1: number = 0;
   searchText: string;
   activeIndex2: number = 0;
   dates: Date[];
-  emptyState = true;
-  cancelEmptyState = true;
-  startDate: Date;
-  bookings: any;
-  pendingBookings: any;
-  approvedBookings: any;
-  deniedBookings: any;
-  cancelledBookings: any;
-  constructor(private bookingService: BookingsService) {}
+  page = 4;
+  booking: any;
+  endDate: Date;
+  bookings: any[] = [];
+  pendingBookings: any[];
+  approvedBookings: any[];
+  deniedBookings: any[];
+  cancelledBookings: any[];
+  bookingId: string;
+
+  constructor(
+    private bookingService: BookingsService,
+    private _router: Router,
+    private _route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.getBookings();
@@ -40,18 +47,12 @@ export class BookingHistoryComponent implements OnInit {
     this.getApprovedBookings(2);
     this.getDeniedBookings(3);
     this.getCancelledBookings(4);
+    console.log(this.bookingId);
   }
 
   getBookings() {
     this.bookingService.getBookings().subscribe((response) => {
       (this.bookings = response.data), (this.dates = []);
-      this.bookings.forEach((x) =>
-        this.dates.push(...x.bookedDates.map((x) => x.eventDate))
-      );
-      console.log(this.dates, 'dates');
-      // Storing the last item
-      this.startDate = this.dates[this.dates.length - 1];
-      console.log(this.startDate, 'all bookings');
     });
   }
 
@@ -64,11 +65,6 @@ export class BookingHistoryComponent implements OnInit {
   getApprovedBookings(status: 2) {
     this.bookingService.getBookingsByStatus(status).subscribe((response) => {
       this.approvedBookings = response.data;
-      if (response.message === 'no bookings with this status') {
-        this.emptyState;
-      } else if (response.message === 'bookings successfully fetched') {
-        this.emptyState = false;
-      }
     });
   }
 
@@ -80,14 +76,21 @@ export class BookingHistoryComponent implements OnInit {
   getCancelledBookings(status: 4) {
     this.bookingService.getBookingsByStatus(status).subscribe((response) => {
       this.cancelledBookings = response.data;
-      if (response.message === 'no bookings with this status') {
-        this.cancelEmptyState;
-      } else if (response.message === 'bookings successfully fetched') {
-        this.emptyState = false;
-      }
     });
   }
-  onSelect(): void {
-    this.getPendingBookings(1);
+  clickContinue(id: string) {
+    this._router.navigate(['/bookings/', id]);
+  }
+
+  getPageSymbol(current: number) {
+    return ['A', 'B', 'C', 'D', 'E', 'F', 'G'][current - 1];
+  }
+
+  selectPage(page: string) {
+    this.page = parseInt(page, 10) || 1;
+  }
+
+  formatInput(input: HTMLInputElement) {
+    input.value = input.value.replace(FILTER_PAG_REGEX, '');
   }
 }

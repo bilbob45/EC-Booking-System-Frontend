@@ -24,18 +24,17 @@ import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { TableModule } from 'primeng/table';
 import { PhotoService } from './services/photoservice';
-import { LoginComponent } from './login/login.component';
 import { BaseLayoutComponent } from './base-layout/base-layout.component';
 import { SiteLayoutComponent } from './site-layout/site-layout.component';
 import { SearchPipe } from './booking-history/search.pipe';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationComponent,
     routingComponents,
-
     BaseLayoutComponent,
     SiteLayoutComponent,
     SearchPipe,
@@ -64,6 +63,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     MessagesModule,
     TableModule,
     TabsModule,
+    FullCalendarModule,
   ],
   providers: [PhotoService],
   bootstrap: [AppComponent],

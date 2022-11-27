@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { PhotoService } from 'src/app/services/photoservice';
+import { PhotoService } from '../../../../src/app/services/photoservice';
 import { BookingsService } from 'src/app/services/bookingsservice';
 import {
   AddBookingResponse,
+  Booking,
   BookingStatus,
+  ReasonForDecline,
 } from 'src/app/services/BookingService';
-import { ActivatedRoute } from '@angular/router';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-booking-detail',
@@ -16,6 +20,15 @@ import { ActivatedRoute } from '@angular/router';
 export class BookingDetailComponent implements OnInit {
   images: any[];
   booking: any;
+  cancelledBooking: any;
+  declineForm = this.fb.group({
+    comment: ['', Validators.required],
+  });
+
+  cancelForm = this.fb.group({
+    comment: ['', Validators.required],
+  });
+
   responsiveOptions: any[] = [
     {
       breakpoint: '1024px',
@@ -32,44 +45,97 @@ export class BookingDetailComponent implements OnInit {
   ];
   displayModal: boolean = false;
   bookingId: string;
+  comment: ReasonForDecline;
   bookingStatus: string;
 
+  showApproval = true;
+  showCancel = false;
+  loggedInUser: any = null;
+  userData: any;
   showModalDialog() {
     this.displayModal = true;
   }
+  displayModalApprove: boolean = false;
+  displayModalDecline: boolean = false;
 
-  constructor(
-    private route: ActivatedRoute,
-    private photoService: PhotoService,
-    private bookingsService: BookingsService
-  ) {
-    this.bookingId = this.route.snapshot.params['id'];
+  showApproveModalDialog() {
+    this.displayModalApprove = true;
   }
+  showDeclineDialog() {
+    this.displayModalDecline = true;
+  }
+  constructor(
+    private _route: ActivatedRoute,
+    private _router: Router,
+    private photoService: PhotoService,
+    private fb: FormBuilder,
+    private location: Location,
+    private bookingsService: BookingsService
+  ) {}
 
   ngOnInit(): void {
-    console.log(this.bookingId, 'ID');
+    this.bookingId = this._route.snapshot.params['id'];
 
+    console.log(this.bookingId);
+    this.getBookingsId(this.bookingId);
     this.photoService.getImages().then((images) => {
       this.images = images;
-      this.getBookingsId(this.bookingId);
     });
+    this.userData = localStorage.getItem('user');
+    this.loggedInUser = JSON.parse(this.userData);
+    if (this.loggedInUser?.role === 'User') {
+      this.showApproval = false;
+      this.showCancel = true;
+    }
+    if (this.loggedInUser?.role === 'Admin') {
+      this.showApproval = false;
+      this.showCancel = true;
+    }
+    if (this.loggedInUser?.role === 'Approver') {
+      this.showApproval;
+      this.showCancel;
+    }
   }
-  // getBookings(id: number) {
-  //   this.bookingsService.getBookings(id).subscribe((response) => {
-  //     return (
-  //       (this.bookings = response.data), console.log(this.bookings, 'bookings')
-  //     );
-  //   });
-  // }
+  backCick() {
+    this.location.back();
+  }
+  approveBooking(bookingId: string) {
+    this.bookingsService
+      .approveBooking(bookingId)
+      .subscribe((response: Booking) => {
+        this._router.navigate(['/bookings/', bookingId]);
+        this.displayModalDecline = false;
+        console.log(response, 'approve');
+      });
+  }
+  declineBooking(bookingId: string) {
+    let payload: ReasonForDecline = this.declineForm.value;
+    this.bookingsService
+      .declineBooking(bookingId, payload)
+      .subscribe((response: AddBookingResponse) => {
+        if (response.success) {
+          this._router.navigate(['/bookings/', bookingId]);
+          this.displayModalDecline = false;
+        }
+      });
+  }
+  cancelBooking(bookingId: string) {
+    let payload: ReasonForDecline = this.cancelForm.value;
+    this.bookingsService
+      .cancelBooking(bookingId, payload)
+      .subscribe((response: AddBookingResponse) => {
+        if (response.success) {
+          this._router.navigate(['/bookings/', bookingId]);
+          this.displayModalDecline = false;
+        }
+        this.cancelledBooking = response?.data;
+        console.log(response?.data, 'cancelled');
+      });
+  }
 
-  // getBookingsId(bookingId: string) {
-  //   this.bookingsService.getBookingsById(bookingId).subscribe((response) => {
-  //     return (
-  //       (this.booking = response.data), console.log(this.booking, 'bookings')
-  //     );
-  //   });
-  // }
-
+  clickContinue() {
+    this._router.navigate(['/approved', this.bookingId]);
+  }
   getBookingsId(bookingId: string) {
     this.bookingsService.getBookingsById(bookingId).subscribe({
       next: (res) => {
@@ -78,12 +144,19 @@ export class BookingDetailComponent implements OnInit {
         switch (this.booking?.status) {
           case 1:
             this.bookingStatus = 'Awaiting Approval';
+            this.showCancel = true;
             break;
           case 2:
             this.bookingStatus = 'Approved';
+            this.showCancel = false;
             break;
           case 3:
             this.bookingStatus = 'Denied';
+            this.showCancel = false;
+            break;
+          case 4:
+            this.bookingStatus = 'Cancelled';
+            this.showCancel = false;
             break;
           default:
             this.bookingStatus = 'Awaiting Approval';

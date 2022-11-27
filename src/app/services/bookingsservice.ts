@@ -73,7 +73,10 @@ export class BookingsService {
       { headers: this.headers }
     );
   }
-  cancelBooking(bookingId: string, body?: ReasonForDecline): Observable<AddBookingResponse> {
+  cancelBooking(
+    bookingId: string,
+    body?: ReasonForDecline
+  ): Observable<AddBookingResponse> {
     return this.http.put<AddBookingResponse>(
       `${this.BASE_URL}/Bookings/cancelbooking?BookingId=${bookingId}`,
       body,
