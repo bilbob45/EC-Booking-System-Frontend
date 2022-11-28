@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { SelectItem } from 'primeng/api';
-import { BookingsService } from '../services/bookingsservice';
-
+import { HttpBackend, HttpClient, HttpHeaders } from '@angular/common/http';
 import {
   HubConnection,
   HubConnectionBuilder,
   LogLevel,
 } from '@microsoft/signalr';
-import { SelectItemGroup } from 'primeng/api';
+import { BookingsService } from '../services/bookingsservice';
+
+import { he } from 'date-fns/locale';
+import * as signalR from '@microsoft/signalr';
 interface Venue {
   name: string;
 }
@@ -21,6 +22,8 @@ interface Venue {
   providers: [HubConnectionBuilder],
 })
 export class HomeComponent implements OnInit {
+  private headers: HttpHeaders;
+  private http: HttpClient;
   userId: string;
   images: any[];
   title: string = 'The Breakroom';
@@ -59,8 +62,17 @@ export class HomeComponent implements OnInit {
   notifications: any[] = [];
   item: string;
   eventDate: Date;
+  userData = localStorage.getItem('user');
+  user = JSON.parse(this.userData);
+  token: any;
   private hubConnectionBuilder: HubConnection;
-  constructor(private _router: Router) {
+  constructor(
+    private _router: Router,
+    httpBackend: HttpBackend,
+    private bookingsService: BookingsService
+  ) {
+    this.token = this.user.token;
+    this.http = new HttpClient(httpBackend);
     this.items = [];
     for (let i = 0; i < 10000; i++) {
       this.items.push({ label: 'Item ' + i, value: 'Item ' + i });
@@ -138,8 +150,19 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.hubConnectionBuilder = new HubConnectionBuilder()
       .withUrl(
-        'https://ecbookingsystem1.azurewebsites.net/api/Accounts/testpostingbysignalr'
+        'https://ecbookingsystem1.azurewebsites.net/api/Accounts/testpostingbysignalr',
+        { accessTokenFactory: () => this.token }
+        // {
+        //   // "Foo: Bar" will not be sent with WebSockets or Server-Sent Events requests
+        //   headers: {
+        //     'Content-Type': 'application/json; charset=utf-8',
+        //     'Access-Control-Allow-Origin': '*',
+        //     Authorization: `Bearer ${this.token}`,
+        //   },
+        //   transport: signalR.HttpTransportType.LongPolling,
+        // }
       )
+
       .configureLogging(LogLevel.Information)
       .build();
     this.hubConnectionBuilder
@@ -157,6 +180,17 @@ export class HomeComponent implements OnInit {
     this.title = this.titles[e];
   }
 
+  getBookedDates(id: number) {
+    this.bookingsService.getBookings(id).subscribe((response) => {
+      this.invalidDates = [];
+      response.data.forEach((x) =>
+        this.invalidDates.push(
+          ...x['bookedDates'].map((x) => new Date(x.eventDate))
+        )
+      );
+      // console.log(this.invalidDates, 'invalid dates');
+    });
+  }
   goToRoom() {
     switch (this.selectedVenue.name) {
       case 'The Coliseum':

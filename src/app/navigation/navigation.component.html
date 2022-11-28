@@ -64,7 +64,7 @@
               <button ngbDropdownItem>
                 <a
                   class="nav-items"
-                  [routerLink]="['/booking-history']"
+                  [routerLink]="['/booking-history/']"
                   routerLinkActive="active"
                   (click)="$event.preventDefault()"
                 >
@@ -221,6 +221,14 @@
                 <a class="nav-items">
                   <span>Abiola Babatunde</span>
                 </a>
+              </button>
+              <button
+                class="logout-button"
+                pButton
+                type="button"
+                (click)="logout()"
+              >
+                Logout
               </button>
             </div>
           </div>

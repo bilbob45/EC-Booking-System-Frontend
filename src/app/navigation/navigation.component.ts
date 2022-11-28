@@ -27,10 +27,12 @@ export class NavigationComponent implements OnInit {
     if (this.loggedInUser?.role === 'Approver') {
       this.showSettings = false;
     }
+    if (this.loggedInUser?.role === 'Admin') {
+      this.showSettings = true;
+    }
   }
 
   logout() {
-    localStorage.clear();
     this.router.navigate(['/login']);
   }
 }

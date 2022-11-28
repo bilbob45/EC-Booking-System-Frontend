@@ -1,20 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { PhotoService } from '../services/photoservice';
+import { KilimanjaroService } from '../services/kilimanjaroservice';
 import { SelectItem } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { Location } from '@angular/common';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BookingsService } from '../services/bookingsservice';
 import { MessageService } from 'primeng/api';
-import { Booking } from '../services/BookingService';
 import { DatePipe } from '@angular/common';
 
 interface Venue {
+  name: string;
+}
+interface MeetingType {
   name: string;
 }
 interface TimeSlot {
@@ -24,7 +21,7 @@ interface TimeSlot {
   selector: 'app-kilimanjaro',
   templateUrl: './kilimanjaro.component.html',
   styleUrls: ['./kilimanjaro.component.css'],
-  providers: [DatePipe, MessageService],
+  providers: [DatePipe, MessageService, KilimanjaroService],
 })
 export class KilimanjaroComponent implements OnInit {
   selectedRoom: number = 2;
@@ -44,6 +41,7 @@ export class KilimanjaroComponent implements OnInit {
   images: any[];
   val: string;
   value1: any;
+  meetingTypes: MeetingType[];
   venues: Venue[];
   timeSlots: TimeSlot[] = [];
   bookingForm: FormGroup;
@@ -57,11 +55,13 @@ export class KilimanjaroComponent implements OnInit {
   rangeDates: Date[];
   minDate: Date;
   maxDate: Date;
+  dateQuery: any;
   es: any;
   queryDate: Date;
   invalidDates: Array<Date>;
   checked1: boolean = false;
   checked2: boolean = true;
+  homeDate: any;
   responsiveOptions: any[] = [
     {
       breakpoint: '1024px',
@@ -78,11 +78,12 @@ export class KilimanjaroComponent implements OnInit {
   ];
 
   constructor(
-    private photoService: PhotoService,
+    private photoService: KilimanjaroService,
     private fb: FormBuilder,
     private datePipe: DatePipe,
     private messageService: MessageService,
     private _router: Router,
+    private location: Location,
     private activatedRouter: ActivatedRoute,
     private bookingsService: BookingsService
   ) {
@@ -94,12 +95,17 @@ export class KilimanjaroComponent implements OnInit {
     // this.activatedRouter.queryParams.subscribe(
     //   data=>this.queryParams.eventDate = data.eventDate
     // )
-    this.venues = [
+    this.meetingTypes = [
       { name: 'Client Meeting' },
       { name: 'BU Meeting' },
       { name: 'Partner Meeting' },
       { name: 'Training' },
       { name: 'Other Events' },
+    ];
+    this.venues = [
+      { name: 'Shuttle Discovery' },
+      { name: 'The Coliseum' },
+      { name: 'Kilimanjaro' },
     ];
     this.timeSlots = [
       { time: 'Morning (9:00am - 12:00noon)' },
@@ -110,7 +116,6 @@ export class KilimanjaroComponent implements OnInit {
       meetingType: ['', Validators.required],
       clientCompanyName: ['', Validators.required],
       engagementLeader: ['', Validators.required],
-
       numberOfGuests: [0, Validators.required],
       internalContactPerson: ['', Validators.required],
       contactNumber: ['', Validators.required],
@@ -118,30 +123,35 @@ export class KilimanjaroComponent implements OnInit {
       feedingRequirement: ['', Validators.required],
       bookedDates: this.fb.array([]),
     });
+
+    this.dateQuery = new Date(
+      this.activatedRouter.snapshot.queryParamMap.get('date')
+    );
+    // let newDate = filter;
+    // this.activatedRouter.queryParams.subscribe(() => {
+    //   this.homeDate = this.datePipe.transform(newDate, 'dd/MM/yyyy');
+    //   console.log(this.homeDate, 'homeDate');
+    // });
   }
 
   ngOnInit(): void {
     this.photoService.getImages().then((images) => {
       this.images = images;
-      // this.getBookedDates(2);
+      this.getBookedDates(1);
+      console.log(this.dateQuery);
     });
-    const filter = this.activatedRouter.snapshot.queryParamMap.get('date');
-    console.log(filter, 'filter');
-    let homeDate = filter;
-    this.activatedRouter.queryParams.subscribe((filter) => {
-      homeDate = this.datePipe.transform(homeDate, 'dd/MM/yyyy');
-      console.log(homeDate, 'homeDate');
-    });
-    //   this.activatedRouter.queryParams
-    //   .filter(params => params.order)
-    //   .subscribe(params => {
-    //     console.log(params); // { order: "popular" }
+    // const filter = this.activatedRouter.snapshot.queryParamMap.get('date');
+    // let newDate = filter;
+    // this.activatedRouter.queryParams.subscribe(() => {
+    //   this.homeDate = this.datePipe.transform(newDate, 'dd/MM/yyyy');
+    //   console.log(this.homeDate, 'homeDate');
+    // });
+    if (this.homeDate) {
+      this.addHomeModel();
+    } else {
+      this.addDate();
+    }
 
-    //     this.eventDate = params.order;
-
-    //     console.log(this.eventDate); // popular
-    //   }
-    // );
     let today = new Date();
     let month = today.getMonth();
     let year = today.getFullYear();
@@ -179,46 +189,49 @@ export class KilimanjaroComponent implements OnInit {
     return this.fb.group({
       eventDate: Date,
       time: '',
-
-      // eventDate: ['', Validators.required],
-      // time: ['', Validators.required],
     });
   }
+  homeDateModel(): FormGroup {
+    return this.fb.group({
+      eventDate: (Date = this.homeDate),
+      time: '',
+    });
+  }
+
   DateModels(): FormArray {
     return this.bookingForm.get('bookedDates') as FormArray;
+  }
+  addHomeModel() {
+    this.DateModels().push(this.newDateModel());
   }
 
   addDate() {
     this.DateModels().push(this.newDateModel());
-    console.log(this.DateModels(), 'controls');
   }
 
   removeDate(i: number) {
     this.DateModels().removeAt(i);
   }
 
-  // save(): void {
-
-  // }
-  // getBookedDates(id: number) {
-  //   this.bookingsService.getBookings(id).subscribe((response) => {
-  //     this.invalidDates = [];
-  //     response.data.forEach((x) =>
-  //       this.invalidDates.push(...x.bookedDates.map((x) => x.eventDate))
-  //     );
-  //     console.log(this.invalidDates, 'invalid dates');
-  //   });
-  // }
-  submitted = false;
-
-  onSubmit(selectedRoom: number) {
-    this.submitted = true;
+  backClick() {
+    this.location.back();
+  }
+  onCancel() {
+    this.reset();
+  }
+  getBookedDates(id: number) {
+    this.bookingsService.getBookings(id).subscribe((response) => {
+      this.invalidDates = [];
+      response.data.forEach((x) =>
+        this.invalidDates.push(
+          ...x['bookedDates'].map((x) => new Date(x.eventDate))
+        )
+      );
+      // console.log(this.invalidDates, 'invalid dates');
+    });
   }
 
   createBooking(spaceId: number) {
-    this.successMsg = '';
-    this.errorMsg = '';
-    this.submitted = true;
     const t = this.bookingForm.value;
     for (let i = 0; i < t.bookedDates.length; i++) {
       let originalDate = t.bookedDates[i].eventDate;
@@ -234,7 +247,9 @@ export class KilimanjaroComponent implements OnInit {
       (res) => {
         this.showSuccess();
         console.log(this.showSuccess, 'response');
-        this._router.navigate(['/awaiting-approval']);
+        this._router.navigate(['/bookings', res.data[0].id]);
+        console.log(res.data[0].id, 'res');
+
         this.reset();
       },
       (error: ErrorEvent) => {
@@ -254,5 +269,18 @@ export class KilimanjaroComponent implements OnInit {
     this.contactNumber = '';
     this.notes = '';
     this.feedingRequirement = '';
+  }
+
+  goToRoom() {
+    switch (this.selectedVenue.name) {
+      case 'The Coliseum':
+        this._router.navigate(['/the-coliseum/'], {});
+        break;
+      case 'Shuttle Discovery':
+        this._router.navigate(['/booking/'], {});
+        break;
+      case 'Kilimanjaro':
+        this._router.navigate(['/kilimanjaro/'], {});
+    }
   }
 }

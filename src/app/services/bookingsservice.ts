@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {
   AddBookingResponse,
+  BookedDates,
   Booking,
   BookingStatus,
   GetBookings,
@@ -33,8 +34,8 @@ export class BookingsService {
     });
   }
 
-  getBookings(id?: number): Observable<{ data: AddBookingResponse[] }> {
-    return this.http.get<{ data: AddBookingResponse[] }>(
+  getBookings(id?: number): Observable<{ data: GetBookings[] }> {
+    return this.http.get<{ data: GetBookings[] }>(
       `${this.BASE_URL}/Bookings/getbookings`,
       { headers: this.headers }
     );
@@ -73,6 +74,7 @@ export class BookingsService {
       { headers: this.headers }
     );
   }
+
   cancelBooking(
     bookingId: string,
     body?: ReasonForDecline
@@ -83,7 +85,14 @@ export class BookingsService {
       { headers: this.headers }
     );
   }
-
+  getBookedDatesBySpaceId(
+    spaceId: number
+  ): Observable<{ data: BookedDates[] }> {
+    return this.http.get<{ data: BookedDates[] }>(
+      `${this.BASE_URL}/Spaces/getbookeddatesbyspaceid?SpaceId=${spaceId}`,
+      { headers: this.headers }
+    );
+  }
   //createBooking(eventDate: string, time: string, meetingType: string, clientCompanyName: string, engagementLeader: string, numberOfGuests: number, contactNumber: number, internalContactPerson: string,additionalInfo: string, feedingRequirement:boolean): Observable<Booking> {
 
   createBooking(body: Booking, id: number): Observable<AddBookingResponse> {

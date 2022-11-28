@@ -1,15 +1,7 @@
 import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import {
-  AddBookingResponse,
-  BookingStatus,
-  GetBookings,
-} from '../services/BookingService';
 import { ActivatedRoute, Router } from '@angular/router';
-
-import { TabDirective } from 'ngx-bootstrap/tabs';
+import { Location } from '@angular/common';
 import { BookingsService } from '../services/bookingsservice';
-import { LazyLoadEvent } from 'primeng/api';
 import { Paginator } from 'primeng/paginator';
 import { Table } from 'primeng/table';
 
@@ -38,6 +30,7 @@ export class BookingHistoryComponent implements OnInit {
   constructor(
     private bookingService: BookingsService,
     private _router: Router,
+    private location: Location,
     private _route: ActivatedRoute
   ) {}
 
@@ -92,5 +85,9 @@ export class BookingHistoryComponent implements OnInit {
 
   formatInput(input: HTMLInputElement) {
     input.value = input.value.replace(FILTER_PAG_REGEX, '');
+  }
+
+  backClick() {
+    this.location.back();
   }
 }

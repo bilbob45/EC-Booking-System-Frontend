@@ -57,17 +57,29 @@ export interface LoginResponse {
 export class GetBookings {
   id: string;
   spaceId: number;
+  spaceName: string;
   userId: string;
+  createdAt: Date;
   clientCompanyName: string;
   meetingType: string;
   engagementLeader: string;
   internalContactPerson: string;
   contactNumber: number;
   feedingRequirement: string;
+  comment: string;
   numberOfGuests: number;
   notes: string;
   status: string;
-  bookedDates: BookedDate[];
+  bookedDates:  [
+    {
+      id: string;
+      bookingId: string;
+      eventDate: Date;
+      time: string;
+    }
+  ];
+  success: boolean;
+  message: string;
 }
 
 export class BookedDates {

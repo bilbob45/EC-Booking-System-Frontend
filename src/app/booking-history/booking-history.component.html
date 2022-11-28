@@ -1,7 +1,7 @@
 <div class="booking-history-container">
   <div class="history-header-container">
     <div class="history-title">
-      <a routerLink="/rooms"
+      <a (click)="backClick()"
         ><img src="../../assets/icons/chevron-left-arrow.svg"
       /></a>
       <span>Booking History</span>
@@ -29,7 +29,8 @@
         </ng-template>
         <ng-template #notEmpty>
           <div class="cancelled-empty-state">
-            <img src="../../assets/images/cancel-empty.svg" />
+            <img src="../../assets/images/empty-state.svg" />
+            <p>There are no Denied boooking requests to display</p>
           </div>
         </ng-template>
         <div class="table-container" *ngIf="bookings; else notEmpty">
@@ -85,7 +86,8 @@
         </ng-template>
         <ng-template #notEmpty>
           <div class="cancelled-empty-state">
-            <img src="../../assets/images/cancel-empty.svg" />
+            <img src="../../assets/images/empty-state.svg" />
+            <p>There are no Denied boooking requests to display</p>
           </div>
         </ng-template>
         <div class="table-container" *ngIf="pendingBookings; else notEmpty">
@@ -144,7 +146,8 @@
         </ng-template>
         <ng-template #notEmpty>
           <div class="cancelled-empty-state">
-            <img src="../../assets/images/cancel-empty.svg" />
+            <img src="../../assets/images/empty-state.svg" />
+            <p>There are no Denied boooking requests to display</p>
           </div>
         </ng-template>
         <div class="table-container">
@@ -202,7 +205,8 @@
         </ng-template>
         <ng-template #notEmpty>
           <div class="cancelled-empty-state">
-            <img src="../../assets/images/cancel-empty.svg" />
+            <img src="../../assets/images/empty-state.svg" />
+            <p>There are no Denied boooking requests to display</p>
           </div>
         </ng-template>
         <div class="table-container">
@@ -260,7 +264,8 @@
         </ng-template>
         <ng-template #notEmpty>
           <div class="cancelled-empty-state">
-            <img src="../../assets/images/cancel-empty.svg" />
+            <img src="../../assets/images/empty-state.svg" />
+            <p>There are no Cancelled boooking requests to display</p>
           </div>
         </ng-template>
         <div

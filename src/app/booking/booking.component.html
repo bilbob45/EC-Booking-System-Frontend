@@ -1,7 +1,6 @@
 <div class="container-fluid booking-container">
-  <p-toast></p-toast>
   <div class="shuttle-header">
-    <a routerLink="/rooms"
+    <a (click)="backClick()"
       ><img
         src="../../assets/icons/chevron-left-arrow.svg"
         width="18"
@@ -173,6 +172,7 @@
                                   [disabledDates]="invalidDates"
                                   [readonlyInput]="true"
                                   inputId="disableDates"
+                                  [minDate]="yesterday"
                                   class="p-inputtext-sm"
                                   placeholder="Select Appointment Date"
                                   [required]="true"
@@ -334,6 +334,7 @@
                 pButton
                 type="button"
                 label="Cancel"
+                (click)="onCancel()"
                 styleClass="p-button-sm"
                 class="p-button-outlined"
               ></button>

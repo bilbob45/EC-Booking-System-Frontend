@@ -29,6 +29,15 @@ import { SiteLayoutComponent } from './site-layout/site-layout.component';
 import { SearchPipe } from './booking-history/search.pipe';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import interactionPlugin from '@fullcalendar/interaction';
+import daygridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+
+FullCalendarModule.registerPlugins([
+  interactionPlugin,
+  daygridPlugin,
+  timeGridPlugin,
+]);
 
 @NgModule({
   declarations: [

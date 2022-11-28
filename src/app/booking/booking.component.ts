@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PhotoService } from '../services/photoservice';
 import { SelectItem } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 import {
   FormArray,
   FormBuilder,
@@ -56,7 +57,7 @@ export class BookingComponent implements OnInit {
   item: string;
   value2: any;
   value8: any;
-
+  yesterday: Date;
   dates: Date[];
   rangeDates: Date[];
   minDate: Date;
@@ -89,6 +90,7 @@ export class BookingComponent implements OnInit {
     private datePipe: DatePipe,
     private messageService: MessageService,
     private _router: Router,
+    private location: Location,
     private activatedRouter: ActivatedRoute,
     private bookingsService: BookingsService
   ) {
@@ -170,7 +172,9 @@ export class BookingComponent implements OnInit {
     this.maxDate = new Date();
     this.maxDate.setMonth(nextMonth);
     this.maxDate.setFullYear(nextYear);
-
+    let yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    this.yesterday = yesterday;
     // let invalidDate = new Date();
     // invalidDate.setDate(today.getDate() - 1);
     // this.invalidDates = [today, invalidDate];
@@ -218,9 +222,9 @@ export class BookingComponent implements OnInit {
     this.DateModels().removeAt(i);
   }
 
-  // save(): void {
-
-  // }
+  backClick() {
+    this.location.back();
+  }
   getBookedDates(id: number) {
     this.bookingsService.getBookings(id).subscribe((response) => {
       this.invalidDates = [];
@@ -232,16 +236,8 @@ export class BookingComponent implements OnInit {
       // console.log(this.invalidDates, 'invalid dates');
     });
   }
-  submitted = false;
-
-  onSubmit(selectedRoom: number) {
-    this.submitted = true;
-  }
 
   createBooking(spaceId: number) {
-    this.successMsg = '';
-    this.errorMsg = '';
-    this.submitted = true;
     const t = this.bookingForm.value;
     for (let i = 0; i < t.bookedDates.length; i++) {
       let originalDate = t.bookedDates[i].eventDate;
@@ -280,15 +276,19 @@ export class BookingComponent implements OnInit {
     this.notes = '';
     this.feedingRequirement = '';
   }
-
+  onCancel() {
+    this.reset();
+  }
   goToRoom() {
     switch (this.selectedVenue.name) {
       case 'The Coliseum':
         this._router.navigate(['/the-coliseum/'], {});
         break;
       case 'Shuttle Discovery':
-        this._router.navigate(['/shuttle-discovery/'], {});
+        this._router.navigate(['/booking/'], {});
         break;
+      case 'Kilimanjaro':
+        this._router.navigate(['/kilimanjaro/'], {});
     }
   }
 }

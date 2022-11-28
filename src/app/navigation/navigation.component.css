@@ -135,6 +135,15 @@ nav a.active:hover {
   border-radius: 8px;
   /* padding: 20px; */
 }
+.logout-button {
+  padding: 4px 44px;
+  background: #e45c2b;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  margin-left: 10px;
+  border-color: #e45c2b;
+}
 /* Responsive Styles */
 @media screen and (max-width: 767px) {
 }

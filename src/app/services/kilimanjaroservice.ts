@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Image } from '../domain/image';
 
 @Injectable()
-export class ColiseumService {
+export class KilimanjaroService {
   constructor(private http: HttpClient) {}
 
   getImages() {

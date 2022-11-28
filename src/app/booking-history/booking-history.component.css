@@ -25,6 +25,11 @@
   align-items: center;
   padding: 80px;
   background: #fff;
+  flex-direction: column;
+}
+.cancelled-empty-state p {
+  padding-top: 15px;
+  font-size: 16px;
 }
 .table-container {
   padding: 30px;
