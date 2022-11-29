@@ -34,7 +34,7 @@ export class BookingsService {
     });
   }
 
-  getBookings(id?: number): Observable<{ data: GetBookings[] }> {
+  getBookings(id?: number): Observable<{ data: GetBookings[] } | undefined> {
     return this.http.get<{ data: GetBookings[] }>(
       `${this.BASE_URL}/Bookings/getbookings`,
       { headers: this.headers }

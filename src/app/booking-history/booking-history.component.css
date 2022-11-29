@@ -50,7 +50,9 @@ th {
   letter-spacing: -0.4px;
   color: #111111;
 }
-
+tr:hover {
+  cursor: pointer;
+}
 td {
   width: 150px;
   padding: 5px;
@@ -61,6 +63,26 @@ td {
   line-height: 24px;
   letter-spacing: -0.4px;
   color: #5e5e5e;
+}
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+.page-link {
+  border: transparent;
+  color: #c5c5c5;
+}
+.page-link:hover {
+  background: transparent;
+  color: #d04a02;
+  border: transparent;
+}
+.page-link:focus {
+  background: transparent;
+  color: #d04a02;
+  border: transparent;
+  box-shadow: none;
 }
 ::ng-deep .p-tabview .p-tabview-nav {
   border: 1px solid transparent !important;

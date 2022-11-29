@@ -35,7 +35,8 @@
             <a
               ngbDropdownToggle
               class="nav-items"
-              routerLink="#"
+              [routerLink]=""
+              [routerLinkActiveOptions]="{ exact: true }"
               routerLinkActive="active"
               #booking="routerLinkActive"
               role="button"
@@ -64,7 +65,7 @@
               <button ngbDropdownItem>
                 <a
                   class="nav-items"
-                  [routerLink]="['/booking-history/']"
+                  [routerLink]="['/booking-history']"
                   routerLinkActive="active"
                   (click)="$event.preventDefault()"
                 >

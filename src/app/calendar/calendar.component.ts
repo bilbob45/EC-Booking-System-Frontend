@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CalendarOptions } from '@fullcalendar/angular';
+import { CalendarOptions, DateSelectArg } from '@fullcalendar/angular';
 import { AddBookingResponse, GetBookings } from '../services/BookingService';
 
 import { BookingsService } from '../services/bookingsservice';
@@ -12,12 +12,11 @@ export class CalendarComponent implements OnInit {
   events: GetBookings[] = [];
   calendarOptions: CalendarOptions | undefined;
   calendarEvents: any[];
-
+  client: any;
   constructor(private bookingsService: BookingsService) {}
 
   ngOnInit(): void {
     this.getEvents();
-    console.log(this.events);
   }
 
   getEvents() {
@@ -25,10 +24,17 @@ export class CalendarComponent implements OnInit {
       this.events = response.data;
       console.log(this.calendarEvents, 'events');
       this.calendarEvents = [];
+
       // response.data.forEach((e) => this.calendarEvents.push({spaceName: e.spaceName, }))
       this.calendarEvents = this.events.map((e) => ({
-        title: e.spaceName,
-        status: e.status,
+        title:
+          e.spaceName +
+          '\n' +
+          e.clientCompanyName +
+          '\n' +
+          e.bookedDates[0].time +
+          '\n' +
+          e.meetingType,
         engagementLeader: e.engagementLeader,
         start: e.bookedDates[0].eventDate,
         end: e.bookedDates[e.bookedDates.length - 1].eventDate,

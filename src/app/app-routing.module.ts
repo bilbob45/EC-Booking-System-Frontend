@@ -29,17 +29,16 @@ const routes: Routes = [
       { path: 'shuttle-discovery', component: ShuttleDiscoveryComponent },
       { path: 'vr-room', component: VRRoomComponent },
       { path: 'booking-history', component: BookingHistoryComponent },
-      { path: 'booking', component: BookingComponent },
       { path: 'the-coliseum', component: TheColiseumComponent },
       { path: 'kilimanjaro', component: KilimanjaroComponent },
-      { path: 'booking-detail', component: BookingDetailComponent },
+      {
+        path: 'booking',
+        loadChildren: () =>
+          import('./booking/booking.module').then((m) => m.BookingModule),
+      },
     ],
   },
-  {
-    path: 'bookings',
-    loadChildren: () =>
-      import('./booking/booking.module').then((m) => m.BookingModule),
-  },
+
   {
     path: '',
     component: BaseLayoutComponent,

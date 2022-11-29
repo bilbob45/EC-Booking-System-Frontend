@@ -69,8 +69,8 @@ export class GetBookings {
   comment: string;
   numberOfGuests: number;
   notes: string;
-  status: string;
-  bookedDates:  [
+  status: BookingStatus;
+  bookedDates: [
     {
       id: string;
       bookingId: string;

@@ -1,16 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectItem } from 'primeng/api';
-import { HttpBackend, HttpClient, HttpHeaders } from '@angular/common/http';
-import {
-  HubConnection,
-  HubConnectionBuilder,
-  LogLevel,
-} from '@microsoft/signalr';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 import { BookingsService } from '../services/bookingsservice';
 
-import { he } from 'date-fns/locale';
-import * as signalR from '@microsoft/signalr';
 interface Venue {
   name: string;
 }
@@ -19,14 +13,12 @@ interface Venue {
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  providers: [HubConnectionBuilder],
+  providers: [],
 })
 export class HomeComponent implements OnInit {
-  private headers: HttpHeaders;
-  private http: HttpClient;
   userId: string;
   images: any[];
-  title: string = 'The Breakroom';
+  title: string = 'Top n Chill';
   titles: string[] = ['Kilimanjaro', 'The Coliseum', 'Shuttle Discovery'];
   description: string =
     'Relax, converse, eat, and chill in our kitchenette area appropriately named Top up n’ chill. ';
@@ -62,17 +54,11 @@ export class HomeComponent implements OnInit {
   notifications: any[] = [];
   item: string;
   eventDate: Date;
-  userData = localStorage.getItem('user');
-  user = JSON.parse(this.userData);
-  token: any;
-  private hubConnectionBuilder: HubConnection;
+
   constructor(
     private _router: Router,
-    httpBackend: HttpBackend,
     private bookingsService: BookingsService
   ) {
-    this.token = this.user.token;
-    this.http = new HttpClient(httpBackend);
     this.items = [];
     for (let i = 0; i < 10000; i++) {
       this.items.push({ label: 'Item ' + i, value: 'Item ' + i });
@@ -147,32 +133,7 @@ export class HomeComponent implements OnInit {
     invalidDate.setDate(today.getDate() - 1);
     this.invalidDates = [today, invalidDate];
   }
-  ngOnInit(): void {
-    this.hubConnectionBuilder = new HubConnectionBuilder()
-      .withUrl(
-        'https://ecbookingsystem1.azurewebsites.net/api/Accounts/testpostingbysignalr',
-        { accessTokenFactory: () => this.token }
-        // {
-        //   // "Foo: Bar" will not be sent with WebSockets or Server-Sent Events requests
-        //   headers: {
-        //     'Content-Type': 'application/json; charset=utf-8',
-        //     'Access-Control-Allow-Origin': '*',
-        //     Authorization: `Bearer ${this.token}`,
-        //   },
-        //   transport: signalR.HttpTransportType.LongPolling,
-        // }
-      )
-
-      .configureLogging(LogLevel.Information)
-      .build();
-    this.hubConnectionBuilder
-      .start()
-      .then(() => console.log('Connection Started'))
-      .catch((err) => console.log('Error while connecting'));
-    this.hubConnectionBuilder.on('BroadcastMessage', (result: any) => {
-      this.notifications.push(result);
-    });
-  }
+  ngOnInit(): void {}
 
   changeImage(e: number) {
     this.slide = this.slides[e];

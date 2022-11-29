@@ -47,9 +47,8 @@ export class BookingDetailComponent implements OnInit {
   bookingId: string;
   comment: ReasonForDecline;
   bookingStatus: string;
-
   showApproval = true;
-  showCancel = false;
+  showCancel = true;
   loggedInUser: any = null;
   userData: any;
   showModalDialog() {
@@ -93,7 +92,7 @@ export class BookingDetailComponent implements OnInit {
     }
     if (this.loggedInUser?.role === 'Approver') {
       this.showApproval;
-      this.showCancel;
+      this.showCancel = false;
     }
   }
   backCick() {
@@ -103,9 +102,9 @@ export class BookingDetailComponent implements OnInit {
     this.bookingsService
       .approveBooking(bookingId)
       .subscribe((response: Booking) => {
-        this._router.navigate(['/bookings/', bookingId]);
-        this.displayModalDecline = false;
-        console.log(response, 'approve');
+        window.location.reload();
+        this.displayModalApprove = false;
+     
       });
   }
   declineBooking(bookingId: string) {
@@ -114,7 +113,7 @@ export class BookingDetailComponent implements OnInit {
       .declineBooking(bookingId, payload)
       .subscribe((response: AddBookingResponse) => {
         if (response.success) {
-          this._router.navigate(['/bookings/', bookingId]);
+          window.location.reload();
           this.displayModalDecline = false;
         }
       });
@@ -125,41 +124,43 @@ export class BookingDetailComponent implements OnInit {
       .cancelBooking(bookingId, payload)
       .subscribe((response: AddBookingResponse) => {
         if (response.success) {
-          this._router.navigate(['/bookings/', bookingId]);
+          window.location.reload();
           this.displayModalDecline = false;
         }
         this.cancelledBooking = response?.data;
-        console.log(response?.data, 'cancelled');
+
       });
   }
 
-  clickContinue() {
-    this._router.navigate(['/approved', this.bookingId]);
-  }
+
   getBookingsId(bookingId: string) {
     this.bookingsService.getBookingsById(bookingId).subscribe({
       next: (res) => {
         this.booking = res?.data;
-
         switch (this.booking?.status) {
           case 1:
             this.bookingStatus = 'Awaiting Approval';
-            this.showCancel = true;
+            this.showCancel;
+
             break;
           case 2:
             this.bookingStatus = 'Approved';
             this.showCancel = false;
+            this.showApproval = false;
             break;
           case 3:
-            this.bookingStatus = 'Denied';
+            this.bookingStatus = 'Declined';
             this.showCancel = false;
+            this.showApproval = false;
             break;
           case 4:
             this.bookingStatus = 'Cancelled';
             this.showCancel = false;
+            this.showApproval = false;
             break;
           default:
             this.bookingStatus = 'Awaiting Approval';
+            this.showCancel = true;
         }
       },
     });

@@ -62,6 +62,7 @@ export class KilimanjaroComponent implements OnInit {
   checked1: boolean = false;
   checked2: boolean = true;
   homeDate: any;
+  yesterday: Date;
   responsiveOptions: any[] = [
     {
       breakpoint: '1024px',
@@ -165,7 +166,9 @@ export class KilimanjaroComponent implements OnInit {
     this.maxDate = new Date();
     this.maxDate.setMonth(nextMonth);
     this.maxDate.setFullYear(nextYear);
-
+    let yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    this.yesterday = yesterday;
     // let invalidDate = new Date();
     // invalidDate.setDate(today.getDate() - 1);
     // this.invalidDates = [today, invalidDate];

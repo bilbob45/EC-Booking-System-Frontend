@@ -57,7 +57,7 @@ export class TheColiseumComponent implements OnInit {
   item: string;
   value2: any;
   value8: any;
-
+  yesterday: Date;
   dates: Date[];
   rangeDates: Date[];
   minDate: Date;
@@ -172,7 +172,9 @@ export class TheColiseumComponent implements OnInit {
     this.maxDate = new Date();
     this.maxDate.setMonth(nextMonth);
     this.maxDate.setFullYear(nextYear);
-
+    let yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    this.yesterday = yesterday;
     // let invalidDate = new Date();
     // invalidDate.setDate(today.getDate() - 1);
     // this.invalidDates = [today, invalidDate];

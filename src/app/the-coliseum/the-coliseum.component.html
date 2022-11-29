@@ -18,7 +18,7 @@
         <img src="../../assets/icons/chevron-down.svg" width="18" height="18" />
       </button>
       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-        <button routerLink="/bookings/" ngbDropdownItem>
+        <button routerLink="/booking/" ngbDropdownItem>
           Shuttle Discovery
         </button>
         <button routerLink="/the-coliseum/" ngbDropdownItem>
@@ -185,6 +185,7 @@
                                   class="p-inputtext-sm"
                                   placeholder="Select Appointment Date"
                                   [required]="true"
+                                  [minDate]="yesterday"
                                   [defaultDate]="dateQuery"
                                 ></p-calendar>
                               </div>

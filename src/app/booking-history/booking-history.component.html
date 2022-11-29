@@ -30,14 +30,14 @@
         <ng-template #notEmpty>
           <div class="cancelled-empty-state">
             <img src="../../assets/images/empty-state.svg" />
-            <p>There are no Denied boooking requests to display</p>
+            <p>There are no boooking requests to display</p>
           </div>
         </ng-template>
         <div class="table-container" *ngIf="bookings; else notEmpty">
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">SN</th>
+                <th style="text-align: center" scope="col">SN</th>
                 <th scope="col">ID</th>
                 <th scope="col">Requested on</th>
                 <th scope="col">Start Date</th>
@@ -50,12 +50,16 @@
             <tbody>
               <tr
                 *ngFor="
-                  let booking of bookings | search: searchText;
+                  let booking of bookings
+                    | slice
+                      : (page - 1) * pageSize
+                      : (page - 1) * pageSize + pageSize
+                    | search: searchText;
                   index as i
                 "
                 (click)="clickContinue(booking.id)"
               >
-                <th scope="row">{{ i + 1 }}</th>
+                <th scope="row" style="text-align: center">{{ i + 1 }}</th>
                 <td>{{ booking?.id }}</td>
                 <td>{{ booking?.createdAt | date: "d MMM, y" }}</td>
                 <td>
@@ -76,6 +80,45 @@
               </tr>
             </tbody>
           </table>
+          <ngb-pagination
+            class="pagination-container"
+            [collectionSize]="bookings?.length"
+            [(page)]="page"
+          >
+            <ng-template ngbPaginationPrevious>Prev</ng-template>
+            <ng-template ngbPaginationNext>Next</ng-template>
+            <ng-template ngbPaginationPages let-page let-pages="pages">
+              <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                <div class="mb-3 d-flex flex-nowrap px-2">
+                  <label
+                    id="paginationInputLabel"
+                    for="paginationInput"
+                    class="col-form-label me-2 ms-1"
+                    >Page</label
+                  >
+                  <input
+                    #i
+                    type="text"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                    class="form-control custom-pages-input"
+                    id="paginationInput"
+                    [value]="page"
+                    (keyup.enter)="selectPage(i.value)"
+                    (blur)="selectPage(i.value)"
+                    (input)="formatInput($any($event).target)"
+                    style="width: 2.5rem"
+                  />
+                  <span
+                    id="paginationDescription"
+                    class="col-form-label text-nowrap px-2"
+                  >
+                    of {{ pages.length }}</span
+                  >
+                </div>
+              </li>
+            </ng-template>
+          </ngb-pagination>
         </div>
       </tab>
       <tab>
@@ -87,7 +130,7 @@
         <ng-template #notEmpty>
           <div class="cancelled-empty-state">
             <img src="../../assets/images/empty-state.svg" />
-            <p>There are no Denied boooking requests to display</p>
+            <p>There are no Pending boooking requests to display</p>
           </div>
         </ng-template>
         <div class="table-container" *ngIf="pendingBookings; else notEmpty">
@@ -137,6 +180,45 @@
               </tr>
             </tbody>
           </table>
+          <ngb-pagination
+            class="pagination-container"
+            [collectionSize]="pendingBookings?.length"
+            [(page)]="page"
+          >
+            <ng-template ngbPaginationPrevious>Prev</ng-template>
+            <ng-template ngbPaginationNext>Next</ng-template>
+            <ng-template ngbPaginationPages let-page let-pages="pages">
+              <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                <div class="mb-3 d-flex flex-nowrap px-2">
+                  <label
+                    id="paginationInputLabel"
+                    for="paginationInput"
+                    class="col-form-label me-2 ms-1"
+                    >Page</label
+                  >
+                  <input
+                    #i
+                    type="text"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                    class="form-control custom-pages-input"
+                    id="paginationInput"
+                    [value]="page"
+                    (keyup.enter)="selectPage(i.value)"
+                    (blur)="selectPage(i.value)"
+                    (input)="formatInput($any($event).target)"
+                    style="width: 2.5rem"
+                  />
+                  <span
+                    id="paginationDescription"
+                    class="col-form-label text-nowrap px-2"
+                  >
+                    of {{ pages.length }}</span
+                  >
+                </div>
+              </li>
+            </ng-template>
+          </ngb-pagination>
         </div>
       </tab>
       <tab>
@@ -144,14 +226,14 @@
           <span>Approved</span>
           <b class="badge">{{ approvedBookings?.length }}</b>
         </ng-template>
-        <ng-template #notEmpty>
+        <ng-template #notEmptyApproved>
           <div class="cancelled-empty-state">
             <img src="../../assets/images/empty-state.svg" />
-            <p>There are no Denied boooking requests to display</p>
+            <p>There are no Approved boooking requests to display</p>
           </div>
         </ng-template>
         <div class="table-container">
-          <table class="table" *ngIf="approvedBookings; else notEmpty">
+          <table class="table" *ngIf="approvedBookings; else notEmptyApproved">
             <thead>
               <tr>
                 <th scope="col">SN</th>
@@ -196,6 +278,45 @@
               </tr>
             </tbody>
           </table>
+          <ngb-pagination
+            class="pagination-container"
+            [collectionSize]="approvedBookings?.length"
+            [(page)]="page"
+          >
+            <ng-template ngbPaginationPrevious>Prev</ng-template>
+            <ng-template ngbPaginationNext>Next</ng-template>
+            <ng-template ngbPaginationPages let-page let-pages="pages">
+              <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                <div class="mb-3 d-flex flex-nowrap px-2">
+                  <label
+                    id="paginationInputLabel"
+                    for="paginationInput"
+                    class="col-form-label me-2 ms-1"
+                    >Page</label
+                  >
+                  <input
+                    #i
+                    type="text"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                    class="form-control custom-pages-input"
+                    id="paginationInput"
+                    [value]="page"
+                    (keyup.enter)="selectPage(i.value)"
+                    (blur)="selectPage(i.value)"
+                    (input)="formatInput($any($event).target)"
+                    style="width: 2.5rem"
+                  />
+                  <span
+                    id="paginationDescription"
+                    class="col-form-label text-nowrap px-2"
+                  >
+                    of {{ pages.length }}</span
+                  >
+                </div>
+              </li>
+            </ng-template>
+          </ngb-pagination>
         </div>
       </tab>
       <tab>
@@ -254,6 +375,45 @@
               </tr>
             </tbody>
           </table>
+          <ngb-pagination
+            class="pagination-container"
+            [collectionSize]="deniedBookings?.length"
+            [(page)]="page"
+          >
+            <ng-template ngbPaginationPrevious>Prev</ng-template>
+            <ng-template ngbPaginationNext>Next</ng-template>
+            <ng-template ngbPaginationPages let-page let-pages="pages">
+              <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                <div class="mb-3 d-flex flex-nowrap px-2">
+                  <label
+                    id="paginationInputLabel"
+                    for="paginationInput"
+                    class="col-form-label me-2 ms-1"
+                    >Page</label
+                  >
+                  <input
+                    #i
+                    type="text"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                    class="form-control custom-pages-input"
+                    id="paginationInput"
+                    [value]="page"
+                    (keyup.enter)="selectPage(i.value)"
+                    (blur)="selectPage(i.value)"
+                    (input)="formatInput($any($event).target)"
+                    style="width: 2.5rem"
+                  />
+                  <span
+                    id="paginationDescription"
+                    class="col-form-label text-nowrap px-2"
+                  >
+                    of {{ pages.length }}</span
+                  >
+                </div>
+              </li>
+            </ng-template>
+          </ngb-pagination>
         </div>
       </tab>
       <tab>
@@ -318,6 +478,45 @@
               </tr>
             </tbody>
           </table>
+          <ngb-pagination
+            class="pagination-container"
+            [collectionSize]="cancelledBookings?.length"
+            [(page)]="page"
+          >
+            <ng-template ngbPaginationPrevious>Prev</ng-template>
+            <ng-template ngbPaginationNext>Next</ng-template>
+            <ng-template ngbPaginationPages let-page let-pages="pages">
+              <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                <div class="mb-3 d-flex flex-nowrap px-2">
+                  <label
+                    id="paginationInputLabel"
+                    for="paginationInput"
+                    class="col-form-label me-2 ms-1"
+                    >Page</label
+                  >
+                  <input
+                    #i
+                    type="text"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                    class="form-control custom-pages-input"
+                    id="paginationInput"
+                    [value]="page"
+                    (keyup.enter)="selectPage(i.value)"
+                    (blur)="selectPage(i.value)"
+                    (input)="formatInput($any($event).target)"
+                    style="width: 2.5rem"
+                  />
+                  <span
+                    id="paginationDescription"
+                    class="col-form-label text-nowrap px-2"
+                  >
+                    of {{ pages.length }}</span
+                  >
+                </div>
+              </li>
+            </ng-template>
+          </ngb-pagination>
         </div>
       </tab>
     </tabset>

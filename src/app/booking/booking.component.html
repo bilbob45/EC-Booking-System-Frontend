@@ -6,15 +6,27 @@
         width="18"
         height="18"
     /></a>
-    <p-dropdown
-      inputId="dropdown"
-      class="p-inputtext-sm"
-      id="header-dropdown"
-      [options]="venues"
-      [(ngModel)]="selectedVenue"
-      (onClick)="goToRoom()"
-      optionLabel="name"
-    ></p-dropdown>
+    <div ngbDropdown class="d-inline-block">
+      <button
+        type="button"
+        class="rooms-title"
+        id="dropdownBasic1"
+        ngbDropdownToggle
+      >
+        Shuttle Discovery
+
+        <img src="../../assets/icons/chevron-down.svg" width="18" height="18" />
+      </button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button routerLink="/booking/" ngbDropdownItem>
+          Shuttle Discovery
+        </button>
+        <button routerLink="/the-coliseum/" ngbDropdownItem>
+          The Coliseum
+        </button>
+        <button routerLink="/kilimanjaro/" ngbDropdownItem>Kilimanjaro</button>
+      </div>
+    </div>
   </div>
   <div class="shuttle-container row">
     <div class="col-md-5">

@@ -4,6 +4,11 @@ import { Location } from '@angular/common';
 import { BookingsService } from '../services/bookingsservice';
 import { Paginator } from 'primeng/paginator';
 import { Table } from 'primeng/table';
+import {
+  AddBookingResponse,
+  BookingStatus,
+  GetBookings,
+} from '../services/BookingService';
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
 @Component({
@@ -17,8 +22,8 @@ export class BookingHistoryComponent implements OnInit {
   searchText: string;
   activeIndex2: number = 0;
   dates: Date[];
-  page = 4;
-  booking: any;
+  page = 1;
+  booking: GetBookings;
   endDate: Date;
   bookings: any[] = [];
   pendingBookings: any[];
@@ -26,6 +31,9 @@ export class BookingHistoryComponent implements OnInit {
   deniedBookings: any[];
   cancelledBookings: any[];
   bookingId: string;
+  bookingStatus: BookingStatus;
+  status: BookingStatus;
+  pageSize = 10;
 
   constructor(
     private bookingService: BookingsService,
@@ -45,7 +53,13 @@ export class BookingHistoryComponent implements OnInit {
 
   getBookings() {
     this.bookingService.getBookings().subscribe((response) => {
-      (this.bookings = response.data), (this.dates = []);
+      this.bookings = response.data;
+      // this.bookings = response.data.map((x) => {
+      //   for (let i = 0; i < x[i].length; i++) {
+      //     x = this.booking.status;
+      //   }
+      // });
+      console.log(this.booking, 'status');
     });
   }
 
@@ -72,7 +86,7 @@ export class BookingHistoryComponent implements OnInit {
     });
   }
   clickContinue(id: string) {
-    this._router.navigate(['/bookings/', id]);
+    this._router.navigate(['/booking/', id]);
   }
 
   getPageSymbol(current: number) {

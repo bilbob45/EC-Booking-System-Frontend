@@ -30,3 +30,7 @@
 ::ng-deep .fc.fc-theme-standard a {
   text-decoration: none;
 }
+
+::ng-deep .fc-daygrid-block-event .fc-event-title {
+  white-space: pre-line;
+}

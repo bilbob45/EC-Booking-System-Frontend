@@ -2,10 +2,6 @@
   <div class="row d-flex home-container">
     <div class="col-md-5 home-text-section">
       <div>
-        <img
-          src="../../assets/images/pwc logo.svg"
-          class="home-content-image"
-        />
         <p>HOME OF EXPERIENTIAL INNOVATION</p>
         <h1 class="home-content">Experience <b>Centre</b> Booking System</h1>
         <p class="home-subtext">
@@ -65,29 +61,30 @@
       <div>
         <div class="exhibition-eclipse">
           <div class="exhibition-eclipse-content">
-            <div class="mini-eclipse-1">
-              <img
-                (click)="changeImage(0)"
-                src="../../assets/images/shrunk-one.svg"
-                onmouseover="this.src='../../assets/images/shrunk-three-active.svg'"
-                onmouseout="this.src='../../assets/images/shrunk-one.svg'"
-                class="mini-eclipse-image-1"
-              />
-            </div>
-            <div class="mini-eclipse-2">
-              <img
-                (click)="changeImage(1)"
-                src="../../assets/images/shrunk-two.svg"
-                class="mini-eclipse-image"
-              />
-            </div>
-            <div class="mini-eclipse-3">
-              <img
-                (click)="changeImage(2)"
-                src="../../assets//images/shrunk-three.svg"
-                class="mini-eclipse-image"
-              />
-            </div>
+            <img
+              (click)="changeImage(0)"
+              src="../../assets/images/shrunk-one.svg"
+              onmouseover="this.src='../../assets/images/shrunk-one-active.svg'"
+              onmouseout="this.src='../../assets/images/shrunk-one.svg'"
+              class="mini-eclipse-1"
+            />
+
+            <img
+              (click)="changeImage(1)"
+              src="../../assets/images/shrunk-two.svg"
+              onmouseover="this.src='../../assets/images/shrunk-two-active.svg'"
+              onmouseout="this.src='../../assets/images/shrunk-two.svg'"
+              class="mini-eclipse-2"
+            />
+
+            <img
+              (click)="changeImage(2)"
+              src="../../assets//images/shrunk-three.svg"
+              onmouseover="this.src='../../assets/images/shrunk-three-active.svg'"
+              onmouseout="this.src='../../assets/images/shrunk-three.svg'"
+              class="mini-eclipse-3"
+            />
+
             <div>
               <img [src]="[slide]" class="exhibition-eclipse-content-image" />
               <div>

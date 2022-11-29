@@ -115,7 +115,7 @@ export class BookingComponent implements OnInit {
       { name: 'Kilimanjaro' },
     ];
     this.timeSlots = [
-      { time: 'Morning (9:00am - 12:00noon)' },
+      { time: 'Morning (9:00am - 12:00pm)' },
       { time: 'Afternoon (1:00pm - 4:00pm)' },
       { time: 'Full Day (9:00am - 4:00pm)' },
     ];
@@ -253,7 +253,7 @@ export class BookingComponent implements OnInit {
       (res) => {
         this.showSuccess();
         console.log(this.showSuccess, 'response');
-        this._router.navigate(['/bookings', res.data[0].id]);
+        this._router.navigate(['/booking', res.data[0].id]);
         console.log(res.data[0].id, 'res');
 
         this.reset();

@@ -46,7 +46,7 @@
         [ngClass]="{
           'awaiting-booking-notice': bookingStatus === 'Awaiting Approval',
           'approved-booking-notice': bookingStatus === 'Approved',
-          'denied-booking-notice': bookingStatus === 'Denied',
+          'denied-booking-notice': bookingStatus === 'Declined',
           'cancel-booking-notice': bookingStatus === 'Cancelled'
         }"
       >
@@ -76,7 +76,7 @@
           <span class="request-content-title">
             Event Date(s) :
             <span class="request-content-copy">{{
-              booking?.bookedDates[0].eventDate
+              booking?.bookedDates[0].eventDate | date: "d MMM, y"
             }}</span>
           </span>
         </div>
@@ -216,7 +216,10 @@
           </ul>
         </div>
       </div>
-      <div class="request-content border-0" *ngIf="bookingStatus === 'Denied'">
+      <div
+        class="request-content border-0"
+        *ngIf="bookingStatus === 'Declined'"
+      >
         <div>
           <span class="cancel-reason-title">
             Reason for decline:
@@ -371,7 +374,7 @@
         </div>
         <div class="request-section">
           <p-button
-            (click)="approveBooking(bookingId)"
+            (click)="showApproveModalDialog()"
             label="Approve Booking"
           ></p-button>
           <p-dialog
@@ -398,7 +401,7 @@
                       pButton
                       type="button"
                       label="Continue"
-                      (click)="clickContinue()"
+                      (click)="approveBooking(bookingId)"
                       styleClass="p-button-sm"
                       class="p-button w-100"
                     ></button>
