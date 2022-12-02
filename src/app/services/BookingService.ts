@@ -103,3 +103,11 @@ export enum BookingStatus {
 export interface ReasonForDecline {
   comment?: string;
 }
+
+export class NotificationResponse{
+  id: number;
+  userId: string;
+  createdAt: Date;
+  title: string;
+  message: string;
+}

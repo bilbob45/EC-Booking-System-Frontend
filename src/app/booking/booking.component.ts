@@ -277,7 +277,7 @@ export class BookingComponent implements OnInit {
     this.feedingRequirement = '';
   }
   onCancel() {
-    this.reset();
+    this.bookingForm = null;
   }
   goToRoom() {
     switch (this.selectedVenue.name) {

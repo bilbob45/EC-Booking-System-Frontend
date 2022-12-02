@@ -117,87 +117,81 @@
             </a>
           </li>
         </ul>
+
         <div class="d-flex nav-items">
-          <div class="assets">
-            <img
-              src="../../assets/icons/notification.svg"
-              alt="notification"
-              (click)="showDialog()"
-            />
-            <div>
-              <p-dialog
-                id="notification"
-                [(visible)]="display"
-                [draggable]="false"
-                [style]="{ width: '25vw' }"
-                header="Notification"
-              >
+          <div class="assets" *ngIf="notifications">
+            <ng-template #content let-modal backdrop="false">
+              <div class="modal-header">
+                <h4 class="modal-title">Notification</h4>
+                <button
+                  type="button"
+                  aria-label="Close"
+                  class="button"
+                  (click)="clearNotification()"
+                >
+                  Clear All
+                </button>
+              </div>
+              <div class="modal-body">
                 <div>
                   <div class="date-container">
                     <span>Today</span>
                   </div>
-                  <div class="notification-template">
+                  <div
+                    class="notification-template"
+                    *ngFor="let notification of notifications"
+                  >
                     <div class="notification-time">
                       <img src="../../assets/icons/file.svg" width="25px" />
-                      <span>5:00pm</span>
+                      <span>{{
+                        notification.createdAt | date: "d MMM, y"
+                      }}</span>
                     </div>
                     <div class="notification-content">
-                      <span><b>New Request:</b>EC/22/0001</span>
-                      <p>
-                        You have received a new request for
-                        <strong>The Coliseum.</strong> Click to view more
-                        information. .
-                      </p>
-                    </div>
-                  </div>
-                  <div class="notification-template">
-                    <div class="notification-time">
-                      <img src="../../assets/icons/file.svg" width="25px" />
-                      <span>5:00pm</span>
-                    </div>
-                    <div class="notification-content">
-                      <span><b>New Request:</b>EC/22/0001</span>
-                      <p>
-                        You have received a new request for
-                        <strong>The Coliseum.</strong> Click to view more
-                        information. .
-                      </p>
-                    </div>
-                  </div>
-                  <div class="date-container">
-                    <span>Older</span>
-                  </div>
-                  <div class="notification-template">
-                    <div class="notification-time">
-                      <img src="../../assets/icons/file.svg" width="25px" />
-                      <span>5:00pm</span>
-                    </div>
-                    <div class="notification-content">
-                      <span><b>New Request:</b>EC/22/0001</span>
-                      <p>
-                        You have received a new request for
-                        <strong>The Coliseum.</strong> Click to view more
-                        information. .
-                      </p>
-                    </div>
-                  </div>
-                  <div class="notification-template">
-                    <div class="notification-time">
-                      <img src="../../assets/icons/file.svg" width="25px" />
-                      <span>5:00pm</span>
-                    </div>
-                    <div class="notification-content">
-                      <span><b>New Request:</b>EC/22/0001</span>
-                      <p>
-                        You have received a new request for
-                        <strong>The Coliseum.</strong> Click to view more
-                        information. .
-                      </p>
+                      <span
+                        ><b>{{ notification.title }}</b></span
+                      >
+                      <p>{{ notification.message }}.</p>
                     </div>
                   </div>
                 </div>
-              </p-dialog>
-            </div>
+              </div>
+            </ng-template>
+
+            <i
+              class="pi pi-bell"
+              pBadge
+              style="font-size: 1.5rem"
+              (click)="openSm(content)"
+              severity="danger"
+            ></i>
+          </div>
+          <div class="assets" *ngIf="clearAll">
+            <ng-template let-modal backdrop="false" #content>
+              <div class="modal-header">
+                <h4 class="modal-title">Notification</h4>
+                <button
+                  type="button"
+                  aria-label="Close"
+                  class="button"
+                  (click)="clearNotification()"
+                >
+                  Clear All
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="notification-empty-state">
+                  <img src="../../assets/images/empty-state.svg" />
+                  <p>No Notifications yet</p>
+                </div>
+              </div>
+            </ng-template>
+
+            <i
+              class="pi pi-bell"
+              style="font-size: 1.5rem"
+              (click)="openSm(content)"
+            ></i>
           </div>
           <div *ngIf="showSettings" class="assets">
             <img src="../../assets/icons/gray-settings.svg" alt="" />
@@ -233,16 +227,6 @@
               </button>
             </div>
           </div>
-          <!-- <div class="">
-            <img
-              src="../../assets/icons/avatar.svg"
-              alt=""
-              width="50"
-              height="50"
-              onmouseover="this.src = '../../assets/icons/avatar-hover.svg'"
-              onmouseout="this.src = '../../assets/icons/avatar.svg'"
-            />
-          </div> -->
         </div>
       </div>
     </div>

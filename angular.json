@@ -16,7 +16,7 @@
             "customWebpackConfig": {
               "path": "./webpack.config.js"
             },
-            "allowedCommonJsDependencies": ["fast-deep-equal"],
+
             "outputPath": "dist/my-app",
             "index": "src/index.html",
             "main": "src/main.ts",

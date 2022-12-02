@@ -162,3 +162,9 @@ h2 {
   font-family: "Helvetica Neue - Medium";
   font-size: 20px;
 }
+
+@media screen and (min-width: 1024px) and (max-width: 1024px) {
+  .shuttle-discovery {
+    width: 424px;
+  }
+}

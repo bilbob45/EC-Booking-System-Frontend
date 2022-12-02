@@ -10,6 +10,7 @@ import {
   GetBookings,
   Login,
   LoginResponse,
+  NotificationResponse,
   ReasonForDecline,
 } from '../services/BookingService';
 
@@ -50,8 +51,8 @@ export class BookingsService {
   }
   getBookingsByStatus(
     status: BookingStatus
-  ): Observable<AddBookingResponse | undefined> {
-    return this.http.get<AddBookingResponse>(
+  ): Observable<{ data: GetBookings[] }> {
+    return this.http.get<{ data: GetBookings[] }>(
       `${this.BASE_URL}/Bookings/getbookingsbystatus?status=${status}`,
       { headers: this.headers }
     );
@@ -107,6 +108,23 @@ export class BookingsService {
       `${this.BASE_URL}/Accounts/login
       `,
       body,
+      { headers: this.headers }
+    );
+  }
+
+  getNotification(
+    id?: number
+  ): Observable<{ data: NotificationResponse[] } | undefined> {
+    return this.http.get<{ data: NotificationResponse[] }>(
+      `${this.BASE_URL}/Notification/getnotifications`,
+      { headers: this.headers }
+    );
+  }
+  clearNotification(
+    id?: number
+  ): Observable<{ data: NotificationResponse[] } | undefined> {
+    return this.http.delete<{ data: NotificationResponse[] }>(
+      `${this.BASE_URL}/Notification/clearnotifications`,
       { headers: this.headers }
     );
   }

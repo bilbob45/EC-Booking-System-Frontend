@@ -18,7 +18,7 @@ interface Venue {
 export class HomeComponent implements OnInit {
   userId: string;
   images: any[];
-  title: string = 'Top n Chill';
+  title: string = 'Top Up n Chill';
   titles: string[] = ['Kilimanjaro', 'The Coliseum', 'Shuttle Discovery'];
   description: string =
     'Relax, converse, eat, and chill in our kitchenette area appropriately named Top up n’ chill. ';

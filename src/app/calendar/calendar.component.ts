@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CalendarOptions, DateSelectArg } from '@fullcalendar/angular';
-import { AddBookingResponse, GetBookings } from '../services/BookingService';
-
+import { CalendarOptions } from '@fullcalendar/angular';
+import { GetBookings } from '../services/BookingService';
 import { BookingsService } from '../services/bookingsservice';
+import {Router, Activac}
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -12,7 +12,6 @@ export class CalendarComponent implements OnInit {
   events: GetBookings[] = [];
   calendarOptions: CalendarOptions | undefined;
   calendarEvents: any[];
-  client: any;
   constructor(private bookingsService: BookingsService) {}
 
   ngOnInit(): void {
@@ -22,10 +21,8 @@ export class CalendarComponent implements OnInit {
   getEvents() {
     this.bookingsService.getBookings().subscribe((response) => {
       this.events = response.data;
-      console.log(this.calendarEvents, 'events');
+      console.log(this.events, 'events');
       this.calendarEvents = [];
-
-      // response.data.forEach((e) => this.calendarEvents.push({spaceName: e.spaceName, }))
       this.calendarEvents = this.events.map((e) => ({
         title:
           e.spaceName +
@@ -35,10 +32,8 @@ export class CalendarComponent implements OnInit {
           e.bookedDates[0].time +
           '\n' +
           e.meetingType,
-        engagementLeader: e.engagementLeader,
         start: e.bookedDates[0].eventDate,
         end: e.bookedDates[e.bookedDates.length - 1].eventDate,
-        time: e.bookedDates[0].time,
       }));
       this.calendarOptions = {
         headerToolbar: {

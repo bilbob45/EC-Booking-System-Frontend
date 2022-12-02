@@ -39,12 +39,12 @@
               <tr>
                 <th style="text-align: center" scope="col">SN</th>
                 <th scope="col">ID</th>
-                <th scope="col">Requested on</th>
                 <th scope="col">Start Date</th>
                 <th scope="col">End Date</th>
                 <th scope="col">Room</th>
                 <th scope="col">Slot</th>
                 <th scope="col">Requested by</th>
+                <th scope="col">Status</th>
               </tr>
             </thead>
             <tbody>
@@ -60,8 +60,7 @@
                 (click)="clickContinue(booking.id)"
               >
                 <th scope="row" style="text-align: center">{{ i + 1 }}</th>
-                <td>{{ booking?.id }}</td>
-                <td>{{ booking?.createdAt | date: "d MMM, y" }}</td>
+                <td class="id">{{ booking?.id }}</td>
                 <td>
                   {{ booking?.bookedDates[0].eventDate | date: "d MMM, y" }}
                 </td>
@@ -77,6 +76,38 @@
                   {{ booking?.bookedDates[0].time | slice: 0:8 }}
                 </td>
                 <td>{{ booking?.internalContactPerson }}</td>
+                <td *ngIf="booking?.status === 1">
+                  <span
+                    ><img
+                      class="status"
+                      src="../../assets/images/pending-status.svg"
+                    />Pending</span
+                  >
+                </td>
+                <td *ngIf="booking?.status === 2">
+                  <span
+                    ><img
+                      class="status"
+                      src="../../assets/images/approved-status.svg"
+                    />Approved</span
+                  >
+                </td>
+                <td *ngIf="booking?.status === 3">
+                  <span
+                    ><img
+                      class="status"
+                      src="../../assets/images/declined-status.svg"
+                    />Declined</span
+                  >
+                </td>
+                <td *ngIf="booking?.status === 4">
+                  <span
+                    ><img
+                      class="status"
+                      src="../../assets/images/cancel-status.svg"
+                    />Cancelled</span
+                  >
+                </td>
               </tr>
             </tbody>
           </table>
@@ -137,14 +168,14 @@
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">SN</th>
-                <th scope="col">ID</th>
-                <th scope="col">Requested on</th>
+                <th style="text-align: center" scope="col">SN</th>
+                <th scope="col" class="id">ID</th>
                 <th scope="col">Start Date</th>
                 <th scope="col">End Date</th>
                 <th scope="col">Room</th>
                 <th scope="col">Slot</th>
                 <th scope="col">Requested by</th>
+                <th scope="col">Status</th>
               </tr>
             </thead>
             <tbody>
@@ -156,10 +187,9 @@
                 (click)="clickContinue(pendingBooking.id)"
               >
                 <th scope="row">{{ i + 1 }}</th>
-                <td>
+                <td class="id">
                   {{ pendingBooking?.id }}
                 </td>
-                <td>{{ pendingBooking?.createdAt | date: "d MMM, y" }}</td>
                 <td>
                   {{
                     pendingBooking?.bookedDates[0].eventDate | date: "d MMM, y"
@@ -177,6 +207,14 @@
                   {{ pendingBooking?.bookedDates[0].time | slice: 0:8 }}
                 </td>
                 <td>{{ pendingBooking?.internalContactPerson }}</td>
+                <td *ngIf="pendingBooking?.status === 1">
+                  <span
+                    ><img
+                      class="status"
+                      src="../../assets/images/pending-status.svg"
+                    />Pending</span
+                  >
+                </td>
               </tr>
             </tbody>
           </table>
@@ -236,14 +274,14 @@
           <table class="table" *ngIf="approvedBookings; else notEmptyApproved">
             <thead>
               <tr>
-                <th scope="col">SN</th>
-                <th scope="col">ID</th>
-                <th scope="col">Requested on</th>
+                <th scope="col" style="text-align: center">SN</th>
+                <th scope="col" class="id">ID</th>
                 <th scope="col">Start Date</th>
                 <th scope="col">End Date</th>
                 <th scope="col">Room</th>
                 <th scope="col">Slot</th>
                 <th scope="col">Requested by</th>
+                <th scope="col">Status</th>
               </tr>
             </thead>
 
@@ -256,8 +294,7 @@
                 (click)="clickContinue(approvedBooking.id)"
               >
                 <th scope="row">{{ i + 1 }}</th>
-                <td>{{ approvedBooking?.id }}</td>
-                <td>{{ approvedBooking?.createdAt | date: "d MMM, y" }}</td>
+                <td class="id">{{ approvedBooking?.id }}</td>
                 <td>
                   {{
                     approvedBooking?.bookedDates[0].eventDate | date: "d MMM, y"
@@ -275,6 +312,14 @@
                   {{ approvedBooking?.bookedDates[0].time | slice: 0:8 }}
                 </td>
                 <td>{{ approvedBooking?.internalContactPerson }}</td>
+                <td *ngIf="approvedBooking?.status === 2">
+                  <span
+                    ><img
+                      class="status"
+                      src="../../assets/images/approved-status.svg"
+                    />Approved</span
+                  >
+                </td>
               </tr>
             </tbody>
           </table>
@@ -334,14 +379,14 @@
           <table class="table" *ngIf="deniedBookings; else notEmpty">
             <thead>
               <tr>
-                <th scope="col">SN</th>
-                <th scope="col">ID</th>
-                <th scope="col">Requested on</th>
+                <th scope="col" style="text-align: center">SN</th>
+                <th scope="col" class="id">ID</th>
                 <th scope="col">Start Date</th>
                 <th scope="col">End Date</th>
                 <th scope="col">Room</th>
                 <th scope="col">Slot</th>
                 <th scope="col">Requested by</th>
+                <th scope="col">Status</th>
               </tr>
             </thead>
             <tbody>
@@ -353,8 +398,7 @@
                 (click)="clickContinue(deniedBooking.id)"
               >
                 <th scope="row">{{ i + 1 }}</th>
-                <td>{{ deniedBooking?.id }}</td>
-                <td>{{ deniedBooking?.createdAt | date: "d MMM, y" }}</td>
+                <td class="id">{{ deniedBooking?.id }}</td>
                 <td>
                   {{
                     deniedBooking?.bookedDates[0].eventDate | date: "d MMM, y"
@@ -372,6 +416,14 @@
                   {{ deniedBooking?.bookedDates[0].time | slice: 0:8 }}
                 </td>
                 <td>{{ deniedBooking?.internalContactPerson }}</td>
+                <td *ngIf="deniedBooking?.status === 3">
+                  <span
+                    ><img
+                      class="status"
+                      src="../../assets/images/declined-status.svg"
+                    />Declined</span
+                  >
+                </td>
               </tr>
             </tbody>
           </table>
@@ -435,14 +487,14 @@
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">SN</th>
-                <th scope="col">ID</th>
-                <th scope="col">Requested on</th>
+                <th scope="col" style="text-align: center">SN</th>
+                <th scope="col" class="id">ID</th>
                 <th scope="col">Start Date</th>
                 <th scope="col">End Date</th>
                 <th scope="col">Room</th>
                 <th scope="col">Slot</th>
                 <th scope="col">Requested by</th>
+                <th scope="col">Status</th>
               </tr>
             </thead>
             <tbody>
@@ -455,8 +507,7 @@
                 (click)="clickContinue(cancelledBooking.id)"
               >
                 <th scope="row">{{ i + 1 }}</th>
-                <td>{{ cancelledBooking?.id }}</td>
-                <td>{{ cancelledBooking?.createdAt | date: "d MMM, y" }}</td>
+                <td class="id">{{ cancelledBooking?.id }}</td>
                 <td>
                   {{
                     cancelledBooking?.bookedDates[0].eventDate
@@ -475,6 +526,14 @@
                   {{ cancelledBooking?.bookedDates[0].time | slice: 0:8 }}
                 </td>
                 <td>{{ cancelledBooking?.internalContactPerson }}</td>
+                <td *ngIf="booking?.status === 4">
+                  <span
+                    ><img
+                      class="status"
+                      src="../../assets/images/cancel-status.svg"
+                    />Cancelled</span
+                  >
+                </td>
               </tr>
             </tbody>
           </table>

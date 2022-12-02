@@ -161,7 +161,9 @@ ul {
 .decline-button {
   margin-right: 12px;
 }
-
+.bookedDates {
+  text-align: right;
+}
 .w-100 {
   width: 100%;
 }
@@ -276,4 +278,18 @@ ul {
   .p-inputswitch-slider {
   border-color: #fedacc;
   box-shadow: 0 0 0 0.2rem #fedacc;
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1024px) {
+  .booking-container {
+    padding: 30px !important;
+  }
+  .bookedEvent {
+    width: 54%;
+  }
+  .bookedDates {
+    text-align: right;
+  }
+}
+@media screen and (max-width: 768px) {
 }

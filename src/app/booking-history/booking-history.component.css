@@ -39,7 +39,9 @@ table {
   padding: 10px;
   background: #fff;
 }
-
+.id:hover {
+  color: #d04a02;
+}
 th {
   width: 150px;
   padding: 5px;
@@ -142,11 +144,6 @@ td {
   font-size: 16px;
 }
 
-/* .badge {
-  background-color: #dddddd;
-  border-radius: 50%;
-  padding: 8px;
-} */
 .nav-tabs .nav-link.active b {
   background-color: #d04a02;
   border-radius: 50%;
@@ -154,4 +151,15 @@ td {
 }
 .nav-link:hover {
   color: #d04a02;
+}
+
+.status {
+  margin-right: 10px;
+}
+
+/* Responsive Styles */
+@media screen and (min-width: 1024px) and (max-width: 1024px) {
+  .booking-history-container {
+    padding: 25px 20px;
+  }
 }

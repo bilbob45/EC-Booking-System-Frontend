@@ -32,6 +32,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import interactionPlugin from '@fullcalendar/interaction';
 import daygridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
+import {OverlayPanelModule} from 'primeng/overlaypanel';
 
 FullCalendarModule.registerPlugins([
   interactionPlugin,
@@ -73,6 +74,7 @@ FullCalendarModule.registerPlugins([
     TableModule,
     TabsModule,
     FullCalendarModule,
+    OverlayPanelModule
   ],
   providers: [PhotoService],
   bootstrap: [AppComponent],

@@ -250,7 +250,7 @@ export class KilimanjaroComponent implements OnInit {
       (res) => {
         this.showSuccess();
         console.log(this.showSuccess, 'response');
-        this._router.navigate(['/bookings', res.data[0].id]);
+        this._router.navigate(['/booking', res.data[0].id]);
         console.log(res.data[0].id, 'res');
 
         this.reset();
