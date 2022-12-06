@@ -78,6 +78,7 @@ a.disabled {
 ::ng-deep .p-overlay-badge .p-badge {
   margin-right: 5px;
   top: 3px;
+  background: #e45c2b;
 }
 ::ng-deep .p-badge.p-badge-danger {
   background-color: #e45c2b;

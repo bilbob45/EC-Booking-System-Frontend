@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/angular';
 import { GetBookings } from '../services/BookingService';
 import { BookingsService } from '../services/bookingsservice';
-import {Router, Activac}
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -12,7 +12,7 @@ export class CalendarComponent implements OnInit {
   events: GetBookings[] = [];
   calendarOptions: CalendarOptions | undefined;
   calendarEvents: any[];
-  constructor(private bookingsService: BookingsService) {}
+  constructor(private bookingsService: BookingsService, router: Router) {}
 
   ngOnInit(): void {
     this.getEvents();
@@ -33,7 +33,11 @@ export class CalendarComponent implements OnInit {
           '\n' +
           e.meetingType,
         start: e.bookedDates[0].eventDate,
+        id: e.id,
         end: e.bookedDates[e.bookedDates.length - 1].eventDate,
+        eventClick:
+          // if (event.e.id) this.router.navigate(['/booking', event.e.id]);
+          window.location.assign('/booking/' + e.id),
       }));
       this.calendarOptions = {
         headerToolbar: {

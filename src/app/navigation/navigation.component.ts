@@ -12,10 +12,10 @@ export class NavigationComponent implements OnInit {
   display: boolean;
   showMenu = true;
   showSettings = true;
-clearAll = true;
+  clearAll = true;
   userData: any;
   loggedInUser: any = null;
-
+  clearNotifications: NotificationResponse[];
   notifications: NotificationResponse[] | null;
   showDialog() {
     this.display = true;
@@ -54,8 +54,8 @@ clearAll = true;
   }
   clearNotification() {
     this.bookingService.clearNotification().subscribe((response) => {
-      this.notifications = response.data;
-      this.clearAll;
+      this.clearNotifications = response.data;
+      this.clearAll = true;
       // if (response) {
       //   this.notifications === null;
       // }
