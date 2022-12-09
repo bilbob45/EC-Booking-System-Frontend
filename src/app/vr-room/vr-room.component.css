@@ -61,3 +61,15 @@
   background: #fff;
   z-index: 999;
 }
+
+@media screen and (min-width: 1440px) and (max-width: 1440px) {
+  .iframe-container {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1024px) {
+  .iframe-container {
+    width: 100%;
+  }
+}

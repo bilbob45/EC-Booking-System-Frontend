@@ -100,14 +100,21 @@ export enum BookingStatus {
   cancelled = 4,
 }
 
+export enum NotificationStatus {
+  unread = 1,
+  read = 2,
+}
+
 export interface ReasonForDecline {
   comment?: string;
 }
 
-export class NotificationResponse{
+export class NotificationResponse {
   id: number;
+  status: NotificationStatus;
   userId: string;
   createdAt: Date;
   title: string;
+  bookingId: string;  
   message: string;
 }

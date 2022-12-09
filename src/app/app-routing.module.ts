@@ -17,10 +17,12 @@ import { BookingDetailComponent } from './booking/booking-detail/booking-detail.
 const routes: Routes = [
   {
     path: '',
+
     component: SiteLayoutComponent,
     children: [
       {
         path: '',
+
         component: HomeComponent,
       },
       { path: 'report', component: ReportComponent },

@@ -134,12 +134,12 @@
           <ul>
             <li>
               <span class="request-content-copy">{{
-                booking?.createdAt | date: "d MMM, y"
+                booking?.createdAt | slice: 0:8
               }}</span>
             </li>
             <li class="request-section-list">
               <span class="request-content-copy">{{
-                booking?.createdAt | date: "shortTime"
+                booking?.createdAt | slice: 10:16
               }}</span>
             </li>
             <li class="request-section-list">

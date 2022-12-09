@@ -104,7 +104,6 @@ export class BookingDetailComponent implements OnInit {
       .subscribe((response: Booking) => {
         window.location.reload();
         this.displayModalApprove = false;
-     
       });
   }
   declineBooking(bookingId: string) {
@@ -128,10 +127,8 @@ export class BookingDetailComponent implements OnInit {
           this.displayModalDecline = false;
         }
         this.cancelledBooking = response?.data;
-
       });
   }
-
 
   getBookingsId(bookingId: string) {
     this.bookingsService.getBookingsById(bookingId).subscribe({

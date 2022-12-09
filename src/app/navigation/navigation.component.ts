@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NotificationResponse } from '../services/BookingService';
+import {
+  NotificationResponse,
+  NotificationStatus,
+} from '../services/BookingService';
 import { BookingsService } from '../services/bookingsservice';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
@@ -14,6 +17,7 @@ export class NavigationComponent implements OnInit {
   showSettings = true;
   clearAll = true;
   userData: any;
+  readNotification: NotificationResponse[];
   loggedInUser: any = null;
   clearNotifications: NotificationResponse[];
   notifications: NotificationResponse[] | null;
@@ -52,14 +56,15 @@ export class NavigationComponent implements OnInit {
   clickView(id: string) {
     this.router.navigate(['/booking/', id]);
   }
+
+  readNotifications(id: number) {
+    this.bookingService.readNotification(id).subscribe((response) => {
+      this.readNotification = response.data;
+    });
+  }
   clearNotification() {
     this.bookingService.clearNotification().subscribe((response) => {
       this.clearNotifications = response.data;
-      this.clearAll = true;
-      // if (response) {
-      //   this.notifications === null;
-      // }
-
       console.log(this.notifications, 'clear');
     });
   }

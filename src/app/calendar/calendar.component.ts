@@ -12,7 +12,9 @@ export class CalendarComponent implements OnInit {
   events: GetBookings[] = [];
   calendarOptions: CalendarOptions | undefined;
   calendarEvents: any[];
-  constructor(private bookingsService: BookingsService, router: Router) {}
+  private _router: any;
+
+  constructor(private bookingsService: BookingsService, _router: Router) {}
 
   ngOnInit(): void {
     this.getEvents();
@@ -35,9 +37,11 @@ export class CalendarComponent implements OnInit {
         start: e.bookedDates[0].eventDate,
         id: e.id,
         end: e.bookedDates[e.bookedDates.length - 1].eventDate,
-        eventClick:
-          // if (event.e.id) this.router.navigate(['/booking', event.e.id]);
-          window.location.assign('/booking/' + e.id),
+        // eventClick: this._router.navigate([
+        //   '/booking/',
+        //   e.bookedDates[0].bookingId,
+        // ]),
+        // window.location.assign('/booking/' + e.id),
       }));
       this.calendarOptions = {
         headerToolbar: {

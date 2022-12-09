@@ -168,3 +168,12 @@ h2 {
     width: 424px;
   }
 }
+
+@media screen and (min-width: 1440px) and (max-width: 1440px) {
+  .coliseum {
+    width: 357px;
+  }
+  .kilimanjaro {
+    width: 357px;
+  }
+}

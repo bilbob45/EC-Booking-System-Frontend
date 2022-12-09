@@ -140,12 +140,12 @@
                   <div
                     class="notification-template"
                     *ngFor="let notification of notifications"
+                    (click)="readNotifications(notification.id)"
+                    [routerLink]="['/booking/', notification.bookingId]"
                   >
                     <div class="notification-time">
                       <img src="../../assets/icons/file.svg" width="25px" />
-                      <span>{{
-                        notification.createdAt | date: "d MMM, y"
-                      }}</span>
+                      <span>{{ notification.createdAt }}</span>
                     </div>
                     <div class="notification-content">
                       <span
@@ -156,11 +156,13 @@
                   </div>
                 </div>
               </div>
-              <div class="modal-body">
-                <div class="notification-empty-state">
-                  <img src="../../assets/images/empty-state.svg" />
-                  <p>No Notifications yet</p>
-                </div>
+              <div class="modal-body" *ngIf="clearNotifications">
+                <ng-template>
+                  <div class="notification-empty-state">
+                    <img src="../../assets/images/empty-state.svg" />
+                    <p>No Notifications yet</p>
+                  </div>
+                </ng-template>
               </div>
               <div class="modal-body" *ngIf="clearAll">
                 <div class="notification-empty-state">

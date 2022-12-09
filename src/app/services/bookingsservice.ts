@@ -120,11 +120,19 @@ export class BookingsService {
       { headers: this.headers }
     );
   }
+  readNotification(
+    id?: number
+  ): Observable<{ data: NotificationResponse[] } | undefined> {
+    return this.http.put<{ data: NotificationResponse[] }>(
+      `${this.BASE_URL}/Notification/readnotification?id=${id}`,
+      { headers: this.headers }
+    );
+  }
   clearNotification(
     id?: number
   ): Observable<{ data: NotificationResponse[] } | undefined> {
     return this.http.delete<{ data: NotificationResponse[] }>(
-      `${this.BASE_URL}/Notification/clearnotifications`,
+      `${this.BASE_URL}/Notification/deletenotification`,
       { headers: this.headers }
     );
   }
