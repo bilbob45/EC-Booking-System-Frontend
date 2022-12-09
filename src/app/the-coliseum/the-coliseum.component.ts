@@ -9,6 +9,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Location } from '@angular/common';
 import { BookingsService } from '../services/bookingsservice';
 import { MessageService } from 'primeng/api';
 import { Booking } from '../services/BookingService';
@@ -56,16 +57,18 @@ export class TheColiseumComponent implements OnInit {
   item: string;
   value2: any;
   value8: any;
-
+  yesterday: Date;
   dates: Date[];
   rangeDates: Date[];
   minDate: Date;
   maxDate: Date;
+  dateQuery: any;
   es: any;
   queryDate: Date;
   invalidDates: Array<Date>;
   checked1: boolean = false;
   checked2: boolean = true;
+  homeDate: any;
   responsiveOptions: any[] = [
     {
       breakpoint: '1024px',
@@ -82,11 +85,12 @@ export class TheColiseumComponent implements OnInit {
   ];
 
   constructor(
-    private coliseumService: ColiseumService,
+    private photoService: ColiseumService,
     private fb: FormBuilder,
     private datePipe: DatePipe,
     private messageService: MessageService,
     private _router: Router,
+    private location: Location,
     private activatedRouter: ActivatedRoute,
     private bookingsService: BookingsService
   ) {
@@ -119,7 +123,6 @@ export class TheColiseumComponent implements OnInit {
       meetingType: ['', Validators.required],
       clientCompanyName: ['', Validators.required],
       engagementLeader: ['', Validators.required],
-
       numberOfGuests: [0, Validators.required],
       internalContactPerson: ['', Validators.required],
       contactNumber: ['', Validators.required],
@@ -127,30 +130,35 @@ export class TheColiseumComponent implements OnInit {
       feedingRequirement: ['', Validators.required],
       bookedDates: this.fb.array([]),
     });
+
+    this.dateQuery = new Date(
+      this.activatedRouter.snapshot.queryParamMap.get('date')
+    );
+    // let newDate = filter;
+    // this.activatedRouter.queryParams.subscribe(() => {
+    //   this.homeDate = this.datePipe.transform(newDate, 'dd/MM/yyyy');
+    //   console.log(this.homeDate, 'homeDate');
+    // });
   }
 
   ngOnInit(): void {
-    this.coliseumService.getImages().then((images) => {
+    this.photoService.getImages().then((images) => {
       this.images = images;
-      this.getBookedDates(3);
+      this.getBookedDates(1);
+      console.log(this.dateQuery);
     });
-    const filter = this.activatedRouter.snapshot.queryParamMap.get('date');
-    console.log(filter, 'filter');
-    let homeDate = filter;
-    this.activatedRouter.queryParams.subscribe((filter) => {
-      homeDate = this.datePipe.transform(homeDate, 'dd/MM/yyyy');
-      console.log(homeDate, 'homeDate');
-    });
-    //   this.activatedRouter.queryParams
-    //   .filter(params => params.order)
-    //   .subscribe(params => {
-    //     console.log(params); // { order: "popular" }
+    // const filter = this.activatedRouter.snapshot.queryParamMap.get('date');
+    // let newDate = filter;
+    // this.activatedRouter.queryParams.subscribe(() => {
+    //   this.homeDate = this.datePipe.transform(newDate, 'dd/MM/yyyy');
+    //   console.log(this.homeDate, 'homeDate');
+    // });
+    if (this.homeDate) {
+      this.addHomeModel();
+    } else {
+      this.addDate();
+    }
 
-    //     this.eventDate = params.order;
-
-    //     console.log(this.eventDate); // popular
-    //   }
-    // );
     let today = new Date();
     let month = today.getMonth();
     let year = today.getFullYear();
@@ -164,7 +172,9 @@ export class TheColiseumComponent implements OnInit {
     this.maxDate = new Date();
     this.maxDate.setMonth(nextMonth);
     this.maxDate.setFullYear(nextYear);
-
+    let yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    this.yesterday = yesterday;
     // let invalidDate = new Date();
     // invalidDate.setDate(today.getDate() - 1);
     // this.invalidDates = [today, invalidDate];
@@ -188,62 +198,67 @@ export class TheColiseumComponent implements OnInit {
     return this.fb.group({
       eventDate: Date,
       time: '',
-
-      // eventDate: ['', Validators.required],
-      // time: ['', Validators.required],
     });
   }
+  homeDateModel(): FormGroup {
+    return this.fb.group({
+      eventDate: (Date = this.homeDate),
+      time: '',
+    });
+  }
+
   DateModels(): FormArray {
     return this.bookingForm.get('bookedDates') as FormArray;
+  }
+  addHomeModel() {
+    this.DateModels().push(this.newDateModel());
   }
 
   addDate() {
     this.DateModels().push(this.newDateModel());
-    console.log(this.DateModels(), 'controls');
   }
 
   removeDate(i: number) {
     this.DateModels().removeAt(i);
   }
 
-  // save(): void {
-
-  // }
+  backClick() {
+    this.location.back();
+  }
+  onCancel() {
+    this.reset();
+  }
   getBookedDates(id: number) {
     this.bookingsService.getBookings(id).subscribe((response) => {
       this.invalidDates = [];
       response.data.forEach((x) =>
-        this.invalidDates.push(...x.bookedDates.map((x) => x.eventDate))
+        this.invalidDates.push(
+          ...x['bookedDates'].map((x) => new Date(x.eventDate))
+        )
       );
-      console.log(this.invalidDates, 'invalid dates');
+      // console.log(this.invalidDates, 'invalid dates');
     });
-  }
-  submitted = false;
-
-  onSubmit(selectedRoom: number) {
-    this.submitted = true;
   }
 
   createBooking(spaceId: number) {
-    this.successMsg = '';
-    this.errorMsg = '';
-    this.submitted = true;
     const t = this.bookingForm.value;
-    // for (let i = 0; i < t.bookedDates.length; i++) {
-    //   let originalDate = t.bookedDates[i].eventDate;
-    //   t.bookedDates[i].eventDate = this.datePipe.transform(
-    //     originalDate,
-    //     'dd/MM/yyyy'
-    //   );
-    // }
-    // console.log(t.bookedDates, 'date');
+    for (let i = 0; i < t.bookedDates.length; i++) {
+      let originalDate = t.bookedDates[i].eventDate;
+      t.bookedDates[i].eventDate = this.datePipe.transform(
+        originalDate,
+        'dd/MM/yyyy'
+      );
+    }
+    console.log(t.bookedDates, 'date');
 
     //let phoneNumber=this.contactNumber.toString()
     this.bookingsService.createBooking(t, spaceId).subscribe(
       (res) => {
         this.showSuccess();
         console.log(this.showSuccess, 'response');
-        this._router.navigate(['/awaiting-approval']);
+        this._router.navigate(['/booking', res.data[0].id]);
+        console.log(res.data[0].id, 'res');
+
         this.reset();
       },
       (error: ErrorEvent) => {
@@ -264,14 +279,17 @@ export class TheColiseumComponent implements OnInit {
     this.notes = '';
     this.feedingRequirement = '';
   }
+
   goToRoom() {
     switch (this.selectedVenue.name) {
       case 'The Coliseum':
         this._router.navigate(['/the-coliseum/'], {});
         break;
       case 'Shuttle Discovery':
-        this._router.navigate(['/shuttle-discovery/'], {});
+        this._router.navigate(['/booking/'], {});
         break;
+      case 'Kilimanjaro':
+        this._router.navigate(['/kilimanjaro/'], {});
     }
   }
 }

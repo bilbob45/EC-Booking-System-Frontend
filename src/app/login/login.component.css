@@ -1,0 +1,28 @@
+.login-container {
+  background-image: linear-gradient(
+      rgba(28, 26, 26, 0.5),
+      rgba(39, 38, 38, 0.5)
+    ),
+    url(../../assets/images/coliseum/images/2.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  padding: 180px 0px;
+}
+.login-section {
+  margin: auto;
+  width: 500px;
+  padding: 50px;
+  background: #f3f3f3;
+  border-radius: 8px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+.submit-button {
+  width: 100%;
+  background: #c52a1a;
+  border: 1px solid #c52a1a;
+}

@@ -2,9 +2,15 @@
   background: #f3f3f3;
   padding: 25px 60px;
 }
+.history-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .history-title {
   padding-bottom: 25px;
   display: flex;
+  align-items: center;
 }
 .history-title a img {
   margin-right: 15px;
@@ -18,15 +24,67 @@
   justify-content: center;
   align-items: center;
   padding: 80px;
+  background: #fff;
+  flex-direction: column;
+}
+.cancelled-empty-state p {
+  padding-top: 15px;
+  font-size: 16px;
+}
+.table-container {
+  padding: 30px;
+  background: #fff;
 }
 table {
-  border-collapse: separate;
-  border-spacing: 20px 0;
+  padding: 10px;
+  background: #fff;
 }
-th,
-td {
+.id:hover {
+  color: #d04a02;
+}
+th {
   width: 150px;
   padding: 5px;
+  font-family: "Helvetica Neue";
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.4px;
+  color: #111111;
+}
+tr:hover {
+  cursor: pointer;
+}
+td {
+  width: 210px;
+  padding: 5px;
+  font-family: "Helvetica Neue";
+  font-weight: 400;
+  font-size: 16px;
+  padding: 20px 10px !important;
+  line-height: 24px;
+  letter-spacing: -0.4px;
+  color: #5e5e5e;
+}
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+.page-link {
+  border: transparent;
+  color: #c5c5c5;
+}
+.page-link:hover {
+  background: transparent;
+  color: #d04a02;
+  border: transparent;
+}
+.page-link:focus {
+  background: transparent;
+  color: #d04a02;
+  border: transparent;
+  box-shadow: none;
 }
 ::ng-deep .p-tabview .p-tabview-nav {
   border: 1px solid transparent !important;
@@ -43,10 +101,68 @@ td {
 }
 ::ng-deep .p-tabview .p-tabview-nav li .p-tabview-nav-link {
   padding: 8px 16px;
-}
-::ng-deep .p-tabview .p-tabview-nav li .p-tabview-nav-link {
   background: transparent;
+  font-family: "Helvetica Neue";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  letter-spacing: -0.4px;
 }
+
 ::ng-deep .p-tabview .p-tabview-nav {
   background: transparent;
+}
+
+.badgeBg {
+  background-color: #5e5e5e;
+}
+
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+  color: #5e5e5e;
+  background-color: transparent;
+  border-color: transparent;
+  border-bottom: 2px solid #d04a02;
+}
+
+.nav-tabs .nav-link {
+  border: none;
+}
+.nav-tabs {
+  border-bottom: transparent;
+}
+.nav-tabs .badge {
+  background-color: #dddddd;
+  border-radius: 50%;
+  padding: 8px;
+  margin-left: 5px;
+}
+.nav-link {
+  color: #5e5e5e;
+  font-size: 16px;
+}
+
+.nav-tabs .nav-link.active b {
+  background-color: #d04a02;
+  border-radius: 50%;
+  padding: 8px;
+}
+.nav-link:hover {
+  color: #d04a02;
+}
+
+.status {
+  margin-right: 10px;
+}
+
+/* Responsive Styles */
+@media screen and (min-width: 1024px) and (max-width: 1024px) {
+  .booking-history-container {
+    padding: 25px 20px;
+  }
+  .table-container {
+    padding: 30px 2px;
+  }
 }

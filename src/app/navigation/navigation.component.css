@@ -64,9 +64,24 @@ p {
   font-size: 15px;
   padding-top: 4px;
 }
-
+a.disabled {
+  color: #cecece !important;
+  cursor: not-allowed;
+  text-decoration: none;
+}
+/* #profile ::ng-deep .dropdown-menu[data-bs-popper] {
+  left: -95px !important;
+} */
 ::ng-deep .dropdown-item {
   width: 86%;
+}
+::ng-deep .p-overlay-badge .p-badge {
+  margin-right: 5px;
+  top: 3px;
+  background: #e45c2b;
+}
+::ng-deep .p-badge.p-badge-danger {
+  background-color: #e45c2b;
 }
 ::ng-deep .dropdown-item:hover {
   background-color: #fedacc !important;
@@ -88,6 +103,9 @@ p {
   margin-top: 8px;
   padding: 15px 10px;
 }
+#inactive a {
+  color: #818181;
+}
 nav a {
   display: flex;
   align-items: center;
@@ -99,7 +117,7 @@ nav a {
 }
 #notification ::ng-deep .p-dialog-mask {
   justify-content: flex-end !important;
-  top: 7% !important;
+  top: -22% !important;
   left: -4% !important;
 }
 nav a.active {
@@ -124,6 +142,60 @@ nav a.active:hover {
   margin-top: 2px;
   border-radius: 8px;
   /* padding: 20px; */
+}
+.logout-button {
+  padding: 4px 44px;
+  background: #e45c2b;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  margin-left: 10px;
+  border-color: #e45c2b;
+}
+::ng-deep .p-component-overlay-enter {
+  animation: none;
+}
+::ng-deep .p-component-overlay {
+  background-color: transparent;
+  animation-duration: none;
+}
+.button {
+  border: 1px solid transparent;
+  background: transparent;
+  color: #e45c2b;
+}
+.notification-empty-state {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 85px;
+  white-space: nowrap;
+}
+.notification-empty-state p {
+  padding-top: 10px;
+}
+::ng-deep .modal {
+  position: absolute;
+  top: 30px;
+  left: 34%;
+  --bs-modal-border-color: transparent;
+}
+::ng-deep .modal.show .modal-dialog {
+  box-shadow: 0px 0px 1px rgba(70, 70, 70, 0.08),
+    0px 8px 16px rgba(70, 70, 70, 0.24);
+}
+::ng-deep :focus-visible {
+  outline: transparent 1px;
+}
+::ng-deep .modal-header {
+  border-bottom: 1px solid transparent !important;
+}
+::ng-deep .modal-body {
+  border: 1px solid transparent;
+}
+::ng-deep .modal-backdrop.show {
+  opacity: 0;
 }
 /* Responsive Styles */
 @media screen and (max-width: 767px) {

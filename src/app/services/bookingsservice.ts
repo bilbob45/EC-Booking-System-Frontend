@@ -1,12 +1,17 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpBackend, HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { BookingComponent } from '../booking/booking.component';
 import {
   AddBookingResponse,
+  BookedDates,
   Booking,
+  BookingStatus,
   GetBookings,
+  Login,
+  LoginResponse,
+  NotificationResponse,
+  ReasonForDecline,
 } from '../services/BookingService';
 
 @Injectable({
@@ -16,18 +21,23 @@ export class BookingsService {
   getState: any;
   private BASE_URL = environment.API_URL;
   private headers: HttpHeaders;
-  token: string;
-  constructor(private http: HttpClient) {
+  private http: HttpClient;
+  userData = localStorage.getItem('user');
+  user = JSON.parse(this.userData);
+  token: any;
+  constructor(httpBackend: HttpBackend) {
+    this.http = new HttpClient(httpBackend);
+    this.token = this.user.token;
     this.headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=utf-8',
       'Access-Control-Allow-Origin': '*',
-      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoic2FyYWhAcHdjLmNvbSIsImp0aSI6ImY5MjQzMDM2LTg4M2UtNDQ3OC05MjY3LWRkYmQ0ODZhYmI3YyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJleHAiOjE2Njg4MjQyNTQsImlzcyI6Imh0dHBzOi8vZWNib29raW5nc3lzdGVtMS5henVyZXdlYnNpdGVzLm5ldCIsImF1ZCI6Imh0dHBzOi8vZWNib29raW5nc3lzdGVtMS5henVyZXdlYnNpdGVzLm5ldCJ9.uPB7FnqiRdZ3-mTNIBRCbn43ohRKCej4Qh-aUpxdUZ0`,
+      Authorization: `Bearer ${this.token}`,
     });
   }
 
-  getBookings(id: number): Observable<{ data: GetBookings[] }> {
+  getBookings(id?: number): Observable<{ data: GetBookings[] } | undefined> {
     return this.http.get<{ data: GetBookings[] }>(
-      `${this.BASE_URL}/Bookings/getbookings?SpaceId=${id}`,
+      `${this.BASE_URL}/Bookings/getbookings`,
       { headers: this.headers }
     );
   }
@@ -39,10 +49,48 @@ export class BookingsService {
       { headers: this.headers }
     );
   }
-  approveBooking(bookingId: string, body: Booking): Observable<Booking> {
+  getBookingsByStatus(
+    status: BookingStatus
+  ): Observable<{ data: GetBookings[] }> {
+    return this.http.get<{ data: GetBookings[] }>(
+      `${this.BASE_URL}/Bookings/getbookingsbystatus?status=${status}`,
+      { headers: this.headers }
+    );
+  }
+  approveBooking(bookingId: string, body?: Booking): Observable<Booking> {
     return this.http.put<Booking>(
       `${this.BASE_URL}/Bookings/approvebooking?BookingId=${bookingId}`,
       body,
+      { headers: this.headers }
+    );
+  }
+
+  declineBooking(
+    bookingId: string,
+    body?: ReasonForDecline
+  ): Observable<AddBookingResponse> {
+    return this.http.put<AddBookingResponse>(
+      `${this.BASE_URL}/Bookings/declinebooking?BookingId=${bookingId}`,
+      body,
+      { headers: this.headers }
+    );
+  }
+
+  cancelBooking(
+    bookingId: string,
+    body?: ReasonForDecline
+  ): Observable<AddBookingResponse> {
+    return this.http.put<AddBookingResponse>(
+      `${this.BASE_URL}/Bookings/cancelbooking?BookingId=${bookingId}`,
+      body,
+      { headers: this.headers }
+    );
+  }
+  getBookedDatesBySpaceId(
+    spaceId: number
+  ): Observable<{ data: BookedDates[] }> {
+    return this.http.get<{ data: BookedDates[] }>(
+      `${this.BASE_URL}/Spaces/getbookeddatesbyspaceid?SpaceId=${spaceId}`,
       { headers: this.headers }
     );
   }
@@ -55,8 +103,37 @@ export class BookingsService {
       { headers: this.headers }
     );
   }
+  login(body: Login): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(
+      `${this.BASE_URL}/Accounts/login
+      `,
+      body,
+      { headers: this.headers }
+    );
+  }
 
-  cancelBooking(id: string): Observable<any> {
-    return this.http.delete(`${this.BASE_URL}/bookings/${id}`);
+  getNotification(
+    id?: number
+  ): Observable<{ data: NotificationResponse[] } | undefined> {
+    return this.http.get<{ data: NotificationResponse[] }>(
+      `${this.BASE_URL}/Notification/getnotifications`,
+      { headers: this.headers }
+    );
+  }
+  readNotification(
+    id?: number
+  ): Observable<{ data: NotificationResponse[] } | undefined> {
+    return this.http.put<{ data: NotificationResponse[] }>(
+      `${this.BASE_URL}/Notification/readnotification?id=${id}`,
+      { headers: this.headers }
+    );
+  }
+  clearNotification(
+    id?: number
+  ): Observable<{ data: NotificationResponse[] } | undefined> {
+    return this.http.delete<{ data: NotificationResponse[] }>(
+      `${this.BASE_URL}/Notification/deletenotification`,
+      { headers: this.headers }
+    );
   }
 }

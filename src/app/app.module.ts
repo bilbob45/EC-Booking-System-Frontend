@@ -20,13 +20,35 @@ import { TabViewModule } from 'primeng/tabview';
 import { BadgeModule } from 'primeng/badge';
 import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
-import {MessagesModule} from 'primeng/messages';
-import {MessageModule} from 'primeng/message';
-
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
+import { TableModule } from 'primeng/table';
 import { PhotoService } from './services/photoservice';
+import { BaseLayoutComponent } from './base-layout/base-layout.component';
+import { SiteLayoutComponent } from './site-layout/site-layout.component';
+import { SearchPipe } from './booking-history/search.pipe';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import interactionPlugin from '@fullcalendar/interaction';
+import daygridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import {OverlayPanelModule} from 'primeng/overlaypanel';
+
+FullCalendarModule.registerPlugins([
+  interactionPlugin,
+  daygridPlugin,
+  timeGridPlugin,
+]);
 
 @NgModule({
-  declarations: [AppComponent, NavigationComponent, routingComponents],
+  declarations: [
+    AppComponent,
+    NavigationComponent,
+    routingComponents,
+    BaseLayoutComponent,
+    SiteLayoutComponent,
+    SearchPipe,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -47,8 +69,12 @@ import { PhotoService } from './services/photoservice';
     BadgeModule,
     ToastModule,
     ReactiveFormsModule,
-   MessageModule,
-   MessagesModule
+    MessageModule,
+    MessagesModule,
+    TableModule,
+    TabsModule,
+    FullCalendarModule,
+    OverlayPanelModule
   ],
   providers: [PhotoService],
   bootstrap: [AppComponent],

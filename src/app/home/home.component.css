@@ -10,9 +10,10 @@
   line-height: 68px;
   font-weight: 600;
   margin-bottom: 26px;
+  font-family: "Helvetica Neue - Medium";
 }
 .home-content-image {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .home-content b {
@@ -51,8 +52,10 @@
   width: 65%;
   align-items: center;
 }
-.search-title h3 {
-  font-weight: 600;
+.search-title p {
+  font-weight: 700;
+  font-size: 20px;
+  font-family: "Helvetica Neue - Medium";
 }
 .search-icon {
   margin-bottom: 14px;
@@ -93,42 +96,27 @@
 .mini-eclipse-1 {
   width: 130.67px;
   height: 130.67px;
-  /* padding: 8px; */
   position: absolute;
   left: 35px;
   top: -114px;
-  border-radius: 50%;
-  background: linear-gradient(149.91deg, #dcdee4 18.41%, #ebecf0 66.48%);
-  border: 2px solid #ffffff;
-  box-shadow: -6px -5px 12px #ffffff, 0px 4px 11px rgba(0, 0, 0, 0.25);
   display: flex;
   justify-content: center;
 }
 .mini-eclipse-2 {
   width: 130.67px;
   height: 130.67px;
-  /* padding: 8px; */
   position: absolute;
   left: -146px;
   top: 75px;
-  border-radius: 50%;
-  background: linear-gradient(149.91deg, #dcdee4 18.41%, #ebecf0 66.48%);
-  border: 2px solid #ffffff;
-  box-shadow: -6px -5px 12px #ffffff, 0px 4px 11px rgba(0, 0, 0, 0.25);
   display: flex;
   justify-content: center;
 }
 .mini-eclipse-3 {
   width: 130.67px;
   height: 130.67px;
-  /* padding: 8px; */
   position: absolute;
   right: 340px;
   bottom: -83px;
-  border-radius: 50%;
-  background: linear-gradient(149.91deg, #dcdee4 18.41%, #ebecf0 66.48%);
-  border: 2px solid #ffffff;
-  box-shadow: -6px -5px 12px #ffffff, 0px 4px 11px rgba(0, 0, 0, 0.25);
   display: flex;
   justify-content: center;
 }
@@ -153,7 +141,7 @@
   font-size: 16px;
   line-height: 24px;
   letter-spacing: -0.4px;
-  padding: 0 20px;
+  padding: 0 37px;
   /* margin: 0 60px ; */
   color: #474747;
 }
@@ -226,4 +214,137 @@
 ::ng-deep .dropdown-menu.show {
   margin-top: 20px;
   padding: 15px 0;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+  .home-container {
+    padding: 60px 30px 0 30px;
+    width: 100vw;
+    height: 100vh;
+  }
+  .home-text-section {
+    padding-left: 20px;
+  }
+  .home-content {
+    font-size: 25px;
+    line-height: 38px;
+  }
+  .exhibition-eclipse {
+    padding: 40px;
+  }
+  .exhibition-eclipse-wrapper {
+    padding-left: 0;
+    margin-bottom: 0;
+  }
+  .exhibition-eclipse-content-image {
+    width: 150px;
+    height: 150px;
+  }
+  .exhibition-eclipse-description {
+    font-size: 15px;
+    line-height: normal;
+  }
+  .mini-eclipse-2 {
+    left: -113px;
+  }
+  .mini-eclipse-3 {
+    right: 142px;
+    bottom: -118px;
+  }
+  .search-wrapper {
+    padding: 15px;
+    margin-bottom: 40px;
+  }
+  .search-title {
+    width: auto;
+  }
+  .search-room {
+    width: 50%;
+    padding-right: 10px;
+  }
+  .search-date {
+    width: 50%;
+    padding-left: 10px;
+  }
+}
+@media screen and (max-width: 575px) {
+  .home-container {
+    padding: 60px 30px 0 30px;
+    width: 100vw;
+    height: 100vh;
+  }
+  .home-text-section {
+    padding-left: 0;
+  }
+  .home-content {
+    font-size: 33px;
+    line-height: 45px;
+  }
+  .home-subtext {
+    margin-right: 0;
+  }
+  .search-wrapper {
+    margin-bottom: 0;
+  }
+  .exhibition-eclipse {
+    display: none;
+  }
+  .exhibition-eclipse-wrapper {
+    padding-left: 0;
+    margin-bottom: 0;
+  }
+  .footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: column;
+    height: 25%;
+  }
+}
+
+/* @media screen and (min-width: 1024px) {
+  .home-text-section {
+    padding-left: 0;
+  }
+  .home-content {
+    font-size: 42px;
+    line-height: 65px;
+  }
+} */
+@media screen and (min-width: 1024px) and (max-width: 1024px) {
+  .home-text-section {
+    padding-left: 0;
+  }
+  .home-content {
+    font-size: 42px;
+    line-height: 65px;
+  }
+  .exhibition-eclipse {
+    padding: 35px;
+  }
+  .exhibition-eclipse-content-image {
+    width: 190px;
+    height: 190px;
+  }
+  .mini-eclipse-2 {
+    left: -110px;
+  }
+  .mini-eclipse-3 {
+    right: 230px;
+  }
+}
+@media screen and (min-width: 1440px) and (max-width: 1440px) {
+  .exhibition-eclipse {
+    padding: 135px;
+  }
+  .mini-eclipse-1 {
+    top: -188px;
+  }
+  .mini-eclipse-2 {
+    left: -211px;
+  }
+  .mini-eclipse-3{
+    right: 378px;
+  }
 }

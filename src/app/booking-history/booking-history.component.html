@@ -1,360 +1,583 @@
 <div class="booking-history-container">
-  <div class="history-title">
-    <a routerLink="/rooms"
-      ><img src="../../assets/icons/chevron-left-arrow.svg"
-    /></a>
-    <span>Booking History</span>
+  <div class="history-header-container">
+    <div class="history-title">
+      <a (click)="backClick()"
+        ><img src="../../assets/icons/chevron-left-arrow.svg"
+      /></a>
+      <span>Booking History</span>
+    </div>
+
+    <div>
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input
+          pInputText
+          type="text"
+          placeholder="Search"
+          [(ngModel)]="searchText"
+        />
+      </span>
+    </div>
   </div>
   <div>
-    <p-tabView>
-      <p-tabPanel>
-        <ng-template pTemplate="header">
+    <tabset>
+      <tab>
+        <ng-template tabHeading>
           <span>All</span>
-          <p-badge value="8"></p-badge>
+
+          <b class="badge">{{ bookings?.length }}</b>
         </ng-template>
-        <div>
-          <table>
+        <ng-template #notEmpty>
+          <div class="cancelled-empty-state">
+            <img src="../../assets/images/empty-state.svg" />
+            <p>There are no boooking requests to display</p>
+          </div>
+        </ng-template>
+        <div class="table-container" *ngIf="bookings; else notEmpty">
+          <table class="table">
             <thead>
               <tr>
-                <th>SN</th>
-                <th>ID</th>
-                <th>Requested on</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Room</th>
-                <th>Slot</th>
-                <th>Requested by</th>
+                <th style="text-align: center" scope="col">SN</th>
+                <th scope="col">ID</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col">Room</th>
+                <th scope="col">Slot</th>
+                <th scope="col">Requested by</th>
+                <th scope="col">Status</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>EC-22/0001</td>
-                <td>20 Aug,2022</td>
-                <td>20 Aug, 2022</td>
-                <td>20 Aug, 2022</td>
-                <td>The Coliseum</td>
-                <td>Morning</td>
-                <td>Anissah George</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>EC-22/0001</td>
-                <td>20 Aug,2022</td>
-                <td>20 Aug, 2022</td>
-                <td>20 Aug, 2022</td>
-                <td>The Coliseum</td>
-                <td>Morning</td>
-                <td>Anissah George</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>EC-22/0001</td>
-                <td>20 Aug,2022</td>
-                <td>20 Aug, 2022</td>
-                <td>20 Aug, 2022</td>
-                <td>The Coliseum</td>
-                <td>Morning</td>
-                <td>Anissah George</td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>EC-22/0001</td>
-                <td>20 Aug,2022</td>
-                <td>20 Aug, 2022</td>
-                <td>20 Aug, 2022</td>
-                <td>The Coliseum</td>
-                <td>Morning</td>
-                <td>Anissah George</td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td>EC-22/0001</td>
-                <td>20 Aug,2022</td>
-                <td>20 Aug, 2022</td>
-                <td>20 Aug, 2022</td>
-                <td>The Coliseum</td>
-                <td>Morning</td>
-                <td>Anissah George</td>
-              </tr>
-              <tr>
-                <td>6</td>
-                <td>EC-22/0001</td>
-                <td>20 Aug,2022</td>
-                <td>20 Aug, 2022</td>
-                <td>20 Aug, 2022</td>
-                <td>The Coliseum</td>
-                <td>Morning</td>
-                <td>Anissah George</td>
-              </tr>
-              <tr>
-                <td>7</td>
-                <td>EC-22/0001</td>
-                <td>20 Aug,2022</td>
-                <td>20 Aug, 2022</td>
-                <td>20 Aug, 2022</td>
-                <td>The Coliseum</td>
-                <td>Morning</td>
-                <td>Anissah George</td>
-              </tr>
-              <tr>
-                <td>8</td>
-                <td>EC-22/0001</td>
-                <td>20 Aug,2022</td>
-                <td>20 Aug, 2022</td>
-                <td>20 Aug, 2022</td>
-                <td>The Coliseum</td>
-                <td>Morning</td>
-                <td>Anissah George</td>
+              <tr
+                *ngFor="
+                  let booking of bookings
+                    | slice
+                      : (page - 1) * pageSize
+                      : (page - 1) * pageSize + pageSize
+                    | search: searchText;
+                  index as i
+                "
+                (click)="clickContinue(booking.id)"
+              >
+                <th scope="row" style="text-align: center">{{ i + 1 }}</th>
+                <td class="id">{{ booking?.id }}</td>
+                <td>
+                  {{ booking?.bookedDates[0].eventDate | date: "d MMM, y" }}
+                </td>
+                <td>
+                  <!-- {{ startDate | date: "d MMM, y" }} -->
+                  {{
+                    booking?.bookedDates[booking?.bookedDates.length - 1]
+                      .eventDate | date: "d MMM, y"
+                  }}
+                </td>
+                <td>{{ booking?.spaceName }}</td>
+                <td>
+                  {{ booking?.bookedDates[0].time | slice: 0:8 }}
+                </td>
+                <td>{{ booking?.internalContactPerson }}</td>
+                <td *ngIf="booking?.status === 1">
+                  <span
+                    ><img
+                      class="status"
+                      src="../../assets/images/pending-status.svg"
+                    />Pending</span
+                  >
+                </td>
+                <td *ngIf="booking?.status === 2">
+                  <span
+                    ><img
+                      class="status"
+                      src="../../assets/images/approved-status.svg"
+                    />Approved</span
+                  >
+                </td>
+                <td *ngIf="booking?.status === 3">
+                  <span
+                    ><img
+                      class="status"
+                      src="../../assets/images/declined-status.svg"
+                    />Declined</span
+                  >
+                </td>
+                <td *ngIf="booking?.status === 4">
+                  <span
+                    ><img
+                      class="status"
+                      src="../../assets/images/cancel-status.svg"
+                    />Cancelled</span
+                  >
+                </td>
               </tr>
             </tbody>
           </table>
+          <ngb-pagination
+            class="pagination-container"
+            [collectionSize]="bookings?.length"
+            [(page)]="page"
+          >
+            <ng-template ngbPaginationPrevious>Prev</ng-template>
+            <ng-template ngbPaginationNext>Next</ng-template>
+            <ng-template ngbPaginationPages let-page let-pages="pages">
+              <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                <div class="mb-3 d-flex flex-nowrap px-2">
+                  <label
+                    id="paginationInputLabel"
+                    for="paginationInput"
+                    class="col-form-label me-2 ms-1"
+                    >Page</label
+                  >
+                  <input
+                    #i
+                    type="text"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                    class="form-control custom-pages-input"
+                    id="paginationInput"
+                    [value]="page"
+                    (keyup.enter)="selectPage(i.value)"
+                    (blur)="selectPage(i.value)"
+                    (input)="formatInput($any($event).target)"
+                    style="width: 2.5rem"
+                  />
+                  <span
+                    id="paginationDescription"
+                    class="col-form-label text-nowrap px-2"
+                  >
+                    of {{ pages.length }}</span
+                  >
+                </div>
+              </li>
+            </ng-template>
+          </ngb-pagination>
         </div>
-      </p-tabPanel>
-      <p-tabPanel>
-        <ng-template pTemplate="header">
+      </tab>
+      <tab>
+        <ng-template tabHeading>
           <span>Pending</span>
-          <p-badge value="5"></p-badge>
+
+          <b class="badge">{{ pendingBookings?.length }}</b>
         </ng-template>
-        <div>
-          <table>
+        <ng-template #notEmpty>
+          <div class="cancelled-empty-state">
+            <img src="../../assets/images/empty-state.svg" />
+            <p>There are no Pending boooking requests to display</p>
+          </div>
+        </ng-template>
+        <div class="table-container" *ngIf="pendingBookings; else notEmpty">
+          <table class="table">
             <thead>
               <tr>
-                <th>SN</th>
-                <th>ID</th>
-                <th>Requested on</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Room</th>
-                <th>Slot</th>
-                <th>Requested by</th>
+                <th style="text-align: center" scope="col">SN</th>
+                <th scope="col" class="id">ID</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col">Room</th>
+                <th scope="col">Slot</th>
+                <th scope="col">Requested by</th>
+                <th scope="col">Status</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>EC-22/0001</td>
-                <td>20 Aug,2022</td>
-                <td>20 Aug, 2022</td>
-                <td>20 Aug, 2022</td>
-                <td>The Coliseum</td>
-                <td>Morning</td>
-                <td>Anissah George</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>EC-22/0001</td>
-                <td>20 Aug,2022</td>
-                <td>20 Aug, 2022</td>
-                <td>20 Aug, 2022</td>
-                <td>The Coliseum</td>
-                <td>Morning</td>
-                <td>Anissah George</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>EC-22/0001</td>
-                <td>20 Aug,2022</td>
-                <td>20 Aug, 2022</td>
-                <td>20 Aug, 2022</td>
-                <td>The Coliseum</td>
-                <td>Morning</td>
-                <td>Anissah George</td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>EC-22/0001</td>
-                <td>20 Aug,2022</td>
-                <td>20 Aug, 2022</td>
-                <td>20 Aug, 2022</td>
-                <td>The Coliseum</td>
-                <td>Morning</td>
-                <td>Anissah George</td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td>EC-22/0001</td>
-                <td>20 Aug,2022</td>
-                <td>20 Aug, 2022</td>
-                <td>20 Aug, 2022</td>
-                <td>The Coliseum</td>
-                <td>Morning</td>
-                <td>Anissah George</td>
+              <tr
+                *ngFor="
+                  let pendingBooking of pendingBookings | search: searchText;
+                  index as i
+                "
+                (click)="clickContinue(pendingBooking.id)"
+              >
+                <th scope="row" style="text-align: center">{{ i + 1 }}</th>
+                <td class="id">
+                  {{ pendingBooking?.id }}
+                </td>
+                <td>
+                  {{
+                    pendingBooking?.bookedDates[0].eventDate | date: "d MMM, y"
+                  }}
+                </td>
+                <td>
+                  {{
+                    pendingBooking?.bookedDates[
+                      pendingBooking?.bookedDates.length - 1
+                    ].eventDate | date: "d MMM, y"
+                  }}
+                </td>
+                <td>{{ pendingBooking?.spaceName }}</td>
+                <td>
+                  {{ pendingBooking?.bookedDates[0].time | slice: 0:8 }}
+                </td>
+                <td>{{ pendingBooking?.internalContactPerson }}</td>
+                <td *ngIf="pendingBooking?.status === 1">
+                  <span
+                    ><img
+                      class="status"
+                      src="../../assets/images/pending-status.svg"
+                    />Pending</span
+                  >
+                </td>
               </tr>
             </tbody>
           </table>
+          <ngb-pagination
+            class="pagination-container"
+            [collectionSize]="pendingBookings?.length"
+            [(page)]="page"
+          >
+            <ng-template ngbPaginationPrevious>Prev</ng-template>
+            <ng-template ngbPaginationNext>Next</ng-template>
+            <ng-template ngbPaginationPages let-page let-pages="pages">
+              <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                <div class="mb-3 d-flex flex-nowrap px-2">
+                  <label
+                    id="paginationInputLabel"
+                    for="paginationInput"
+                    class="col-form-label me-2 ms-1"
+                    >Page</label
+                  >
+                  <input
+                    #i
+                    type="text"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                    class="form-control custom-pages-input"
+                    id="paginationInput"
+                    [value]="page"
+                    (keyup.enter)="selectPage(i.value)"
+                    (blur)="selectPage(i.value)"
+                    (input)="formatInput($any($event).target)"
+                    style="width: 2.5rem"
+                  />
+                  <span
+                    id="paginationDescription"
+                    class="col-form-label text-nowrap px-2"
+                  >
+                    of {{ pages.length }}</span
+                  >
+                </div>
+              </li>
+            </ng-template>
+          </ngb-pagination>
         </div>
-      </p-tabPanel>
-
-      <p-tabPanel>
-        <ng-template pTemplate="header">
+      </tab>
+      <tab>
+        <ng-template tabHeading>
           <span>Approved</span>
-          <p-badge value="8"></p-badge>
+          <b class="badge">{{ approvedBookings?.length }}</b>
         </ng-template>
-        <div>
-          <table>
+        <ng-template #notEmptyApproved>
+          <div class="cancelled-empty-state">
+            <img src="../../assets/images/empty-state.svg" />
+            <p>There are no Approved boooking requests to display</p>
+          </div>
+        </ng-template>
+        <div class="table-container">
+          <table class="table" *ngIf="approvedBookings; else notEmptyApproved">
             <thead>
               <tr>
-                <th>SN</th>
-                <th>ID</th>
-                <th>Requested on</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Room</th>
-                <th>Slot</th>
-                <th>Requested by</th>
+                <th scope="col" style="text-align: center">SN</th>
+                <th scope="col" class="id">ID</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col">Room</th>
+                <th scope="col">Slot</th>
+                <th scope="col">Requested by</th>
+                <th scope="col">Status</th>
               </tr>
             </thead>
+
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>EC-22/0001</td>
-                <td>20 Aug,2022</td>
-                <td>20 Aug, 2022</td>
-                <td>20 Aug, 2022</td>
-                <td>The Coliseum</td>
-                <td>Morning</td>
-                <td>Anissah George</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>EC-22/0001</td>
-                <td>20 Aug,2022</td>
-                <td>20 Aug, 2022</td>
-                <td>20 Aug, 2022</td>
-                <td>The Coliseum</td>
-                <td>Morning</td>
-                <td>Anissah George</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>EC-22/0001</td>
-                <td>20 Aug,2022</td>
-                <td>20 Aug, 2022</td>
-                <td>20 Aug, 2022</td>
-                <td>The Coliseum</td>
-                <td>Morning</td>
-                <td>Anissah George</td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>EC-22/0001</td>
-                <td>20 Aug,2022</td>
-                <td>20 Aug, 2022</td>
-                <td>20 Aug, 2022</td>
-                <td>The Coliseum</td>
-                <td>Morning</td>
-                <td>Anissah George</td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td>EC-22/0001</td>
-                <td>20 Aug,2022</td>
-                <td>20 Aug, 2022</td>
-                <td>20 Aug, 2022</td>
-                <td>The Coliseum</td>
-                <td>Morning</td>
-                <td>Anissah George</td>
-              </tr>
-              <tr>
-                <td>6</td>
-                <td>EC-22/0001</td>
-                <td>20 Aug,2022</td>
-                <td>20 Aug, 2022</td>
-                <td>20 Aug, 2022</td>
-                <td>The Coliseum</td>
-                <td>Morning</td>
-                <td>Anissah George</td>
-              </tr>
-              <tr>
-                <td>7</td>
-                <td>EC-22/0001</td>
-                <td>20 Aug,2022</td>
-                <td>20 Aug, 2022</td>
-                <td>20 Aug, 2022</td>
-                <td>The Coliseum</td>
-                <td>Morning</td>
-                <td>Anissah George</td>
-              </tr>
-              <tr>
-                <td>8</td>
-                <td>EC-22/0001</td>
-                <td>20 Aug,2022</td>
-                <td>20 Aug, 2022</td>
-                <td>20 Aug, 2022</td>
-                <td>The Coliseum</td>
-                <td>Morning</td>
-                <td>Anissah George</td>
+              <tr
+                *ngFor="
+                  let approvedBooking of approvedBookings | search: searchText;
+                  index as i
+                "
+                (click)="clickContinue(approvedBooking.id)"
+              >
+                <th scope="row">{{ i + 1 }}</th>
+                <td class="id">{{ approvedBooking?.id }}</td>
+                <td>
+                  {{
+                    approvedBooking?.bookedDates[0].eventDate | date: "d MMM, y"
+                  }}
+                </td>
+                <td>
+                  {{
+                    approvedBooking?.bookedDates[
+                      approvedBooking?.bookedDates.length - 1
+                    ].eventDate | date: "d MMM, y"
+                  }}
+                </td>
+                <td>{{ approvedBooking?.spaceName }}</td>
+                <td>
+                  {{ approvedBooking?.bookedDates[0].time | slice: 0:8 }}
+                </td>
+                <td>{{ approvedBooking?.internalContactPerson }}</td>
+                <td *ngIf="approvedBooking?.status === 2">
+                  <span
+                    ><img
+                      class="status"
+                      src="../../assets/images/approved-status.svg"
+                    />Approved</span
+                  >
+                </td>
               </tr>
             </tbody>
           </table>
+          <ngb-pagination
+            class="pagination-container"
+            [collectionSize]="approvedBookings?.length"
+            [(page)]="page"
+          >
+            <ng-template ngbPaginationPrevious>Prev</ng-template>
+            <ng-template ngbPaginationNext>Next</ng-template>
+            <ng-template ngbPaginationPages let-page let-pages="pages">
+              <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                <div class="mb-3 d-flex flex-nowrap px-2">
+                  <label
+                    id="paginationInputLabel"
+                    for="paginationInput"
+                    class="col-form-label me-2 ms-1"
+                    >Page</label
+                  >
+                  <input
+                    #i
+                    type="text"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                    class="form-control custom-pages-input"
+                    id="paginationInput"
+                    [value]="page"
+                    (keyup.enter)="selectPage(i.value)"
+                    (blur)="selectPage(i.value)"
+                    (input)="formatInput($any($event).target)"
+                    style="width: 2.5rem"
+                  />
+                  <span
+                    id="paginationDescription"
+                    class="col-form-label text-nowrap px-2"
+                  >
+                    of {{ pages.length }}</span
+                  >
+                </div>
+              </li>
+            </ng-template>
+          </ngb-pagination>
         </div>
-      </p-tabPanel>
-
-      <p-tabPanel>
-        <ng-template pTemplate="header">
+      </tab>
+      <tab>
+        <ng-template tabHeading>
           <span>Denied</span>
-          <p-badge value="3"></p-badge>
+          <b class="badge">{{ deniedBookings?.length }}</b>
         </ng-template>
-        <div>
-          <table>
+        <ng-template #notEmpty>
+          <div class="cancelled-empty-state">
+            <img src="../../assets/images/empty-state.svg" />
+            <p>There are no Denied boooking requests to display</p>
+          </div>
+        </ng-template>
+        <div class="table-container">
+          <table class="table" *ngIf="deniedBookings; else notEmpty">
             <thead>
               <tr>
-                <th>SN</th>
-                <th>ID</th>
-                <th>Requested on</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Room</th>
-                <th>Slot</th>
-                <th>Requested by</th>
+                <th scope="col" style="text-align: center">SN</th>
+                <th scope="col" class="id">ID</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col">Room</th>
+                <th scope="col">Slot</th>
+                <th scope="col">Requested by</th>
+                <th scope="col">Status</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>EC-22/0001</td>
-                <td>20 Aug,2022</td>
-                <td>20 Aug, 2022</td>
-                <td>20 Aug, 2022</td>
-                <td>The Coliseum</td>
-                <td>Morning</td>
-                <td>Anissah George</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>EC-22/0001</td>
-                <td>20 Aug,2022</td>
-                <td>20 Aug, 2022</td>
-                <td>20 Aug, 2022</td>
-                <td>The Coliseum</td>
-                <td>Morning</td>
-                <td>Anissah George</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>EC-22/0001</td>
-                <td>20 Aug,2022</td>
-                <td>20 Aug, 2022</td>
-                <td>20 Aug, 2022</td>
-                <td>The Coliseum</td>
-                <td>Morning</td>
-                <td>Anissah George</td>
+              <tr
+                *ngFor="
+                  let deniedBooking of deniedBookings | search: searchText;
+                  index as i
+                "
+                (click)="clickContinue(deniedBooking.id)"
+              >
+                <th scope="row">{{ i + 1 }}</th>
+                <td class="id">{{ deniedBooking?.id }}</td>
+                <td>
+                  {{
+                    deniedBooking?.bookedDates[0].eventDate | date: "d MMM, y"
+                  }}
+                </td>
+                <td>
+                  {{
+                    deniedBooking?.bookedDates[
+                      deniedBooking?.bookedDates.length - 1
+                    ].eventDate | date: "d MMM, y"
+                  }}
+                </td>
+                <td>{{ deniedBooking?.spaceName }}</td>
+                <td>
+                  {{ deniedBooking?.bookedDates[0].time | slice: 0:8 }}
+                </td>
+                <td>{{ deniedBooking?.internalContactPerson }}</td>
+                <td *ngIf="deniedBooking?.status === 3">
+                  <span
+                    ><img
+                      class="status"
+                      src="../../assets/images/declined-status.svg"
+                    />Declined</span
+                  >
+                </td>
               </tr>
             </tbody>
           </table>
+          <ngb-pagination
+            class="pagination-container"
+            [collectionSize]="deniedBookings?.length"
+            [(page)]="page"
+          >
+            <ng-template ngbPaginationPrevious>Prev</ng-template>
+            <ng-template ngbPaginationNext>Next</ng-template>
+            <ng-template ngbPaginationPages let-page let-pages="pages">
+              <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                <div class="mb-3 d-flex flex-nowrap px-2">
+                  <label
+                    id="paginationInputLabel"
+                    for="paginationInput"
+                    class="col-form-label me-2 ms-1"
+                    >Page</label
+                  >
+                  <input
+                    #i
+                    type="text"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                    class="form-control custom-pages-input"
+                    id="paginationInput"
+                    [value]="page"
+                    (keyup.enter)="selectPage(i.value)"
+                    (blur)="selectPage(i.value)"
+                    (input)="formatInput($any($event).target)"
+                    style="width: 2.5rem"
+                  />
+                  <span
+                    id="paginationDescription"
+                    class="col-form-label text-nowrap px-2"
+                  >
+                    of {{ pages.length }}</span
+                  >
+                </div>
+              </li>
+            </ng-template>
+          </ngb-pagination>
         </div>
-      </p-tabPanel>
-
-      <p-tabPanel>
-        <ng-template pTemplate="header">
+      </tab>
+      <tab>
+        <ng-template tabHeading>
           <span>Cancelled</span>
-          <p-badge value="2"></p-badge>
+
+          <b class="badge">{{ cancelledBookings?.length }}</b>
         </ng-template>
-        <div class="cancelled-empty-state">
-          <img src="../../assets/images/cancel-empty.svg" />
+        <ng-template #notEmpty>
+          <div class="cancelled-empty-state">
+            <img src="../../assets/images/empty-state.svg" />
+            <p>There are no Cancelled boooking requests to display</p>
+          </div>
+        </ng-template>
+        <div
+          *ngIf="this.cancelledBookings; else notEmpty"
+          class="table-container"
+        >
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col" style="text-align: center">SN</th>
+                <th scope="col" class="id">ID</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col">Room</th>
+                <th scope="col">Slot</th>
+                <th scope="col">Requested by</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let cancelledBooking of cancelledBookings
+                    | search: searchText;
+                  index as i
+                "
+                (click)="clickContinue(cancelledBooking.id)"
+              >
+                <th scope="row">{{ i + 1 }}</th>
+                <td class="id">{{ cancelledBooking?.id }}</td>
+                <td>
+                  {{
+                    cancelledBooking?.bookedDates[0].eventDate
+                      | date: "d MMM, y"
+                  }}
+                </td>
+                <td>
+                  {{
+                    cancelledBooking?.bookedDates[
+                      cancelledBooking?.bookedDates.length - 1
+                    ].eventDate | date: "d MMM, y"
+                  }}
+                </td>
+                <td>{{ cancelledBooking?.spaceName }}</td>
+                <td>
+                  {{ cancelledBooking?.bookedDates[0].time | slice: 0:8 }}
+                </td>
+                <td>{{ cancelledBooking?.internalContactPerson }}</td>
+                <td *ngIf="booking?.status === 4">
+                  <span
+                    ><img
+                      class="status"
+                      src="../../assets/images/cancel-status.svg"
+                    />Cancelled</span
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <ngb-pagination
+            class="pagination-container"
+            [collectionSize]="cancelledBookings?.length"
+            [(page)]="page"
+          >
+            <ng-template ngbPaginationPrevious>Prev</ng-template>
+            <ng-template ngbPaginationNext>Next</ng-template>
+            <ng-template ngbPaginationPages let-page let-pages="pages">
+              <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                <div class="mb-3 d-flex flex-nowrap px-2">
+                  <label
+                    id="paginationInputLabel"
+                    for="paginationInput"
+                    class="col-form-label me-2 ms-1"
+                    >Page</label
+                  >
+                  <input
+                    #i
+                    type="text"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                    class="form-control custom-pages-input"
+                    id="paginationInput"
+                    [value]="page"
+                    (keyup.enter)="selectPage(i.value)"
+                    (blur)="selectPage(i.value)"
+                    (input)="formatInput($any($event).target)"
+                    style="width: 2.5rem"
+                  />
+                  <span
+                    id="paginationDescription"
+                    class="col-form-label text-nowrap px-2"
+                  >
+                    of {{ pages.length }}</span
+                  >
+                </div>
+              </li>
+            </ng-template>
+          </ngb-pagination>
         </div>
-      </p-tabPanel>
-    </p-tabView>
+      </tab>
+    </tabset>
   </div>
 </div>

@@ -1,0 +1,36 @@
+.calendar-container {
+  padding: 60px;
+}
+
+::ng-deep .fc.fc-theme-standard .fc-toolbar .fc-button {
+  background: #e45c2b;
+  border: 1px solid #e45c2b;
+}
+
+::ng-deep
+  .fc.fc-theme-standard
+  .fc-toolbar
+  .fc-button.fc-dayGridMonth-button.fc-button-active {
+  background: #e45c2b;
+  border-color: #e45c2b;
+}
+
+::ng-deep .fc.fc-theme-standard .fc-toolbar .fc-button:disabled {
+  background: #e45c2b;
+  border: 1px solid #e45c2b;
+}
+
+::ng-deep
+  .fc.fc-theme-standard
+  .fc-view-harness
+  .fc-event.fc-daygrid-block-event {
+  background: #e45c2b;
+  border-color: #e45c2b;
+}
+::ng-deep .fc.fc-theme-standard a {
+  text-decoration: none;
+}
+
+::ng-deep .fc-daygrid-block-event .fc-event-title {
+  white-space: pre-line;
+}

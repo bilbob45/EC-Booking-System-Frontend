@@ -14,7 +14,38 @@
   padding: 0 10px 0 30px;
   font-size: 30px;
   font-weight: 500;
+  font-family: "Helvetica Neue - Medium";
 }
+.rooms-title {
+  font-size: 30px;
+  font-weight: 500;
+  font-family: "Helvetica Neue - Medium";
+  border: none;
+  margin-left: 12px;
+}
+#header-dropdown ::ng-deep .p-dropdown {
+  background-color: transparent !important;
+  border: none;
+}
+#header-dropdown ::ng-deep .pi {
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+}
+#header-dropdown ::ng-deep .p-dropdown .p-dropdown-trigger {
+  color: #111111;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 5px;
+}
+#header-dropdown ::ng-deep .p-dropdown .p-dropdown-label.p-placeholder {
+  display: none;
+}
+#header-dropdown ::ng-deep .p-inputtext {
+  font-family: "Helvetica Neue - Medium";
+  font-size: 1.9rem !important;
+  color: #111111;
+}
+
 .shuttle-container {
   background: #fff;
   padding: 25px;

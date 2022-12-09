@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { SelectItem } from 'primeng/api';
-import { SelectItemGroup } from 'primeng/api';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+import { BookingsService } from '../services/bookingsservice';
+
 interface Venue {
   name: string;
 }
@@ -11,27 +13,19 @@ interface Venue {
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
+  providers: [],
 })
-export class HomeComponent {
-  // model: NgbDateStruct | any;
-  // model: NgbDateStruct;
-  // date: { year: number; month: number };
-
-  // constructor(private calendar: NgbCalendar) {}
-
-  // selectToday() {
-  // 	this.model = this.calendar.getToday();
-
-  // }
+export class HomeComponent implements OnInit {
+  userId: string;
   images: any[];
-  title: string = 'The Breakroom';
+  title: string = 'Top Up n Chill';
   titles: string[] = ['Kilimanjaro', 'The Coliseum', 'Shuttle Discovery'];
   description: string =
-    'Lorem ipsum dolor sit amet, conseelers sas adipiscin elit. Donec dolor sit amet, apaisd';
+    'Relax, converse, eat, and chill in our kitchenette area appropriately named Top up n’ chill. ';
   descriptions: string[] = [
-    'Lorem ipsum dolor sit amet, conseelers sas adipiscing elit. Donec dolor sit amet, apaisd',
-    'Lorem ipsum dolor sit amet, conseelers sas adipiscing elit. Donec dolor sit amet, apaisd',
-    'Lorem ipsum dolor sit amet, conseelers sas adipiscing elit. Donec dolor sit amet, apaisd',
+    'Our glorious 12-man meeting room called appropriately named after the highest point in Africa.',
+    'A space created to spark creativity, knowledge, and instill the importance of community.',
+    'A space ship themed Demo lab & Alternate reality room aptly named Shuttle Discovery after the NASA space',
   ];
   slide: string = '../../assets/images/breakroom-slide.svg';
   slides: string[] = [
@@ -57,11 +51,14 @@ export class HomeComponent {
   invalidDates: Array<Date>;
 
   items: SelectItem[];
-
+  notifications: any[] = [];
   item: string;
   eventDate: Date;
 
-  constructor(private _router: Router) {
+  constructor(
+    private _router: Router,
+    private bookingsService: BookingsService
+  ) {
     this.items = [];
     for (let i = 0; i < 10000; i++) {
       this.items.push({ label: 'Item ' + i, value: 'Item ' + i });
@@ -136,6 +133,7 @@ export class HomeComponent {
     invalidDate.setDate(today.getDate() - 1);
     this.invalidDates = [today, invalidDate];
   }
+  ngOnInit(): void {}
 
   changeImage(e: number) {
     this.slide = this.slides[e];
@@ -143,18 +141,29 @@ export class HomeComponent {
     this.title = this.titles[e];
   }
 
+  getBookedDates(id: number) {
+    this.bookingsService.getBookings(id).subscribe((response) => {
+      this.invalidDates = [];
+      response.data.forEach((x) =>
+        this.invalidDates.push(
+          ...x['bookedDates'].map((x) => new Date(x.eventDate))
+        )
+      );
+      // console.log(this.invalidDates, 'invalid dates');
+    });
+  }
   goToRoom() {
     switch (this.selectedVenue.name) {
       case 'The Coliseum':
-        this._router.navigate(['/the-coliseum/'], {
+        this._router.navigate(['/booking/'], {
           queryParams: { date: this.date10.toISOString() },
         });
         break;
-        case 'Shuttle Discovery':
-          this._router.navigate(['/shuttle-discovery/'], {
-            queryParams: { date: this.date10.toISOString() },
-          });
-          break;
+      case 'Shuttle Discovery':
+        this._router.navigate(['/booking/'], {
+          queryParams: { date: this.date10.toISOString() },
+        });
+        break;
     }
   }
 }

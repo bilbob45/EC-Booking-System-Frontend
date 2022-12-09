@@ -162,3 +162,18 @@ h2 {
   font-family: "Helvetica Neue - Medium";
   font-size: 20px;
 }
+
+@media screen and (min-width: 1024px) and (max-width: 1024px) {
+  .shuttle-discovery {
+    width: 424px;
+  }
+}
+
+@media screen and (min-width: 1440px) and (max-width: 1440px) {
+  .coliseum {
+    width: 357px;
+  }
+  .kilimanjaro {
+    width: 357px;
+  }
+}
